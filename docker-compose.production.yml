@@ -1,0 +1,23 @@
+version: '2'
+
+services:
+  client:
+    restart: unless-stopped
+    build:
+      context: ./packages/client
+      dockerfile: ./Dockerfile-production
+      args:
+        - node_env=production
+        - server_protocol=${SERVER_PROTOCOL}
+        - server_host=${SERVER_HOST}
+        - server_port=${SERVER_PORT}
+        - server_serve_client=false
+        - feature_book_structure=${FEATURE_BOOK_STRUCTURE}
+        - feature_upload_docx_files=${FEATURE_UPLOAD_DOCX_FILES}
+        - client_ws_min_timeout=${CLIENT_WS_MIN_TIMEOUT:-3000}
+        - client_ws_timeout=${CLIENT_WS_TIMEOUT:-30000}
+        - locks_ws_url=${LOCKS_WS_URL}
+    ports:
+      - ${CLIENT_PORT}:80
+
+ 

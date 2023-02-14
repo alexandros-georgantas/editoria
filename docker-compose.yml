@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  client:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile-development
+    command:
+      [
+        'node_modules/.bin/webpack-dev-server',
+        '--config',
+        './webpack/webpack.development.config.js'
+      ]
+    ports:
+      - ${CLIENT_PORT:-4000}:${CLIENT_PORT:-4000}
+    environment:
+      - NODE_ENV=development
+      - CLIENT_PORT=${CLIENT_PORT:-4000}
+      - FEATURE_UPLOAD_DOCX_FILES=${FEATURE_UPLOAD_DOCX_FILES:-true}
+      - FEATURE_BOOK_STRUCTURE=${FEATURE_BOOK_STRUCTURE:-false}
+      - CLIENT_HOST=0.0.0.0
+      - SERVER_PROTOCOL=${SERVER_PROTOCOL:-http}
+      - SERVER_HOST=${SERVER_HOST:-localhost}
+      - SERVER_PORT=${SERVER_PORT:-3000}
+      - SERVER_SERVE_CLIENT=true
+      - CLIENT_WS_MIN_TIMEOUT=3000
+      - CLIENT_WS_TIMEOUT=30000
+      - LOCKS_WS_URL=${LOCKS_WS_URL:-ws://localhost:3333/locks}
+    volumes:
+      - ./app:/home/node/app/app
+      - ./config:/home/node/app/config
+
+  
