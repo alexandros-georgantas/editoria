@@ -63,7 +63,7 @@ const EditorPage = props => {
   divisions.forEach(division => {
     const { bookComponents } = division
     bookComponents.forEach(bC => {
-      const { compType } = bC
+      const { componentType: compType } = bC
 
       if (compType !== 'toc' && compType !== 'endnotes') {
         flatBookComponents.push(bC)

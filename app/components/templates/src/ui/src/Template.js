@@ -30,8 +30,8 @@ const ImageContainer = styled.div`
   margin-right: calc(3 * ${th('gridUnit')});
   ${({ thumbnail, color }) =>
     thumbnail
-      ? `background-image: url(${thumbnail.source})`
-      : `background: ${color}`}
+      ? `background-image: url(${thumbnail.source});`
+      : `background: ${color};`}
   width: 188px;
 `
 

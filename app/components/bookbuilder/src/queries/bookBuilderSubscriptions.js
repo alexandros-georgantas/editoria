@@ -20,9 +20,7 @@ const BOOK_COMPONENT_UPLOADING_UPDATED_SUBSCRIPTION = gql`
 
 const RUNNING_HEADERS_UPDATED_SUBSCRIPTION = gql`
   subscription RunningHeadersUpdated {
-    bookRunningHeadersUpdated {
-      id
-    }
+    bookRunningHeadersUpdated
   }
 `
 
