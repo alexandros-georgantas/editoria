@@ -11,7 +11,7 @@ module.exports = {
     admin: {
       username: 'ADMIN_USERNAME',
       password: 'ADMIN_PASSWORD',
-      givenName: 'ADMIN_GIVEN_NAME',
+      givenNames: 'ADMIN_GIVEN_NAME',
       surname: 'ADMIN_SURNAME',
       email: 'ADMIN_EMAIL',
     },

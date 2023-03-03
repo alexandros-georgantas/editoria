@@ -16,6 +16,7 @@ import EditorPageWithData from './components/wax/src/EditorPageWithData'
 
 // Ketida
 import BookBuilder from './components/bookbuilder/src/ConnectedBookBuilder'
+import VerifyEmailPage from './components/verifyEmail/VerifyEmail.page'
 
 import BookStructurePage from './components/wizard/src/BookStructure.page'
 import Dashboard from './components/dashboard/src/ConnectedDashboard'
@@ -70,6 +71,12 @@ export default (
         path="/signup"
         render={props => <Signup {...props} logo="/ketida.png" />}
       />
+      <Route
+        component={VerifyEmailPage}
+        exact
+        path="/email-verification/:token"
+      />
+
       <Route component={PasswordReset} path="/password-reset" />
       <PageLayout>
         <ConnectedNavigation />

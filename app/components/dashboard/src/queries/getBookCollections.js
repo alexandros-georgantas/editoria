@@ -19,7 +19,7 @@ const GET_BOOK_COLLECTIONS = gql`
         archived
         authors {
           username
-          givenName
+          givenNames
           surname
         }
         bookStructure {

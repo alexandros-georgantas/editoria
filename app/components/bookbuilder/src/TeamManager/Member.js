@@ -66,11 +66,11 @@ export class Member extends React.Component {
 
     const withoutMember = map(clonedMembers, member => {
       const { user: userFromMember } = member
-      return { user: { id: userFromMember.id } }
+      return userFromMember.id
     })
 
     update({
-      variables: { id: team.id, input: { members: withoutMember } },
+      variables: { teamId: team.id, members: withoutMember },
     })
   }
 
@@ -83,7 +83,7 @@ export class Member extends React.Component {
     return (
       <ListItem>
         <MemberContainer>
-          <User>{`${user.givenName} ${user.surname}`}</User>
+          <User>{`${user.givenNames} ${user.surname}`}</User>
         </MemberContainer>
 
         {canRemoveTeamMember && (

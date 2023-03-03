@@ -10,6 +10,8 @@ const handleSubmit = (
   { props, setSubmitting, setErrors, setError, setStatus },
 ) => {
   const { signupUser, history } = props
+  values.agreedTc = true
+
   signupUser({
     variables: { input: values },
   })
@@ -17,19 +19,20 @@ const handleSubmit = (
       setStatus('ok')
       history.push('/login')
     })
-    .catch(res => {
-      if (res.graphQLErrors) {
-        const errors = res.graphQLErrors.map(error => error.message)
-        setError(errors[0])
-      }
+    .catch(err => {
+      setError(err)
+      setSubmitting(false)
+      // if (res.graphQLErrors) {
+      //   const errors = res.graphQLErrors.map(error => error.message)
+      // }
     })
 }
 
 const validate = values => {
   const errors = {}
 
-  if (values.givenName === values.surname) {
-    errors.givenName = 'First name and given name are the same'
+  if (values.givenNames === values.surname) {
+    errors.givenNames = 'First name and given name are the same'
     errors.surname = 'First name and given name are the same'
   }
 
@@ -42,14 +45,15 @@ const validate = values => {
 
 const enhancedFormik = withFormik({
   initialValues: {
-    givenName: '',
+    givenNames: '',
     surname: '',
     username: '',
     email: '',
     password: '',
+    agreedTc: true,
   },
   mapPropsToValues: props => ({
-    givenName: props.givenName,
+    givenNames: props.givenNames,
     surname: props.surname,
     username: props.username,
     password: props.password,

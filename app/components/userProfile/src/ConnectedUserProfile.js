@@ -5,14 +5,12 @@ import { adopt } from 'react-adopt'
 import {
   UpdatePasswordMutation,
   UpdatePersonalInformationMutation,
-  // UpdateUsernameMutation,
 } from './queries'
 import UserProfile from './ui/UserProfile'
 
 const mapper = {
   UpdatePasswordMutation,
   UpdatePersonalInformationMutation,
-  // UpdateUsernameMutation,
 }
 
 const mapProps = args => {
@@ -23,24 +21,17 @@ const mapProps = args => {
       },
     })
 
-  const updatePersonalInformation = input =>
-    args.UpdatePersonalInformationMutation.updatePersonalInformation({
+  const updatePersonalInformation = (id, input) =>
+    args.UpdatePersonalInformationMutation.updateUser({
       variables: {
+        id,
         input,
       },
     })
 
-  // const updateUsername = input =>
-  //   args.UpdateUsernameMutation.updateUsername({
-  //     variables: {
-  //       input,
-  //     },
-  //   })
-
   return {
     updatePassword,
     updatePersonalInformation,
-    // updateUsername,
   }
 }
 

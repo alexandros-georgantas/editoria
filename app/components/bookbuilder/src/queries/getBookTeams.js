@@ -3,28 +3,29 @@ import { Query } from '@apollo/client/react/components'
 import { gql } from '@apollo/client'
 
 const GET_BOOK_TEAMS = gql`
-  query GetBookTeams($bookId: ID!) {
-    getBookTeams(bookId: $bookId) {
-      id
-      role
-      name
-      objectId
-      objectType
-      # object {
-      #   objectId
-      # }
-      members {
+  query GetBookTeams($objectId: ID!, $objectType: String! = "book") {
+    getObjectTeams(objectId: $objectId, objectType: $objectType) {
+      result {
         id
-        user {
+        role
+        displayName
+        objectId
+        objectType
+        members {
           id
-          username
-          surname
-          givenName
-          email
-          admin
+          user {
+            id
+            username
+            surname
+            givenNames
+            defaultIdentity {
+              email
+            }
+            admin
+          }
         }
+        global
       }
-      global
     }
   }
 `
@@ -34,10 +35,10 @@ const getBookTeamsQuery = props => {
 
   return (
     <Query
-      fetchPolicy="cache-first"
+      fetchPolicy="network-only"
       notifyOnNetworkStatusChange
       query={GET_BOOK_TEAMS}
-      variables={{ bookId }}
+      variables={{ objectId: bookId }}
     >
       {render}
     </Query>

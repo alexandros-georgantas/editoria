@@ -24,7 +24,7 @@ const RENAME_BOOK_COMPONENT_TITLE = gql`
         userId
         username
         created
-        givenName
+        givenNames
         isAdmin
         surname
       }

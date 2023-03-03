@@ -28,16 +28,12 @@ export class AddMember extends React.Component {
     this.setState({ selectedOption })
     const { team, update } = this.props
 
-    const updatedMembers = map(team.members, member => ({
-      user: {
-        id: member.user.id,
-      },
-    }))
+    const updatedMembers = map(team.members, member => member.user.id)
 
-    updatedMembers.push({ user: { id: selectedOption.value } })
+    updatedMembers.push(selectedOption.value)
 
     update({
-      variables: { id: team.id, input: { members: updatedMembers } },
+      variables: { teamId: team.id, members: updatedMembers },
     }).then(res => this.setState({ selectedOption: null }))
   }
 
@@ -56,7 +52,7 @@ export class AddMember extends React.Component {
 
       const options = map(searchForUsersFromData, user => ({
         value: user.id,
-        label: `${user.givenName} ${user.surname}`,
+        label: `${user.givenNames} ${user.surname}`,
       }))
 
       return callback(options)

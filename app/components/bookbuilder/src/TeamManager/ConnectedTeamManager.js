@@ -27,9 +27,9 @@ const mapper = {
 const mapProps = args => ({
   state: args.statefull.state,
   setState: args.statefull.setState,
-  teams: get(args.getBookTeamsQuery, 'data.getBookTeams'),
+  teams: get(args.getBookTeamsQuery, 'data.getObjectTeams.result'),
   searchForUsers: args.searchForUsersMutation.searchForUsers,
-  updateTeam: args.updateTeamMutation.updateBookTeam,
+  updateTeam: args.updateTeamMutation.updateKetidaTeamMembers,
   refetching:
     args.getBookTeamsQuery.networkStatus === 4 ||
     args.getBookTeamsQuery.networkStatus === 2, // possible apollo bug

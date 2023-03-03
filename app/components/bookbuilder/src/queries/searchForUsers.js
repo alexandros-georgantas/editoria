@@ -7,7 +7,7 @@ const SEARCH_FOR_USERS = gql`
     searchForUsers(search: $search, exclude: $exclude) {
       id
       username
-      givenName
+      givenNames
       surname
       email
     }

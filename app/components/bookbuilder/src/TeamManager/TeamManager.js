@@ -38,30 +38,11 @@ TeamManager.propTypes = {
   teams: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
-      name: PropTypes.string,
+      displayName: PropTypes.string,
       type: PropTypes.string,
-      rev: PropTypes.string,
-      teamType: PropTypes.shape({
-        name: PropTypes.string,
-        permissions: PropTypes.arrayOf(PropTypes.string),
-      }),
-      members: PropTypes.arrayOf(PropTypes.string),
-      object: PropTypes.shape({
-        id: PropTypes.string,
-        type: PropTypes.string,
-      }),
+      role: PropTypes.string,
     }),
   ).isRequired,
-  users: PropTypes.arrayOf(
-    PropTypes.shape({
-      admin: PropTypes.bool,
-      email: PropTypes.string,
-      id: PropTypes.string,
-      rev: PropTypes.string,
-      type: PropTypes.string,
-      username: PropTypes.string,
-    }),
-  ),
   updateTeam: PropTypes.func.isRequired,
 }
 

@@ -127,14 +127,7 @@ const PasswordInput = props => (
   />
 )
 
-const Signup = ({
-  error,
-  errors,
-  touched,
-  status,
-  handleSubmit,
-  logo = null,
-}) => (
+const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
   <CenteredColumn small>
     {logo && (
       <Logo>
@@ -150,7 +143,7 @@ const Signup = ({
       <Form onSubmit={handleSubmit}>
         <ValidatedFieldFormik
           component={GivenNameInput}
-          name="givenName"
+          name="givenNames"
           validate={validateNames}
         />
         <ValidatedFieldFormik
