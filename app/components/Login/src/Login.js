@@ -2,7 +2,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Field } from 'formik'
-import { isEmpty } from 'lodash'
+import isEmpty from 'lodash/isEmpty'
 import { override } from '@pubsweet/ui-toolkit'
 import {
   CenteredColumn,
@@ -58,7 +58,7 @@ const Login = ({
       <FormContainer>
         <H1>Login</H1>
 
-        {!isEmpty(errors) && <ErrorText>{errors}</ErrorText>}
+        {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
         <form onSubmit={handleSubmit}>
           <Field component={UsernameInput} name="username" />
           <Field component={PasswordInput} name="password" />
@@ -77,7 +77,7 @@ const Login = ({
         {passwordReset && (
           <div>
             <span>Forgot your password? </span>
-            <Link to="/password-reset">Reset password</Link>
+            <Link to="/request-password-reset">Reset password</Link>
           </div>
         )}
       </FormContainer>

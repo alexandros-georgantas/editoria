@@ -3,7 +3,6 @@ import { Redirect, Route, Switch } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
 // Users and Teams
-import PasswordReset from '@pubsweet/component-password-reset-client'
 import GlobalTeamsManager from './components/globalTeamsManager/src/ConnectedGlobalTeams'
 
 // Authentication
@@ -17,6 +16,8 @@ import EditorPageWithData from './components/wax/src/EditorPageWithData'
 // Ketida
 import BookBuilder from './components/bookbuilder/src/ConnectedBookBuilder'
 import VerifyEmailPage from './components/verifyEmail/VerifyEmail.page'
+import RequestPasswordResetPage from './components/requestPasswordReset/RequestPasswordReset.page'
+import ResetPasswordPage from './components/resetPassword/ResetPassword.page'
 
 import BookStructurePage from './components/wizard/src/BookStructure.page'
 import Dashboard from './components/dashboard/src/ConnectedDashboard'
@@ -77,7 +78,17 @@ export default (
         path="/email-verification/:token"
       />
 
-      <Route component={PasswordReset} path="/password-reset" />
+      <Route
+        component={RequestPasswordResetPage}
+        exact
+        path="/request-password-reset"
+      />
+      <Route
+        component={ResetPasswordPage}
+        exact
+        path="/password-reset/:token"
+      />
+
       <PageLayout>
         <ConnectedNavigation />
         <Page>

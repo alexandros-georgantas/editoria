@@ -25,7 +25,7 @@ const CURRENT_USER = gql`
 const CurrentUserQuery = props => {
   const { render } = props
   return (
-    <Query fetchPolicy="network-only" query={CURRENT_USER} pollInterval={5000}>
+    <Query fetchPolicy="network-only" pollInterval={5000} query={CURRENT_USER}>
       {render}
     </Query>
   )

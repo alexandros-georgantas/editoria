@@ -17,15 +17,6 @@ const {
   bookSettingIcon,
 } = Icons
 
-// const Container = styled.div`
-//   clear: both;
-//   display: block;
-//   float: none;
-//   margin: 0 auto;
-//   height: calc(100% - 80px);
-//   width: 76%;
-//   overflow-y: auto;
-// `
 const Container = styled.div`
   clear: both;
   display: block;
@@ -82,7 +73,6 @@ const BookBuilder = ({
     rules
 
   const { divisions, productionEditors } = book
-  // const featureUploadDOCXFiles = process.env.FEATURE_UPLOAD_DOCX_FILES || false
 
   const featureUploadDOCXFiles =
     (process.env.FEATURE_UPLOAD_DOCX_FILES &&

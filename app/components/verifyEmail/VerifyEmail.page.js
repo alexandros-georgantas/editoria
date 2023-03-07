@@ -58,6 +58,7 @@ const VerifyEmailPage = props => {
     <VerifyEmail
       alreadyVerified={alreadyVerified}
       expired={expired}
+      hasError={!!verifyError && (!alreadyVerified || !expired)}
       redirectToLogin={redirectToLogin}
       resend={resendVerificationEmail}
       resending={resending || resendingLoader}

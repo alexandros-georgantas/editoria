@@ -7,10 +7,14 @@ import Signup from './Signup'
 
 const handleSubmit = (
   values,
-  { props, setSubmitting, setErrors, setError, setStatus },
+  { props, setSubmitting, setErrors, setStatus },
 ) => {
   const { signupUser, history } = props
+
+  // at some point implement a Terms and conditions checkbox
+  /* eslint-disable no-param-reassign */
   values.agreedTc = true
+  /* eslint-enable no-param-reassign */
 
   signupUser({
     variables: { input: values },
@@ -20,11 +24,8 @@ const handleSubmit = (
       history.push('/login')
     })
     .catch(err => {
-      setError(err)
+      setErrors({ api: err.message })
       setSubmitting(false)
-      // if (res.graphQLErrors) {
-      //   const errors = res.graphQLErrors.map(error => error.message)
-      // }
     })
 }
 
