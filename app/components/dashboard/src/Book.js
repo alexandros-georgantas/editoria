@@ -117,14 +117,14 @@ const TopRowValues = ({ authors }) => {
   return (
     <TopRowValuesWrapper>
       {map(authors, author => {
-        if (!author.surname || !author.givenName) {
+        if (!author.surname || !author.givenNames) {
           return <Author author={author.username} key={author.username} />
         }
 
         return (
           <Author
-            author={`${author.givenName} ${author.surname}`}
-            key={`${author.givenName} ${author.surname}`}
+            author={`${author.givenNames} ${author.surname}`}
+            key={`${author.givenNames} ${author.surname}`}
           />
         )
       })}

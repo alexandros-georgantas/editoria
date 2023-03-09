@@ -10,15 +10,14 @@ const CURRENT_USER = gql`
       id
       username
       admin
-      givenName
+      givenNames
       surname
-      # teams {
-      #   id
-      #   role
-      #   object {
-      #     objectId
-      #   }
-      # }
+      teams {
+        id
+        role
+        objectId
+        global
+      }
     }
   }
 `
@@ -26,7 +25,7 @@ const CURRENT_USER = gql`
 const CurrentUserQuery = props => {
   const { render } = props
   return (
-    <Query fetchPolicy="network-only" query={CURRENT_USER}>
+    <Query fetchPolicy="network-only" pollInterval={5000} query={CURRENT_USER}>
       {render}
     </Query>
   )

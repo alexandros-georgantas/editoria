@@ -59,7 +59,7 @@ const GET_BOOK = featureBookStructureEnabled
                 userId
                 username
                 created
-                givenName
+                givenNames
                 isAdmin
                 surname
               }
@@ -113,7 +113,7 @@ const GET_BOOK = featureBookStructureEnabled
                 userId
                 username
                 created
-                givenName
+                givenNames
                 isAdmin
                 surname
               }

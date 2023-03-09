@@ -17,16 +17,16 @@ const handleSubmit = (values, { props, setSubmitting, setErrors }) =>
       variables: { input: values },
     })
     .then(({ data }) => {
-      localStorage.setItem('token', data.loginUser.token)
+      const { login } = data
+      const { token } = login
+      localStorage.setItem('token', token)
       setTimeout(() => {
         props.onLoggedIn(getNextUrl())
       }, 100)
     })
     .catch(e => {
-      if (e.graphQLErrors.length > 0) {
-        setSubmitting(false)
-        setErrors(e.graphQLErrors[0].message)
-      }
+      setSubmitting(false)
+      setErrors({ api: e.message })
     })
 
 const enhancedFormik = withFormik({

@@ -30,25 +30,6 @@ export class MemberList extends React.Component {
   }
 }
 
-MemberList.propTypes = {
-  members: PropTypes.arrayOf(PropTypes.any).isRequired,
-  team: PropTypes.shape({
-    id: PropTypes.string,
-    name: PropTypes.string,
-    type: PropTypes.string,
-    rev: PropTypes.string,
-    teamType: PropTypes.shape({
-      name: PropTypes.string,
-      permissions: PropTypes.arrayOf(PropTypes.string),
-    }),
-    members: PropTypes.arrayOf(PropTypes.string),
-    object: PropTypes.shape({
-      id: PropTypes.string,
-      type: PropTypes.string,
-    }),
-  }).isRequired,
-  update: PropTypes.func.isRequired,
-  color: PropTypes.string.isRequired,
-}
+MemberList.propTypes = {}
 
 export default MemberList

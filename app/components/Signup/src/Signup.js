@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types, react/destructuring-assignment */
 import React from 'react'
 import { Form } from 'formik'
+import isEmpty from 'lodash/isEmpty'
 import { override } from '@pubsweet/ui-toolkit'
 import {
   ValidatedFieldFormik,
@@ -12,7 +13,6 @@ import {
   TextField,
 } from '@pubsweet/ui'
 import styled from 'styled-components'
-import { isEmpty } from 'lodash'
 
 const FormContainer = styled.div`
   ${override('Login.FormContainer')};
@@ -127,14 +127,7 @@ const PasswordInput = props => (
   />
 )
 
-const Signup = ({
-  error,
-  errors,
-  touched,
-  status,
-  handleSubmit,
-  logo = null,
-}) => (
+const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
   <CenteredColumn small>
     {logo && (
       <Logo>
@@ -144,13 +137,13 @@ const Signup = ({
     <FormContainer>
       <H1>Sign up</H1>
 
-      {error && <ErrorText>{error}</ErrorText>}
+      {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
       {status && <SuccessText>User created</SuccessText>}
 
       <Form onSubmit={handleSubmit}>
         <ValidatedFieldFormik
           component={GivenNameInput}
-          name="givenName"
+          name="givenNames"
           validate={validateNames}
         />
         <ValidatedFieldFormik

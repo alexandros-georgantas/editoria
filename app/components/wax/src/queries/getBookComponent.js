@@ -27,7 +27,7 @@ const GET_BOOK_COMPONENT = !featureBookStructureEnabled
             userId
             username
             created
-            givenName
+            givenNames
             tabId
             isAdmin
             surname
@@ -68,7 +68,7 @@ const GET_BOOK_COMPONENT = !featureBookStructureEnabled
             userId
             username
             created
-            givenName
+            givenNames
             tabId
             isAdmin
             surname

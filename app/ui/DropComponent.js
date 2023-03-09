@@ -63,13 +63,13 @@ const DropComponent = ({
   logoutUser,
   setIsOpen,
 }) => {
-  const { givenName, surname, username } = currentUser
+  const { givenNames, surname, username } = currentUser
 
   return (
     <Wrapper>
       <UserSection>
         <UserInfo>
-          {givenName} {surname}
+          {givenNames} {surname}
         </UserInfo>
         <Username>{username}</Username>
       </UserSection>

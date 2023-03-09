@@ -3,17 +3,19 @@ import { Mutation } from '@apollo/client/react/components'
 import { gql } from '@apollo/client'
 
 const UPDATE_GLOBAL_TEAM = gql`
-  mutation updateGlobalTeam($id: String!, $input: TeamInput!) {
-    updateTeamMembers(id: $id, input: $input) {
+  mutation updateGlobalTeam($teamId: ID!, $members: [ID!]!) {
+    updateKetidaTeamMembers(teamId: $teamId, members: $members) {
       id
       role
-      name
+      displayName
       members {
         id
         user {
           id
           username
-          email
+          defaultIdentity {
+            email
+          }
           admin
         }
       }
@@ -27,8 +29,8 @@ const globalTeamMutation = props => {
 
   return (
     <Mutation mutation={UPDATE_GLOBAL_TEAM}>
-      {(updateGlobalTeam, updateGlobalTeamResult) =>
-        render({ updateGlobalTeam, updateGlobalTeamResult })
+      {(updateKetidaTeamMembers, updateKetidaTeamMembersResult) =>
+        render({ updateKetidaTeamMembers, updateKetidaTeamMembersResult })
       }
     </Mutation>
   )

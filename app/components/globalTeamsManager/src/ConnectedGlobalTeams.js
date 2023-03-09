@@ -19,13 +19,13 @@ const mapper = {
 }
 
 const mapProps = args => ({
-  users: get(args.getUsersTeamsQuery, 'data.users'),
-  teams: get(args.getUsersTeamsQuery, 'data.getGlobalTeams'),
+  users: get(args.getUsersTeamsQuery, 'data.users.result'),
+  teams: get(args.getUsersTeamsQuery, 'data.getGlobalTeams.result'),
   loading: args.getUsersTeamsQuery.loading,
   refetching:
     args.getUsersTeamsQuery.networkStatus === 4 ||
     args.getUsersTeamsQuery.networkStatus === 2, // possible apollo bug
-  updateGlobalTeam: args.globalTeamMutation.updateGlobalTeam,
+  updateGlobalTeam: args.globalTeamMutation.updateKetidaTeamMembers,
 })
 
 const Composed = adopt(mapper, mapProps)

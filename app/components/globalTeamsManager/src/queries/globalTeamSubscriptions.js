@@ -5,15 +5,7 @@ import { gql } from '@apollo/client'
 const TEAM_MEMBERS_UPDATED_SUBSCRIPTION = gql`
   subscription TeamMembersUpdated {
     teamMembersUpdated {
-      bookId
-      teamId
       role
-      members {
-        id
-        username
-        email
-        admin
-      }
     }
   }
 `

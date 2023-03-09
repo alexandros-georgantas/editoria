@@ -76,15 +76,15 @@ const SectionHeader = styled(H4)`
 `
 
 const PersonalInformation = props => {
-  const { givenName, surname, update } = props
+  const { givenNames, surname, update, userId } = props
 
   const initialValues = {
-    givenName,
+    givenNames,
     surname,
   }
 
   const validations = yup.object().shape({
-    givenName: yup.string().required('Given names are required'),
+    givenNames: yup.string().required('Given names are required'),
     surname: yup.string().required('Surname is required'),
   })
 
@@ -97,7 +97,7 @@ const PersonalInformation = props => {
       >
         {notifyRibbon => {
           const handleSubmit = (formValues, formkikBag) => {
-            update(formValues).then(() => notifyRibbon(true))
+            update(userId, formValues).then(() => notifyRibbon(true))
           }
 
           return (
@@ -117,20 +117,20 @@ const PersonalInformation = props => {
                 } = formProps
 
                 const disabled =
-                  (values.givenName === initialValues.givenName &&
+                  (values.givenNames === initialValues.givenNames &&
                     values.surname === initialValues.surname) ||
                   !isValid
 
                 return (
                   <>
                     <TextField
-                      error={errors.givenName}
+                      error={errors.givenNames}
                       handleBlur={handleBlur}
                       handleChange={handleChange}
                       label="Given Name"
-                      name="givenName"
+                      name="givenNames"
                       touched={touched}
-                      value={values.givenName}
+                      value={values.givenNames}
                     />
 
                     <TextField
@@ -160,79 +160,8 @@ const PersonalInformation = props => {
   )
 }
 
-// const Username = props => {
-//   const { update, username } = props
-
-//   const initialValues = {
-//     username,
-//   }
-
-//   const validations = yup.object().shape({
-//     username: yup.string().required('Username is required'),
-//   })
-
-//   return (
-//     <InnerSectionWrapper>
-//       <SectionHeader>Username</SectionHeader>
-//       <RibbonFeedback
-//         keepSpaceOccupied={false}
-//         successMessage="Username successfully updated"
-//       >
-//         {notifyRibbon => {
-//           const handleSubmit = (formValues, formikBag) => {
-//             update(formValues).then(() => notifyRibbon(true))
-//           }
-
-//           return (
-//             <Form
-//               initialValues={initialValues}
-//               onSubmit={handleSubmit}
-//               validationSchema={validations}
-//             >
-//               {formProps => {
-//                 const {
-//                   errors,
-//                   handleBlur,
-//                   handleChange,
-//                   isValid,
-//                   touched,
-//                   values,
-//                 } = formProps
-
-//                 const disabled =
-//                   values.username === initialValues.username || !isValid
-
-//                 return (
-//                   <Fragment>
-//                     <TextField
-//                       error={errors.username}
-//                       handleBlur={handleBlur}
-//                       handleChange={handleChange}
-//                       label="Username"
-//                       name="username"
-//                       touched={touched}
-//                       value={values.username}
-//                     />
-
-//                     <Button
-//                       disabled={disabled}
-//                       label="Change username"
-//                       title="Change username"
-//                       type="submit"
-//                     />
-//                   </Fragment>
-//                 )
-//               }}
-//             </Form>
-//           )
-//         }}
-//       </RibbonFeedback>
-//     </InnerSectionWrapper>
-//   )
-// }
-
 const Password = props => {
-  const { update } = props
+  const { update, userId } = props
 
   const initialValues = {
     currentPassword: '',
@@ -265,16 +194,26 @@ const Password = props => {
         successMessage="Password successfully updated"
       >
         {notifyRibbon => {
-          const handleSubmit = (formValues, formikBag) => {
+          const handleSubmit = (formValues, { resetForm }) => {
             const { currentPassword, newPassword1 } = formValues
 
             const patch = {
               currentPassword,
               newPassword: newPassword1,
+              id: userId,
             }
 
             update(patch)
-              .then(() => notifyRibbon(true))
+              .then(() => {
+                resetForm({
+                  values: {
+                    currentPassword: '',
+                    newPassword1: '',
+                    newPassword2: '',
+                  },
+                })
+                notifyRibbon(true)
+              })
               .catch(err => {
                 const errorMessage = err.graphQLErrors[0].message
                   .split(':')
@@ -362,16 +301,10 @@ const Password = props => {
 }
 
 const UserProfile = props => {
-  const {
-    data,
-    loading,
-    updatePassword,
-    updatePersonalInformation,
-    // updateUsername,
-  } = props
+  const { data, loading, updatePassword, updatePersonalInformation } = props
 
   if (loading) return <Loading />
-  const { givenName, surname } = data
+  const { givenNames, surname, id } = data
 
   return (
     <Container>
@@ -381,12 +314,12 @@ const UserProfile = props => {
         </HeaderWrapper>
         <SectionWrapper>
           <PersonalInformation
-            givenName={givenName}
+            givenNames={givenNames}
             surname={surname}
             update={updatePersonalInformation}
+            userId={id}
           />
-          {/* <Username update={updateUsername} username={username} /> */}
-          <Password update={updatePassword} />
+          <Password update={updatePassword} userId={id} />
         </SectionWrapper>
       </InnerWrapper>
     </Container>

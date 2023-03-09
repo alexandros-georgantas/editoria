@@ -192,7 +192,7 @@ const mapProps = args => ({
       }
     }
 
-    showModal('unlockedModal', {
+    showModal('warningModal', {
       onConfirm: onClick,
       warning,
     })
@@ -521,6 +521,7 @@ const Connected = props => {
         onWorkflowUpdate,
       }) => {
         if (loading || loadingRules || !book) return <Loading />
+
         return (
           <BookBuilder
             addBookComponent={addBookComponent}

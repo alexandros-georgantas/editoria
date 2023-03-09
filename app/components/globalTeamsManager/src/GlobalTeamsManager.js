@@ -5,7 +5,6 @@ import React from 'react'
 import Select from 'react-select'
 import sortBy from 'lodash/sortBy'
 import keys from 'lodash/keys'
-import omit from 'lodash/omit'
 import cloneDeep from 'lodash/cloneDeep'
 import { th } from '@pubsweet/ui-toolkit'
 import { H3 } from '@pubsweet/ui'
@@ -63,6 +62,8 @@ const TeamHeadingWrapper = styled.h4`
   font-size: 24px;
   line-height: 28px;
   margin: 0;
+  margin-bottom: 5px;
+  margin-top: 15px;
 `
 
 const TeamSectionWrapper = styled.div`
@@ -167,7 +168,7 @@ const TeamManagerForm = props => {
       {teams.map(team => (
         <TeamSection
           key={team.id}
-          name={team.name}
+          name={team.displayName}
           setFieldValue={setFieldValue}
           type={team.role}
           users={users}
@@ -199,7 +200,9 @@ class GlobalTeamsManager extends React.Component {
       const team = teams.find(t => t.role === role)
       const clonedTeam = cloneDeep(team)
       clonedTeam.members = formValues[role]
-        ? formValues[role].map(item => ({ user: { id: item.id } }))
+        ? formValues[role].map(item => {
+            return item.id || item
+          })
         : []
       return clonedTeam
     })
@@ -207,8 +210,8 @@ class GlobalTeamsManager extends React.Component {
     const promises = data.map(team =>
       updateGlobalTeam({
         variables: {
-          id: team.id,
-          input: omit(team, ['id', '__typename', 'type']),
+          teamId: team.id,
+          members: team.members,
         },
       }),
     )
@@ -254,7 +257,7 @@ class GlobalTeamsManager extends React.Component {
       <Container>
         <InnerWrapper>
           <HeaderWrapper>
-            <Title>Team Manager</Title>
+            <Title>Global Teams Manager</Title>
           </HeaderWrapper>
           <Ribbon hide={hideRibbon}>{infoMessage}</Ribbon>
 

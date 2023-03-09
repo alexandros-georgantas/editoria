@@ -24,7 +24,7 @@ const UPDATE_BOOK_COMPONENT_CONTENT = gql`
         userId
         username
         created
-        givenName
+        givenNames
         isAdmin
         surname
       }

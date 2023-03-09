@@ -48,7 +48,7 @@ const BOOK_COMPONENT_UPDATED_SUBSCRIPTION = !featureBookStructureEnabled
             userId
             username
             created
-            givenName
+            givenNames
             tabId
             isAdmin
             surname
@@ -93,7 +93,7 @@ const BOOK_COMPONENT_UPDATED_SUBSCRIPTION = !featureBookStructureEnabled
             username
             tabId
             created
-            givenName
+            givenNames
             isAdmin
             surname
             id

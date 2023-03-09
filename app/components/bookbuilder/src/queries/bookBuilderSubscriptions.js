@@ -66,7 +66,9 @@ const BOOK_COMPONENT_LOCK_UPDATED_SUBSCRIPTION = gql`
 
 const BOOK_COMPONENTS_LOCK_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentsLockUpdated {
-    bookComponentsLockUpdated
+    bookComponentsLockUpdated {
+      id
+    }
   }
 `
 
@@ -81,7 +83,7 @@ const BOOK_COMPONENT_TITLE_UPDATED_SUBSCRIPTION = gql`
 const TEAM_MEMBERS_UPDATED_SUBSCRIPTION = gql`
   subscription TeamMembersUpdated {
     teamMembersUpdated {
-      objectId
+      role
     }
   }
 `
@@ -133,7 +135,7 @@ const addTeamMemberSubscription = props => {
 const PRODUCTION_EDITORS_UPDATED_SUBSCRIPTION = gql`
   subscription ProductionEditorsUpdated {
     productionEditorsUpdated {
-      objectId
+      role
     }
   }
 `
@@ -420,11 +422,7 @@ const productionEditorChangeSubscription = props => {
 
 const BOOK_RENAMED_SUBSCRIPTION = gql`
   subscription BookRenamed {
-    bookRenamed {
-      id
-      title
-      collectionId
-    }
+    bookRenamed
   }
 `
 

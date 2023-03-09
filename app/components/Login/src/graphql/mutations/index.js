@@ -1,11 +1,19 @@
 import { gql } from '@apollo/client'
 
-const LOGIN_USER = gql`
-  mutation ($input: LoginUserInput) {
-    loginUser(input: $input) {
+const LOGIN = gql`
+  mutation Login($input: LoginInput!) {
+    login(input: $input) {
+      user {
+        id
+        defaultIdentity {
+          id
+          isVerified
+        }
+      }
       token
     }
   }
 `
 
-export default LOGIN_USER
+
+export default LOGIN

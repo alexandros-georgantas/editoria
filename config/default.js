@@ -29,14 +29,7 @@ if (!featureBookStructureEnabled) {
 module.exports = {
   authsome: flavour === 'BOOKSPRINTS' ? authsomeBooksprints : authsomeVanilla,
   bookBuilder,
-  'password-reset': {
-    path: 'password-reset',
-  },
-  publicKeys: [
-    'authsome',
-    'bookBuilder',
-    'pubsweet-client',
-  ],
+  publicKeys: ['authsome', 'bookBuilder', 'pubsweet-client'],
   'pubsweet-client': {
     API_ENDPOINT: '/api',
     'login-redirect': '/',

@@ -9,7 +9,6 @@ import {
   GET_BOOK_COMPONENT,
   GET_CUSTOM_TAGS,
   GET_SPECIFIC_FILES,
-  GET_USER_TEAM,
   GET_WAX_RULES,
   UPDATE_BOOK_COMPONENT_CONTENT,
   ADD_CUSTOM_TAG,
@@ -62,20 +61,9 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
     loading: waxRulesLoading,
     error: waxRulesError,
     data: waxRulesData,
+    networkStatus,
   } = useQuery(GET_WAX_RULES, {
     variables: { id: bookComponentId },
-    pollInterval: 5000,
-    fetchPolicy: 'network-only',
-  })
-
-  // TODO: get this info from current user
-  const {
-    loading: userTeamsLoading,
-    error: userTeamsError,
-    data: userTeamsData,
-    networkStatus,
-  } = useQuery(GET_USER_TEAM, {
-    variables: { users: [currentUser.id] },
     pollInterval: 5000,
     fetchPolicy: 'network-only',
   })
@@ -280,7 +268,6 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
     bookComponentError ||
     bookError ||
     waxRulesError ||
-    userTeamsError ||
     customTagsError ||
     updateContentError ||
     lockBookComponentError ||
@@ -308,23 +295,22 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
   }, [networkStatus])
 
   if (
+    !currentUser ||
     bookLoading ||
     bookComponentLoading ||
     waxRulesLoading ||
-    userTeamsLoading ||
     customTagsLoading
   )
     return <Loading />
 
   const { getBook: book } = bookData
   const { getBookComponent: bookComponent } = bookComponentData
-  const { teams } = userTeamsData
   const { getCustomTags: tags } = customTagsData
   const { getWaxRules: rules } = waxRulesData
 
   const user = {
     ...currentUser,
-    userColor: getUserTrackChangeColor(teams),
+    userColor: getUserTrackChangeColor(currentUser.teams),
     userId: currentUser.id,
   }
 

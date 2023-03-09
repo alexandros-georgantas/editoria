@@ -9,7 +9,7 @@ const LOCK_BOOK_COMPONENT = gql`
         userId
         username
         created
-        givenName
+        givenNames
         isAdmin
         surname
       }

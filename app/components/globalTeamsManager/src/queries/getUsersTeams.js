@@ -5,28 +5,34 @@ import { gql } from '@apollo/client'
 const GET_USERS_TEAMS = gql`
   query GetUsersTeams {
     users {
-      id
-      type
-      username
-      email
-      admin
+      result {
+        id
+        username
+        defaultIdentity {
+          email
+        }
+        admin
+      }
     }
 
     getGlobalTeams {
-      id
-      type
-      role
-      name
-      members {
+      result {
         id
-        user {
+        role
+        displayName
+        members {
           id
-          username
-          email
-          admin
+          user {
+            id
+            username
+            defaultIdentity {
+              email
+            }
+            admin
+          }
         }
+        global
       }
-      global
     }
   }
 `

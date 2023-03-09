@@ -7,9 +7,15 @@ import Signup from './Signup'
 
 const handleSubmit = (
   values,
-  { props, setSubmitting, setErrors, setError, setStatus },
+  { props, setSubmitting, setErrors, setStatus },
 ) => {
   const { signupUser, history } = props
+
+  // at some point implement a Terms and conditions checkbox
+  /* eslint-disable no-param-reassign */
+  values.agreedTc = true
+  /* eslint-enable no-param-reassign */
+
   signupUser({
     variables: { input: values },
   })
@@ -17,19 +23,17 @@ const handleSubmit = (
       setStatus('ok')
       history.push('/login')
     })
-    .catch(res => {
-      if (res.graphQLErrors) {
-        const errors = res.graphQLErrors.map(error => error.message)
-        setError(errors[0])
-      }
+    .catch(err => {
+      setErrors({ api: err.message })
+      setSubmitting(false)
     })
 }
 
 const validate = values => {
   const errors = {}
 
-  if (values.givenName === values.surname) {
-    errors.givenName = 'First name and given name are the same'
+  if (values.givenNames === values.surname) {
+    errors.givenNames = 'First name and given name are the same'
     errors.surname = 'First name and given name are the same'
   }
 
@@ -42,14 +46,15 @@ const validate = values => {
 
 const enhancedFormik = withFormik({
   initialValues: {
-    givenName: '',
+    givenNames: '',
     surname: '',
     username: '',
     email: '',
     password: '',
+    agreedTc: true,
   },
   mapPropsToValues: props => ({
-    givenName: props.givenName,
+    givenNames: props.givenNames,
     surname: props.surname,
     username: props.username,
     password: props.password,
