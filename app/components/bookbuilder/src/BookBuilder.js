@@ -79,6 +79,11 @@ const BookBuilder = ({
       JSON.parse(process.env.FEATURE_UPLOAD_DOCX_FILES)) ||
     false
 
+  const featureBookStructureEnabled =
+    (process.env.FEATURE_BOOK_STRUCTURE &&
+      JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
+    false
+
   useMemo(() => {
     if (!canAccessBook) {
       const onConfirm = () => {
@@ -97,39 +102,44 @@ const BookBuilder = ({
   const headerActions = [
     <Button
       icon={metadataIcon}
-      key={0}
+      key="metadata_button"
       label="Metadata"
       onClick={() => onMetadataAdd(book)}
       title="Metadata"
     />,
     <Button
       icon={assetManagerIcon}
-      key={1}
+      key="assetManager_button"
       label="Asset Manager"
       onClick={() => onAssetManager(book.id)}
       title="Asset Manager"
     />,
     <Button
       icon={bookExportIcon}
-      key={2}
+      key="exportBook_button"
       label="Export Book"
       onClick={() => onExportBook(book, book.title, history)}
       title="Export Book"
     />,
-    <Button
-      icon={bookSettingIcon}
-      key={3}
-      label="Book Settings"
-      onClick={() => onBookSettings(book)}
-      title="Book Settings"
-    />,
   ]
+
+  if (!featureBookStructureEnabled) {
+    headerActions.push(
+      <Button
+        icon={bookSettingIcon}
+        key="bookSettings_button"
+        label="Book Settings"
+        onClick={() => onBookSettings(book)}
+        title="Book Settings"
+      />,
+    )
+  }
 
   if (canViewTeamManager) {
     headerActions.unshift(
       <Button
         icon={teamManagerIcon}
-        key={4}
+        key="teamManager_button"
         label="Team Manager"
         onClick={() => onTeamManager(book.id)}
         title="Team Manager"
@@ -141,7 +151,7 @@ const BookBuilder = ({
     headerActions.unshift(
       <UploadFilesButton
         book={book}
-        key={5}
+        key="ingestWord_button"
         onWarning={onWarning}
         uploadBookComponent={uploadBookComponent}
       />,

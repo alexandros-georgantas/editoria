@@ -487,6 +487,11 @@ class SecondRow extends React.Component {
         JSON.parse(process.env.FEATURE_UPLOAD_DOCX_FILES)) ||
       false
 
+    const featureBookStructureEnabled =
+      (process.env.FEATURE_BOOK_STRUCTURE &&
+        JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
+      false
+
     // const warningModal = this.renderModal()
     const paginationData = []
     forIn(pagination, (value, key) => {
@@ -521,7 +526,7 @@ class SecondRow extends React.Component {
             values={this.progressValues}
           />
         )}
-        {canViewAlignmentTool && (
+        {!featureBookStructureEnabled && canViewAlignmentTool && (
           <AlignmentTool
             componentType={componentType}
             data={paginationData}
