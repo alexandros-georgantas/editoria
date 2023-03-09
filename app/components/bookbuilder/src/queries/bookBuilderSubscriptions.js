@@ -66,7 +66,9 @@ const BOOK_COMPONENT_LOCK_UPDATED_SUBSCRIPTION = gql`
 
 const BOOK_COMPONENTS_LOCK_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentsLockUpdated {
-    bookComponentsLockUpdated
+    bookComponentsLockUpdated {
+      id
+    }
   }
 `
 
@@ -420,11 +422,7 @@ const productionEditorChangeSubscription = props => {
 
 const BOOK_RENAMED_SUBSCRIPTION = gql`
   subscription BookRenamed {
-    bookRenamed {
-      id
-      title
-      collectionId
-    }
+    bookRenamed
   }
 `
 
