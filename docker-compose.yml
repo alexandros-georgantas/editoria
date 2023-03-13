@@ -23,7 +23,7 @@ services:
       - SERVER_PROTOCOL=${SERVER_PROTOCOL:-http}
       - SERVER_HOST=${SERVER_HOST:-localhost}
       - SERVER_PORT=${SERVER_PORT:-3000}
-      - SERVER_SERVE_CLIENT=true
+      - SERVER_SERVE_CLIENT=false
       - CLIENT_WS_MIN_TIMEOUT=3000
       - CLIENT_WS_TIMEOUT=30000
       - LOCKS_WS_URL=${LOCKS_WS_URL:-ws://localhost:3333/locks}

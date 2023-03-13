@@ -4,8 +4,8 @@ services:
   client:
     restart: unless-stopped
     build:
-      context: ./packages/client
-      dockerfile: ./Dockerfile-production
+      context: ./
+      dockerfile: Dockerfile
       args:
         - node_env=production
         - server_protocol=${SERVER_PROTOCOL}
