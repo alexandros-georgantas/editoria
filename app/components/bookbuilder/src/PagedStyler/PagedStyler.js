@@ -85,7 +85,7 @@ const handleDownload = hashed => e => {
 }
 
 const getCssFile = template =>
-  template.files.find(file => file.mimetype === 'text/css')
+  template.files.find(file => file.storedObjects[0].mimetype === 'text/css')
 
 const PagedStyler = ({
   bookId,
@@ -103,7 +103,7 @@ const PagedStyler = ({
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `${serverUrlWithProtocol}/uploads/temp/previewer/${hashed}/${templateFile.name}.${templateFile.extension}`,
+        `${serverUrlWithProtocol}/uploads/temp/previewer/${hashed}/${templateFile.name}`,
       )
 
       const file = await response.text()

@@ -78,7 +78,9 @@ const ItemHeader = styled.h5`
 
 /* eslint-disable react/prop-types */
 const FileDetails = ({ file, updateFile, closeHandler }) => {
-  const { alt, source, id, name, size, mimetype, updated, metadata } = file
+  const { alt, name, url, id, updated, storedObjects } = file
+  const { size, mimetype, imageMetadata } = storedObjects[0]
+
   return (
     <PreviewWrapper>
       <ClosePreview>
@@ -92,7 +94,7 @@ const FileDetails = ({ file, updateFile, closeHandler }) => {
         />
       </ClosePreview>
       <ImagePreviewer>
-        <img alt={alt} src={source} />
+        <img alt={alt} src={url} />
       </ImagePreviewer>
       <InfoSection>
         <InfoHeaderWrapper>
@@ -135,16 +137,19 @@ const FileDetails = ({ file, updateFile, closeHandler }) => {
           <ItemHeader>Dimensions (W x H)</ItemHeader>
           <InfoItem
             key={`${id}-dimensions`}
-            value={`${metadata.width} x ${metadata.height}`}
+            value={`${imageMetadata.width} x ${imageMetadata.height}`}
           />
         </ItemWrapper>
         <ItemWrapper>
           <ItemHeader>Color space</ItemHeader>
-          <InfoItem key={`${id}-colorSpace`} value={metadata.space} />
+          <InfoItem key={`${id}-colorSpace`} value={imageMetadata.space} />
         </ItemWrapper>
         <ItemWrapper>
           <ItemHeader>Density</ItemHeader>
-          <InfoItem key={`${id}-density`} value={metadata.density || '-'} />
+          <InfoItem
+            key={`${id}-density`}
+            value={imageMetadata.density || '-'}
+          />
         </ItemWrapper>
       </InfoSection>
     </PreviewWrapper>
