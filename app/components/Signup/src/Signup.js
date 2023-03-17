@@ -22,9 +22,13 @@ const SuccessText = styled.div`
   color: green;
 `
 
+/* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
+  margin: 10px auto 20px;
+  width: 100%;
 `
+/* stylelint-enable order/properties-alphabetical-order */
 
 const validateEmail = value => {
   let error
@@ -131,7 +135,7 @@ const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
   <CenteredColumn small>
     {logo && (
       <Logo>
-        <img alt="pubsweet-logo" src={`${logo}`} />
+        <img alt="ketida-logo" src={`${logo}`} />
       </Logo>
     )}
     <FormContainer>

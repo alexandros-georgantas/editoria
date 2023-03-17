@@ -5,8 +5,10 @@ const GET_SPECIFIC_FILES = gql`
     getSpecificFiles(ids: $ids) {
       id
       alt
-      source(size: medium)
-      mimetype(target: editor)
+      url(size: medium)
+      # storedObjects {
+      #   mimetype
+      # }
     }
   }
 `

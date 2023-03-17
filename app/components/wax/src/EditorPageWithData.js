@@ -124,8 +124,14 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
         if (!loading) {
           const { getSpecificFiles: files } = data
 
+          const transformedFiles = files.map(file => ({
+            id: file.id,
+            source: file.url,
+            alt: file.alt,
+          }))
+
           hideModal()
-          resolve(files)
+          resolve(transformedFiles)
         }
       }
 

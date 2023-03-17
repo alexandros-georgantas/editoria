@@ -8,22 +8,26 @@ const GET_TEMPLATE = gql`
       id
       name
       thumbnail {
-        name
-        mimetype
         id
-        source(size: small)
+        name
+        url(size: small)
+        storedObjects {
+          mimetype
+        }
       }
       author
       trimSize
       notes
       target
       files {
-        name
-        mimetype
         id
-        source
-        extension
-        objectKey
+        name
+        url(size: original)
+        storedObjects {
+          mimetype
+          extension
+          key
+        }
       }
       exportScripts {
         label

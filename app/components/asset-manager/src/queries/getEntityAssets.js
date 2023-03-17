@@ -7,18 +7,18 @@ const GET_ENTITY_FILES = gql`
     getEntityFiles(input: $input) {
       id
       name
-      alt
-      source(size: small)
-      mimetype
-      size
-      updated
-      inUse
-      metadata {
-        width
-        height
-        space
-        density
+      url(size: small)
+      storedObjects {
+        mimetype
+        size
+        imageMetadata {
+          width
+          height
+          space
+          density
+        }
       }
+      updated
     }
   }
 `
@@ -34,7 +34,6 @@ const getEntityFilesQuery = props => {
       variables={{
         input: {
           entityId,
-          entityType: 'book',
           sortingParams: [
             { key: 'name', order: 'asc' },
             { key: 'updated', order: 'asc' },

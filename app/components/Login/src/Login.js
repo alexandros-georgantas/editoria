@@ -15,11 +15,15 @@ import {
 
 import styled from 'styled-components'
 
+/* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
+  margin: 10px auto 20px;
+  width: 100%;
 `
+/* stylelint-enable order/properties-alphabetical-order */
 
-Logo.displayName = 'Logo'
+Logo.displayName = 'Ketida'
 
 const FormContainer = styled.div`
   ${override('Login.FormContainer')};
@@ -52,7 +56,7 @@ const Login = ({
     <CenteredColumn small>
       {logo && (
         <Logo>
-          <img alt="pubsweet-logo" src={`${logo}`} />
+          <img alt="ketida-logo" src={`${logo}`} />
         </Logo>
       )}
       <FormContainer>

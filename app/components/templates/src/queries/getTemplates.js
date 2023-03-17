@@ -8,10 +8,12 @@ const GET_TEMPLATES = gql`
       id
       name
       thumbnail {
-        name
-        mimetype
         id
-        source
+        name
+        url(size: small)
+        storedObjects {
+          mimetype
+        }
       }
       author
       trimSize

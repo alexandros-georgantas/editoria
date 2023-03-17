@@ -158,7 +158,7 @@ const FilesTable = ({
                   if (label === 'size') {
                     return (
                       <TableCell key={label} width={width}>
-                        {fileSizeFormatter(item[label])}
+                        {fileSizeFormatter(item.storedObjects[0][label])}
                       </TableCell>
                     )
                   }
@@ -167,6 +167,14 @@ const FilesTable = ({
                     return (
                       <TableCell key={label} width={width}>
                         {item[label] ? 'Yes' : 'No'}
+                      </TableCell>
+                    )
+                  }
+
+                  if (label === 'mimetype') {
+                    return (
+                      <TableCell key={label} width={width}>
+                        {item.storedObjects[0][label]}
                       </TableCell>
                     )
                   }
