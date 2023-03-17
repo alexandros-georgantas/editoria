@@ -6,11 +6,15 @@ import { CenteredColumn, ErrorText, H1, Button, TextField } from '@pubsweet/ui'
 
 import { Loading } from '../../ui'
 
+/* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
+  margin: 10px auto 20px;
+  width: 100%;
 `
+/* stylelint-enable order/properties-alphabetical-order */
 
-Logo.displayName = 'Logo'
+Logo.displayName = 'Ketida'
 
 const FormContainer = styled.div`
   ${override('Login.FormContainer')};
@@ -37,7 +41,7 @@ const ResetPassword = props => {
   return (
     <CenteredColumn>
       <Logo>
-        <img alt="ketida-logo" src="/ketida.png" />
+        <img alt="ketida-logo" src="/ketida.svg" />
       </Logo>
 
       <FormContainer>

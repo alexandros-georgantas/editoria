@@ -14,11 +14,25 @@ const PrivateRoute = ({
   <Route
     render={props => {
       if (currentUser) {
+        const { isActive, defaultIdentity } = currentUser
+        const { isVerified } = defaultIdentity
+
+        if (isActive && isVerified) {
+          return (
+            <Component
+              applicationParameter={applicationParameter}
+              currentUser={currentUser}
+              {...props}
+            />
+          )
+        }
+
         return (
-          <Component
-            applicationParameter={applicationParameter}
-            currentUser={currentUser}
-            {...props}
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: props.location },
+            }}
           />
         )
       }

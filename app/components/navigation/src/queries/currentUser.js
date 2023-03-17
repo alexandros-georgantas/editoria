@@ -12,6 +12,10 @@ const CURRENT_USER = gql`
       admin
       givenNames
       surname
+      isActive
+      defaultIdentity {
+        isVerified
+      }
       teams {
         id
         role

@@ -66,11 +66,11 @@ export default (
       <Redirect exact path="/" to="/books" />
       <Route
         path="/login"
-        render={props => <Login {...props} logo="/ketida.png" />}
+        render={props => <Login {...props} logo="/ketida.svg" />}
       />
       <Route
         path="/signup"
-        render={props => <Signup {...props} logo="/ketida.png" />}
+        render={props => <Signup {...props} logo="/ketida.svg" />}
       />
       <Route
         component={VerifyEmailPage}
