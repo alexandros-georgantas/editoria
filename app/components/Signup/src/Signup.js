@@ -132,7 +132,7 @@ const PasswordInput = props => (
 )
 
 const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
-  <CenteredColumn small>
+  <CenteredColumn>
     {logo && (
       <Logo>
         <img alt="ketida-logo" src={`${logo}`} />

@@ -17,12 +17,20 @@ const handleSubmit = (values, { props, setSubmitting, setErrors }) =>
       variables: { input: values },
     })
     .then(({ data }) => {
-      const { login } = data
-      const { token } = login
-      localStorage.setItem('token', token)
-      setTimeout(() => {
-        props.onLoggedIn(getNextUrl())
-      }, 100)
+      const { ketidaLogin } = data
+      const { token, code } = ketidaLogin
+
+      if (!code && token) {
+        setSubmitting(false)
+        localStorage.setItem('token', token)
+        setTimeout(() => {
+          props.onLoggedIn(getNextUrl())
+        }, 100)
+      }
+
+      if (code) {
+        setErrors({ api: code })
+      }
     })
     .catch(e => {
       setSubmitting(false)

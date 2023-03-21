@@ -16,6 +16,7 @@ import EditorPageWithData from './components/wax/src/EditorPageWithData'
 // Ketida
 import BookBuilder from './components/bookbuilder/src/ConnectedBookBuilder'
 import VerifyEmailPage from './components/verifyEmail/VerifyEmail.page'
+import RequestVerificationEmailPage from './components/requestVerificationEmail/RequestVerificationEmail.page'
 import RequestPasswordResetPage from './components/requestPasswordReset/RequestPasswordReset.page'
 import ResetPasswordPage from './components/resetPassword/ResetPassword.page'
 
@@ -77,7 +78,11 @@ export default (
         exact
         path="/email-verification/:token"
       />
-
+      <Route
+        component={RequestVerificationEmailPage}
+        exact
+        path="/resend-verification"
+      />
       <Route
         component={RequestPasswordResetPage}
         exact

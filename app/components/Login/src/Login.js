@@ -42,6 +42,30 @@ const PasswordInput = props => (
   />
 )
 
+const renderError = msg => {
+  if (msg === 100 || msg === 120) {
+    return (
+      <span>
+        <ErrorText>
+          Please follow the verification link sent to your email after
+          registration process, or request a new verification email,
+        </ErrorText>
+        <Link to="/resend-verification">resend verification</Link>
+      </span>
+    )
+  }
+
+  if (msg === 110) {
+    return (
+      <ErrorText>
+        Your user is deactivated by the admins of the system
+      </ErrorText>
+    )
+  }
+
+  return <ErrorText>{msg}</ErrorText>
+}
+
 const Login = ({
   errors,
   handleSubmit,
@@ -53,7 +77,7 @@ const Login = ({
   redirectLink ? (
     <Redirect to={redirectLink} />
   ) : (
-    <CenteredColumn small>
+    <CenteredColumn>
       {logo && (
         <Logo>
           <img alt="ketida-logo" src={`${logo}`} />
@@ -62,7 +86,7 @@ const Login = ({
       <FormContainer>
         <H1>Login</H1>
 
-        {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
+        {!isEmpty(errors) && renderError(errors.api)}
         <form onSubmit={handleSubmit}>
           <Field component={UsernameInput} name="username" />
           <Field component={PasswordInput} name="password" />

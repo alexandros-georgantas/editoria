@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
 const LOGIN = gql`
-  mutation Login($input: LoginInput!) {
-    login(input: $input) {
+  mutation KetidaLogin($input: LoginInput!) {
+    ketidaLogin(input: $input) {
       user {
         id
         defaultIdentity {
@@ -11,9 +11,9 @@ const LOGIN = gql`
         }
       }
       token
+      code
     }
   }
 `
-
 
 export default LOGIN

@@ -27,7 +27,7 @@ const FormContainer = styled.div`
   ${override('Login.FormContainer')};
 `
 
-const RequestPasswordReset = props => {
+const RequestVerificationEmail = props => {
   const {
     hasError,
     hasSuccess,
@@ -47,7 +47,7 @@ const RequestPasswordReset = props => {
 
       <FormContainer>
         {loading && <Loading />}
-        <H1>Password Reset</H1>
+        <H1>Request Verification email</H1>
 
         <div>
           <TextField
@@ -74,7 +74,9 @@ const RequestPasswordReset = props => {
             Send email
           </Button>
           {hasError && <ErrorText>Something went wrong</ErrorText>}
-          {hasSuccess && <div>{`An email has been sent to ${userEmail}`}</div>}
+          {hasSuccess && (
+            <div>{`A verification email has been sent to ${userEmail}`}</div>
+          )}
         </div>
         <div>
           <span>Are you here by mistake? Go back to </span>
@@ -85,4 +87,4 @@ const RequestPasswordReset = props => {
   )
 }
 
-export default RequestPasswordReset
+export default RequestVerificationEmail
