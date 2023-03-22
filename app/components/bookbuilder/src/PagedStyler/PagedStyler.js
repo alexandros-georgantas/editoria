@@ -90,6 +90,7 @@ const getCssFile = template =>
 const PagedStyler = ({
   bookId,
   bookTitle,
+  currentUser,
   hashed,
   previewerLink,
   history,
@@ -112,6 +113,21 @@ const PagedStyler = ({
 
     fetchData()
   }, [hashed, id])
+
+  if(!(currentUser.admin || currentUser.isGlobal))
+    return (
+      <Wrapper>
+        <PreviewArea>
+          <iframe
+            frameBorder="0"
+            id="printBook"
+            key={random}
+            src={previewerLink}
+            title="PagedJS"
+          />
+        </PreviewArea>
+      </Wrapper>
+    )
 
   return (
     <Wrapper>

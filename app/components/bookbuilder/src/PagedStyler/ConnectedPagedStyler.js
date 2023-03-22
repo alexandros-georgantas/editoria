@@ -129,6 +129,7 @@ const Connected = props => {
       params: { hashed, templateId, id },
     },
     history,
+    currentUser,
   } = props
 
   return (
@@ -154,6 +155,7 @@ const Connected = props => {
           <PagedStyler
             bookId={book.id}
             bookTitle={book.title}
+            currentUser={currentUser}
             hashed={hashed}
             history={history}
             onWarningModal={onWarningModal}

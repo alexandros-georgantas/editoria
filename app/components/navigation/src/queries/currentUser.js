@@ -10,6 +10,7 @@ const CURRENT_USER = gql`
       id
       username
       admin
+      isGlobal
       givenNames
       surname
       isActive
