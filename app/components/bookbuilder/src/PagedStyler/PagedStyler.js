@@ -30,15 +30,21 @@ const Wrapper = styled.div`
   height: 100%;
   justify-content: flex-start;
   padding: 8px;
+  width: 100%;
+`
+
+const EditorAreaWrapper = styled.div`
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  width: 0%;
 `
 
 const CodeEditorWrapper = styled.div`
   display: flex;
-  flex-basis: 100%;
   flex-direction: column;
   height: 100%;
-  max-width: 50%;
-  width: 50%;
+  width: 100%;
 `
 
 const EditorToolbar = styled.div`
@@ -51,7 +57,6 @@ const EditorToolbar = styled.div`
 `
 
 const EditorArea = styled.div`
-  flex-grow: 1;
   height: 95%;
 
   .react-codemirror2 {
@@ -64,9 +69,8 @@ const EditorArea = styled.div`
 `
 
 const PreviewArea = styled.div`
+  flex-grow: 1;
   height: 100%;
-  max-width: 50%;
-  width: 50%;
 
   iframe {
     height: 100%;
@@ -114,7 +118,7 @@ const PagedStyler = ({
     fetchData()
   }, [hashed, id])
 
-  if(!(currentUser.admin || currentUser.isGlobal))
+  if (!(currentUser.admin || currentUser.isGlobal))
     return (
       <Wrapper>
         <PreviewArea>
@@ -131,55 +135,57 @@ const PagedStyler = ({
 
   return (
     <Wrapper>
-      <CodeEditorWrapper>
-        <EditorToolbar>
-          <Button
-            label="Save"
-            onClick={() =>
-              onWarningModal(
-                bookId,
-                bookTitle,
-                templateFile,
-                cssFile,
-                template,
-                hashed,
-                history,
-              ).then(() => setRandom(Math.random().toString(36).substring(7)))
-            }
-            title="Save"
-          />
-          <Button
-            label="Download HTML"
-            onClick={handleDownload(hashed)}
-            title="Download HTML"
-          />
-
-          {previewerLink && (
+      <EditorAreaWrapper>
+        <CodeEditorWrapper>
+          <EditorToolbar>
             <Button
-              label="Print"
-              onClick={() => window.open(previewerLink, '_blank')}
-              title="Print"
+              label="Save"
+              onClick={() =>
+                onWarningModal(
+                  bookId,
+                  bookTitle,
+                  templateFile,
+                  cssFile,
+                  template,
+                  hashed,
+                  history,
+                ).then(() => setRandom(Math.random().toString(36).substring(7)))
+              }
+              title="Save"
             />
-          )}
-          <NavBarLink to={`/books/${bookId}/book-builder`}>
-            Back to book
-          </NavBarLink>
-        </EditorToolbar>
-        <EditorArea>
-          <CodeMirror
-            onBeforeChange={(editor, data, newValue) => {
-              setCssFile(newValue)
-            }}
-            options={{
-              mode: 'css',
-              lineWrapping: true,
-              lineNumbers: true,
-              readOnly: false,
-            }}
-            value={cssFile}
-          />
-        </EditorArea>
-      </CodeEditorWrapper>
+            <Button
+              label="Download HTML"
+              onClick={handleDownload(hashed)}
+              title="Download HTML"
+            />
+
+            {previewerLink && (
+              <Button
+                label="Print"
+                onClick={() => window.open(previewerLink, '_blank')}
+                title="Print"
+              />
+            )}
+            <NavBarLink to={`/books/${bookId}/book-builder`}>
+              Back to book
+            </NavBarLink>
+          </EditorToolbar>
+          <EditorArea>
+            <CodeMirror
+              onBeforeChange={(editor, data, newValue) => {
+                setCssFile(newValue)
+              }}
+              options={{
+                mode: 'css',
+                lineWrapping: true,
+                lineNumbers: true,
+                readOnly: false,
+              }}
+              value={cssFile}
+            />
+          </EditorArea>
+        </CodeEditorWrapper>
+      </EditorAreaWrapper>
       <PreviewArea>
         <iframe
           frameBorder="0"
