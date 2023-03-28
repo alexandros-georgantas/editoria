@@ -7,12 +7,19 @@ import { CenteredColumn, ErrorText, Button } from '@pubsweet/ui'
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
-  margin: 10px auto 20px;
+  margin: 0;
   width: 100%;
+  height: auto;
 `
 /* stylelint-enable order/properties-alphabetical-order */
 
 Logo.displayName = 'Ketida'
+
+const StyledCenterColumn = styled(CenteredColumn)`
+  height: 100%;
+`
+
+/* stylelint-disable order/properties-alphabetical-order */
 
 const Wrapper = styled.div`
   align-items: center;
@@ -45,7 +52,7 @@ const VerifyEmail = props => {
   }
 
   return (
-    <CenteredColumn>
+    <StyledCenterColumn>
       <Logo>
         <img alt="ketida-logo" src="/ketida.svg" />
       </Logo>
@@ -91,7 +98,7 @@ const VerifyEmail = props => {
           <ErrorText>Something went wrong!</ErrorText>
         </Wrapper>
       )}
-    </CenteredColumn>
+    </StyledCenterColumn>
   )
 }
 

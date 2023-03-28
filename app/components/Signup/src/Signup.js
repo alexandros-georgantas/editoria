@@ -19,19 +19,33 @@ const emailRegex =
   /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
 /* eslint-enable no-useless-escape, no-control-regex */
 
+/* stylelint-disable order/properties-alphabetical-order */
 const FormContainer = styled.div`
   ${override('Login.FormContainer')};
+  height: 50%;
+  overflow-y: auto;
+  border: 0;
 `
+
+const HeadingWrapper = styled.div`
+  padding-left: 40px;
+`
+/* stylelint-enable order/properties-alphabetical-order */
 
 const SuccessText = styled.div`
   color: green;
 `
 
+const StyledCenterColumn = styled(CenteredColumn)`
+  height: 100%;
+`
+
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
-  margin: 10px auto 20px;
+  margin: 0;
   width: 100%;
+  height: auto;
 `
 /* stylelint-enable order/properties-alphabetical-order */
 
@@ -135,15 +149,16 @@ const PasswordInput = props => (
 )
 
 const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
-  <CenteredColumn>
+  <StyledCenterColumn>
     {logo && (
       <Logo>
         <img alt="ketida-logo" src={`${logo}`} />
       </Logo>
     )}
-    <FormContainer>
+    <HeadingWrapper>
       <H1>Sign up</H1>
-
+    </HeadingWrapper>
+    <FormContainer>
       {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
       {status && <SuccessText>User created</SuccessText>}
 
@@ -183,7 +198,7 @@ const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
         <Link to="/login">Login</Link>
       </div>
     </FormContainer>
-  </CenteredColumn>
+  </StyledCenterColumn>
 )
 
 export default Signup
