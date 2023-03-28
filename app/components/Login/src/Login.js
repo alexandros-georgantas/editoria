@@ -18,16 +18,26 @@ import styled from 'styled-components'
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
-  margin: 10px auto 20px;
+  margin: 0;
   width: 100%;
+  height: auto;
 `
 /* stylelint-enable order/properties-alphabetical-order */
 
 Logo.displayName = 'Ketida'
 
+const StyledCenterColumn = styled(CenteredColumn)`
+  height: 100%;
+`
+
+/* stylelint-disable order/properties-alphabetical-order */
 const FormContainer = styled.div`
   ${override('Login.FormContainer')};
+  border: 0;
+  height: 70%;
+  overflow-y: auto;
 `
+/* stylelint-enable order/properties-alphabetical-order */
 
 const UsernameInput = props => (
   <TextField label="Username" placeholder="Username" {...props.field} />
@@ -77,7 +87,7 @@ const Login = ({
   redirectLink ? (
     <Redirect to={redirectLink} />
   ) : (
-    <CenteredColumn>
+    <StyledCenterColumn>
       {logo && (
         <Logo>
           <img alt="ketida-logo" src={`${logo}`} />
@@ -109,7 +119,7 @@ const Login = ({
           </div>
         )}
       </FormContainer>
-    </CenteredColumn>
+    </StyledCenterColumn>
   )
 
 export default Login

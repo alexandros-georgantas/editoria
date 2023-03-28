@@ -48,11 +48,11 @@ const Template = ({
 
   useEffect(() => {
     if (featureBookStructureEnabled) {
-      if (!currentUser.admin) {
+      if (!currentUser.admin || !currentUser.isGlobal) {
         onAccessWarningModal(history)
       }
     }
-  }, [currentUser.admin])
+  }, [currentUser])
 
   return (
     <Container>

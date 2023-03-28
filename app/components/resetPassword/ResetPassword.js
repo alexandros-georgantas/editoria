@@ -9,15 +9,24 @@ import { Loading } from '../../ui'
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
-  margin: 10px auto 20px;
+  margin: 0;
   width: 100%;
+  height: auto;
 `
 /* stylelint-enable order/properties-alphabetical-order */
 
 Logo.displayName = 'Ketida'
 
+const StyledCenterColumn = styled(CenteredColumn)`
+  height: 100%;
+`
+
+/* stylelint-disable order/properties-alphabetical-order */
 const FormContainer = styled.div`
   ${override('Login.FormContainer')};
+  border: 0;
+  height: 50%;
+  overflow-y: auto;
 `
 
 const ResetPassword = props => {
@@ -39,7 +48,7 @@ const ResetPassword = props => {
   }
 
   return (
-    <CenteredColumn>
+    <StyledCenterColumn>
       <Logo>
         <img alt="ketida-logo" src="/ketida.svg" />
       </Logo>
@@ -86,7 +95,7 @@ const ResetPassword = props => {
           {hasError && <ErrorText>Something went wrong</ErrorText>}
         </div>
       </FormContainer>
-    </CenteredColumn>
+    </StyledCenterColumn>
   )
 }
 
