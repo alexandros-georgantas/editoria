@@ -115,13 +115,13 @@ const EditorPage = props => {
     if (editorMode === 'full') {
       onBookComponentTitleChange(changedTitle)
     }
-  }, 2000)
+  }, 50)
 
   const onPeriodicBookComponentContentChange = debounce(changedContent => {
     if (editorMode === 'full') {
       onBookComponentContentChange(changedContent)
     }
-  }, 2000)
+  }, 50)
 
   const { getWebSocket, readyState } = useWebSocket(
     socketUrl,
