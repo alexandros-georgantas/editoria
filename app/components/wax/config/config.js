@@ -42,8 +42,8 @@ import {
   CustomTagInlineToolGroupService,
   CustomTagBlockToolGroupService,
   CustomTagService,
+  disallowPasteImagesPlugin,
 } from 'wax-prosemirror-services'
-
 // change in wax
 import { EditoriaSchema } from 'wax-prosemirror-core'
 
@@ -51,7 +51,11 @@ import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles'
 
 import charactersList from './charactersList'
 
-export default {
+/* eslint-disable no-param-reassign */
+
+// console.log('aaaaaaaaa', disallowPasteImagesPlugin)
+
+export default onInfoModal => ({
   MenuService: [
     {
       templateArea: 'mainMenuToolBar',
@@ -103,7 +107,16 @@ export default {
   EnableTrackChangeService: {},
   AcceptTrackChangeService: {},
   RejectTrackChangeService: {},
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [
+    columnResizing(),
+    tableEditing(),
+    disallowPasteImagesPlugin(() =>
+      onInfoModal(
+        `Pasting external images is not supported. Please use platform's Asset Manager infrastructure`,
+      ),
+    ),
+    invisibles([hardBreak()]),
+  ],
   CustomTagService: {
     tags: [],
   },
@@ -153,4 +166,4 @@ export default {
     new CustomTagInlineToolGroupService(),
     new CustomTagBlockToolGroupService(),
   ],
-}
+})

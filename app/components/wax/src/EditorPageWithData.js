@@ -260,6 +260,17 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
     }
   }
 
+  const onInfoModal = msg => {
+    const onConfirm = () => {
+      hideModal()
+    }
+
+    showModal('editorModal', {
+      onConfirm,
+      warning: msg,
+    })
+  }
+
   const onHideModal = () => {
     hideModal()
   }
@@ -335,6 +346,7 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
       onBookComponentTrackChangesChange={onBookComponentTrackChangesChange}
       onCustomTagAdd={onCustomTagAdd}
       onHideModal={onHideModal}
+      onInfoModal={onInfoModal}
       onTriggerModal={onTriggerModal}
       rules={rules}
       setTabId={setTabId}

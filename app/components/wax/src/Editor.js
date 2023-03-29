@@ -31,6 +31,7 @@ const Editor = ({
   title,
   bookStructureElements,
   bookTitle,
+  onInfoModal,
   bookId,
   prevBookComponent,
   bookComponentId,
@@ -45,13 +46,22 @@ const Editor = ({
   user,
   tags,
 }) => {
-  let configWax = defaultConfig
+  // onWarning(
+  //         `Pasting external images is not supported. Please use platform's Asset Manager infrastructure`,
+  //       ),
+  let configWax = defaultConfig(onInfoModal)
 
   if (featureBookStructureEnabled) {
-    configWax = OENConfigWax
+    configWax = OENConfigWax(onInfoModal)
   }
 
   let translatedEditing
+  // useEffect(() => {
+  //   const clonedPmPlugins = [...configWax.PmPlugins]
+  //   configWax.PmPlugins = clonedPmPlugins.concat([
+  //     disallowPasteImagesPlugin(() => console.log('eeeeeeeEEEEEEEEEEEEEE')),
+  //   ])
+  // }, [])
 
   switch (editorMode) {
     case 'selection':
@@ -189,6 +199,7 @@ const Editor = ({
 
   configWax.TitleService = { updateTitle: onPeriodicBookComponentTitleChange }
   configWax.ImageService = { handleAssetManager: onAssetManager }
+
   configWax.CustomTagService.tags = tags
   configWax.CustomTagService.updateTags = onCustomTagAdd
 
