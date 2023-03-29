@@ -30,6 +30,7 @@ const EditorPage = props => {
     onBookComponentTitleChange,
     subscribeToBookComponentUpdates,
     subscribeToBookUpdates,
+    onInfoModal,
     subscribeToCustomTagsUpdates,
     rules,
     setTabId,
@@ -282,6 +283,7 @@ const EditorPage = props => {
       onAssetManager={onAssetManager}
       onBookComponentTrackChangesChange={onBookComponentTrackChangesChange}
       onCustomTagAdd={onCustomTagAdd}
+      onInfoModal={onInfoModal}
       onPeriodicBookComponentContentChange={
         onPeriodicBookComponentContentChange
       }

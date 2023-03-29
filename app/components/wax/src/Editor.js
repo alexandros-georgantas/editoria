@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Wax } from 'wax-prosemirror-core'
 
+import { disallowPasteImagesPlugin } from 'wax-prosemirror-services'
 import { KetidaLayout } from '../layout'
 import { defaultConfig, OENConfigWax } from '../config'
 import WaxHeader from './WaxHeader'
@@ -31,6 +32,7 @@ const Editor = ({
   title,
   bookStructureElements,
   bookTitle,
+  onInfoModal,
   bookId,
   prevBookComponent,
   bookComponentId,
@@ -189,6 +191,14 @@ const Editor = ({
 
   configWax.TitleService = { updateTitle: onPeriodicBookComponentTitleChange }
   configWax.ImageService = { handleAssetManager: onAssetManager }
+  configWax.PmPlugins.push(
+    disallowPasteImagesPlugin(() =>
+      onInfoModal(
+        `Pasting external images is not supported. Please use platform's Asset Manager infrastructure`,
+      ),
+    ),
+  )
+
   configWax.CustomTagService.tags = tags
   configWax.CustomTagService.updateTags = onCustomTagAdd
 
