@@ -45,6 +45,7 @@ import {
   OENContainersService,
   OENLeftToolGroupService,
   OENContainersToolGroupService,
+  disallowPasteImagesPlugin,
 } from 'wax-prosemirror-services'
 
 // change in wax
@@ -54,7 +55,7 @@ import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles'
 
 import CharactersList from './charactersList'
 
-export default {
+export default onInfoModal => ({
   MenuService: [
     {
       templateArea: 'mainMenuToolBar',
@@ -105,7 +106,16 @@ export default {
   EnableTrackChangeService: {},
   AcceptTrackChangeService: {},
   RejectTrackChangeService: {},
-  PmPlugins: [columnResizing(), tableEditing(), invisibles([hardBreak()])],
+  PmPlugins: [
+    columnResizing(),
+    tableEditing(),
+    disallowPasteImagesPlugin(() =>
+      onInfoModal(
+        `Pasting external images is not supported. Please use platform's Asset Manager infrastructure`,
+      ),
+    ),
+    invisibles([hardBreak()]),
+  ],
   CustomTagService: { tags: [] },
 
   services: [
@@ -153,4 +163,4 @@ export default {
     new CustomTagInlineToolGroupService(),
     new CustomTagBlockToolGroupService(),
   ],
-}
+})
