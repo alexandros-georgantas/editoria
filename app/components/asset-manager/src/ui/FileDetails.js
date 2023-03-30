@@ -78,7 +78,7 @@ const ItemHeader = styled.h5`
 
 /* eslint-disable react/prop-types */
 const FileDetails = ({ file, updateFile, closeHandler }) => {
-  const { alt, name, url, id, updated, storedObjects } = file
+  const { url, id, updated, storedObjects } = file
   const { size, mimetype, imageMetadata } = storedObjects[0]
 
   return (
@@ -94,33 +94,21 @@ const FileDetails = ({ file, updateFile, closeHandler }) => {
         />
       </ClosePreview>
       <ImagePreviewer>
-        <img alt={alt} src={url} />
+        <img alt={`thumbnail for file with id ${id}`} src={url} />
       </ImagePreviewer>
       <InfoSection>
         <InfoHeaderWrapper>
           <InfoHeader>Info</InfoHeader>
         </InfoHeaderWrapper>
 
-        <ItemWrapper>
+        {/* <ItemWrapper>
           <ItemHeader>Name</ItemHeader>
-          <InfoItem
-            editable
-            key={`${id}-name`}
-            type="name"
-            updateFile={updateFile}
-            value={name}
-          />
-        </ItemWrapper>
-        <ItemWrapper>
+          <InfoItem key={`${id}-name`} type="name" value={name} />
+        </ItemWrapper> */}
+        {/* <ItemWrapper>
           <ItemHeader>Alt</ItemHeader>
-          <InfoItem
-            editable
-            key={`${id}-alt`}
-            type="alt"
-            updateFile={updateFile}
-            value={alt || '-'}
-          />
-        </ItemWrapper>
+          <InfoItem key={`${id}-alt`} type="alt" value={alt || '-'} />
+        </ItemWrapper> */}
         <ItemWrapper>
           <ItemHeader>Size</ItemHeader>
           <InfoItem key={`${id}-size`} value={fileSizeFormatter(size)} />

@@ -101,6 +101,7 @@ export default onInfoModal => ({
   SpecialCharactersService: CharactersList,
   SchemaService: EditoriaSchema,
   TitleService: {},
+  ImageService: {},
   RulesService: [emDash, ellipsis],
   ShortCutsService: {},
   EnableTrackChangeService: {},

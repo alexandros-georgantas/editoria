@@ -198,7 +198,7 @@ const Editor = ({
   }
 
   configWax.TitleService = { updateTitle: onPeriodicBookComponentTitleChange }
-  configWax.ImageService = { handleAssetManager: onAssetManager }
+  configWax.ImageService = { handleAssetManager: onAssetManager, showAlt: true }
 
   configWax.CustomTagService.tags = tags
   configWax.CustomTagService.updateTags = onCustomTagAdd
