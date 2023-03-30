@@ -80,7 +80,7 @@ const EditorPage = props => {
   const prevBookComponent =
     flatBookComponents[currentBookComponentIndex - 1] || null
 
-  let editorMode
+  let editorMode = 'preview'
 
   const {
     canAccessBook,
