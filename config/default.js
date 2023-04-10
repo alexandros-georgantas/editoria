@@ -36,7 +36,6 @@ module.exports = {
     navigation: 'app/components/Navigation/Navigation.jsx',
     routes: 'app/routes.jsx',
     theme: 'ThemeEditoria',
-    converter: 'ucp',
     port: 3000,
     protocol: 'http',
     host: 'localhost',
