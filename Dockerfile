@@ -2,7 +2,7 @@ FROM node:16.19.0-alpine3.16 as build-stage
 
 RUN apk add --no-cache git make g++
 
-WORKDIR /home/node/app
+WORKDIR /home/node/ketida
 
 COPY package.json .
 COPY yarn.lock .
@@ -11,6 +11,10 @@ COPY yarn.lock .
 RUN yarn install --frozen-lockfile --production=false
 
 COPY . .
+COPY app app
+COPY config config
+COPY public public
+COPY webpack webpack
 
 ARG node_env
 ARG server_protocol
@@ -44,8 +48,11 @@ WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 
 # copies static resources from build stage
-COPY --from=build-stage /home/node/app/_build /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /home/node/ketida/_build /usr/share/nginx/html
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx/gzip.conf /etc/nginx/conf.d/gzip.conf
+COPY ./env.sh .
 
 # containers run nginx with global directives and daemon off
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+# ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["/bin/bash", "-c", "/usr/share/nginx/html/env.sh && nginx -g \"daemon off;\""]

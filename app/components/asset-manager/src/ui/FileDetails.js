@@ -31,6 +31,7 @@ const ImagePreviewer = styled.div`
   display: flex;
   height: 53.79%;
   justify-content: center;
+  overflow: hidden;
   width: 100%;
 `
 
@@ -76,6 +77,10 @@ const ItemHeader = styled.h5`
   padding: 0;
 `
 
+const StyledImage = styled.img`
+  max-width: 65%;
+`
+
 /* eslint-disable react/prop-types */
 const FileDetails = ({ file, updateFile, closeHandler }) => {
   const { url, id, updated, storedObjects } = file
@@ -94,7 +99,7 @@ const FileDetails = ({ file, updateFile, closeHandler }) => {
         />
       </ClosePreview>
       <ImagePreviewer>
-        <img alt={`thumbnail for file with id ${id}`} src={url} />
+        <StyledImage alt={`thumbnail for file with id ${id}`} src={url} />
       </ImagePreviewer>
       <InfoSection>
         <InfoHeaderWrapper>
