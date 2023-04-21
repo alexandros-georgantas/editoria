@@ -9,26 +9,17 @@ const PNG = 'image/png'
 const JPEG = 'image/jpeg'
 const SVG = 'image/svg+xml'
 const TIFF = 'image/tiff'
-const BMP = 'image/bmp'
-const images = [PNG, JPEG, SVG, TIFF, BMP]
+const images = [PNG, JPEG, SVG, TIFF]
 const fonts = [OTF, TTF, WOFF, WOFF2]
 const template = [OTF, TTF, WOFF, WOFF2, CSS]
 const templateThumbnail = [PNG, JPEG]
-const all = [OTF, TTF, WOFF, WOFF2, PNG, JPEG, SVG, TIFF, BMP, CSS]
+const all = [OTF, TTF, WOFF, WOFF2, PNG, JPEG, SVG, TIFF, CSS]
 
-const imageExtensions = [
-  '.png',
-  '.jpg',
-  '.jpeg',
-  '.svg',
-  '.tiff',
-  '.tif',
-  '.bmp',
-]
+const imageExtensions = ['.png', '.jpg', '.jpeg', '.svg', '.tiff', '.tif']
 
 const templateFileExtensions = '.css, .otf, .woff, .woff2, .ttf'
 const templateThumbnailExtensions = '.png, .jpg, .jpeg'
-const assetManagerFileExtensions = '.png, .jpg, .jpeg, .svg, .tiff, .tif, .bmp'
+const assetManagerFileExtensions = '.png, .jpg, .jpeg, .svg, .tiff, .tif'
 
 const isSupportedAsset = (mimetype, scope = undefined) => {
   if (scope === 'images') {
