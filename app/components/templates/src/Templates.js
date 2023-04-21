@@ -5,13 +5,6 @@ import styled from 'styled-components'
 import TemplatesHeader from './ui/src/TemplatesHeader'
 import TemplatesGrid from './ui/src/TemplatesGrid'
 
-import { Loading } from '../../../ui'
-
-const featureBookStructureEnabled =
-  (process.env.FEATURE_BOOK_STRUCTURE &&
-    JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
-  false
-
 const Container = styled.div`
   clear: both;
   display: block;
@@ -33,26 +26,17 @@ const InnerWrapper = styled.div`
 
 const Template = ({
   templates,
-  onAccessWarningModal,
-  currentUser,
   onCreateTemplate,
   onUpdateTemplate,
   onDeleteTemplate,
-  history,
   setSortingParams,
   sortingParams,
-  loading,
+  onChangeSort,
   refetching,
 }) => {
-  if (loading || !templates || !currentUser) return <Loading />
-
   useEffect(() => {
-    if (featureBookStructureEnabled) {
-      if (!currentUser.admin && !currentUser.isGlobal) {
-        onAccessWarningModal(history)
-      }
-    }
-  }, [currentUser])
+    onChangeSort(sortingParams)
+  }, [sortingParams])
 
   return (
     <Container>

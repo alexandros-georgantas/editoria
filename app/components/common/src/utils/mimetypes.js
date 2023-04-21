@@ -52,7 +52,6 @@ module.exports = {
   JPEG,
   SVG,
   TIFF,
-  BMP,
   all,
   supportedImages: images,
   supportedFonts: fonts,
