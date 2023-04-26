@@ -50,9 +50,8 @@ const mapProps = args => ({
     refetch({
       input: {
         entityId: bookId,
-        entityType: 'book',
         sortingParams,
-        includeInUse: true,
+        includeInUse: false,
       },
     })
   },
