@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { get } from 'lodash'
 import { adopt } from 'react-adopt'
-
+import { Loading } from '../../../ui'
 import withModal from '../../common/src/withModal'
 import Templates from './Templates'
 import {
@@ -184,13 +184,12 @@ const mapProps = args => ({
       templateName,
     })
   },
-  onAccessWarningModal: history => {
+  onAccessWarningModal: () => {
     const { withModal: withModalFromArgs } = args
 
     const { showModal, hideModal } = withModalFromArgs
 
     const onConfirm = () => {
-      history.goBack()
       hideModal()
     }
 
@@ -205,6 +204,11 @@ const mapProps = args => ({
 })
 
 const Composed = adopt(mapper, mapProps)
+
+const featureBookStructureEnabled =
+  (process.env.FEATURE_BOOK_STRUCTURE &&
+    JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
+  false
 
 const Connected = ({ currentUser }) => (
   <Composed>
@@ -226,9 +230,15 @@ const Connected = ({ currentUser }) => (
         sortKey: 'name',
       })
 
-      useEffect(() => {
-        onChangeSort(sortingParams)
-      }, [sortingParams])
+      if (loading || !templates || !currentUser) return <Loading />
+
+      if (featureBookStructureEnabled) {
+        if (!currentUser.admin && !currentUser.isGlobal) {
+          history.push('/')
+          onAccessWarningModal()
+        }
+      }
+
       return (
         <Templates
           createTemplate={createTemplate}
@@ -236,6 +246,7 @@ const Connected = ({ currentUser }) => (
           history={history}
           loading={loading}
           onAccessWarningModal={onAccessWarningModal}
+          onChangeSort={onChangeSort}
           onCreateTemplate={onCreateTemplate}
           onDeleteTemplate={onDeleteTemplate}
           onUpdateTemplate={onUpdateTemplate}

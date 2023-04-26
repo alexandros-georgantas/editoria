@@ -17,7 +17,7 @@ const featureBookStructureEnabled =
     JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
   false
 
-const navLinksBuilder = (location, isAdmin) => {
+const navLinksBuilder = (location, isAdminOrGlobal) => {
   const navLinksLeft = []
 
   const inDashboard =
@@ -34,7 +34,7 @@ const navLinksBuilder = (location, isAdmin) => {
   )
 
   if (featureBookStructureEnabled) {
-    if (isAdmin) {
+    if (isAdminOrGlobal) {
       const inTemplates =
         (location.pathname.match(/templates/g) &&
           location.pathname.match(/templates/g).length === 1) ||
@@ -81,7 +81,10 @@ const Navigation = props => {
     dropdownItems.push({ link: '/globalTeams', label: 'Team Manager' })
   }
 
-  const itemsLeft = navLinksBuilder(location, currentUser.admin)
+  const itemsLeft = navLinksBuilder(
+    location,
+    currentUser.admin || currentUser.isGlobal,
+  )
 
   return (
     <NavBar
