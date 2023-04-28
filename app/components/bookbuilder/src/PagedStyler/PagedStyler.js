@@ -24,6 +24,11 @@ if (!serverUrl) {
   serverUrlWithProtocol = `${window.location.protocol}//${serverUrl}`
 }
 
+const featureBookStructureEnabled =
+  (process.env.FEATURE_BOOK_STRUCTURE &&
+    JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
+  false
+
 const Wrapper = styled.div`
   align-items: flex-start;
   display: flex;
@@ -118,7 +123,11 @@ const PagedStyler = ({
     fetchData()
   }, [hashed, id])
 
-  if (!(currentUser.admin || currentUser.isGlobal))
+  if (
+    featureBookStructureEnabled &&
+    !currentUser.admin &&
+    !currentUser.isGlobal
+  ) {
     return (
       <Wrapper>
         <PreviewArea>
@@ -132,6 +141,7 @@ const PagedStyler = ({
         </PreviewArea>
       </Wrapper>
     )
+  }
 
   return (
     <Wrapper>
