@@ -1387,7 +1387,7 @@ const StepFour = ({ bookStructure, updateBookOutline, numberOfLevels }) => (
 
       return (
         <InnerWrapper>
-          <Header>&#9314; Review Textbook</Header>
+          <Header>&#9315; Review Textbook</Header>
           <Content>
             This is the complete outline and structure of your textbook. Review
             and edit as needed. If you’d like to change the pedagogical elements
