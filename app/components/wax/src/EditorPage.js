@@ -113,13 +113,13 @@ const EditorPage = props => {
   const socketUrl = process.env.LOCKS_WS_URL
 
   const onPeriodicBookComponentTitleChange = debounce(changedTitle => {
-    if (editorMode === 'full') {
+    if (editorMode === 'full' || editorMode === 'review') {
       onBookComponentTitleChange(changedTitle)
     }
   }, 50)
 
   const onPeriodicBookComponentContentChange = debounce(changedContent => {
-    if (editorMode === 'full') {
+    if (editorMode === 'full' || editorMode === 'review') {
       onBookComponentContentChange(changedContent)
     }
   }, 50)
