@@ -29,7 +29,7 @@ const FinalizeBookStructureModal = props => {
       <Text>
         {`Are you sure you want to build ${title || 'Untitled'}?`}
         <br />
-        You will no longer be able to access the Open Textbook Builder, but you
+        You will no longer be able to access the Open Textbook Planner, but you
         can make any changes you’d like in the book after it is built.
       </Text>
     </DialogModal>
