@@ -14,7 +14,8 @@ const Wrapper = styled.div`
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
   line-height: ${th('lineHeightBase')};
-  max-height: 240px;
+  height: auto !important;
+  max-height: 280px;
   padding: ${grid(1)};
   width: 222px;
 `

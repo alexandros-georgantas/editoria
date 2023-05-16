@@ -1,9 +1,12 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
 import { createGlobalStyle } from 'styled-components'
 
 // Users and Teams
 import GlobalTeamsManager from './components/globalTeamsManager/src/ConnectedGlobalTeams'
+
+// About This Site Page
+import ConnectedAboutThisSite from './components/aboutThisSite/src/ConnectedAboutThisSite';
 
 // Authentication
 import Login from './components/Login/src/LoginContainer'
@@ -127,6 +130,7 @@ export default (
               path="/books/:bookId/bookComponents/:bookComponentId/:mode"
             />
             <PrivateRoute component={GlobalTeamsManager} path="/globalTeams" />
+            <PrivateRoute component={ConnectedAboutThisSite} path="/aboutThisSite" />
           </Switch>
         </Page>
       </PageLayout>
