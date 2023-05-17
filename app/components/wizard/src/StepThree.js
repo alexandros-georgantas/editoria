@@ -25,7 +25,7 @@ const openersAndClosersDictionary = {
   contentOpenerImage: 'Content Opener Image',
   focusQuestions: 'Focus Questions',
   keyTerms: 'Key Terms List',
-  selfReflectionActivity: 'Self-Reflection Activity',
+  selfReflectionActivities: 'Self-Reflection Activities',
   reviewActivity: 'Review Activity',
   summary: 'Summary',
   references: 'References',
@@ -1074,9 +1074,9 @@ const StepThree = ({ bookStructure, updateLevelContentStructure }) => (
                           )}
                         </Draggable>
                         <Draggable
-                          draggableId="selfReflectionActivity"
+                          draggableId="selfReflectionActivities"
                           index={7}
-                          key="selfReflectionActivity"
+                          key="selfReflectionActivities"
                         >
                           {(providedL2, ___) => (
                             <DraggableItemWrapper
