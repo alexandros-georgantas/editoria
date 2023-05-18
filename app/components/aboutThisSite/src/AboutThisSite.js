@@ -76,8 +76,6 @@ const SectionWrapper = styled.div`
 `
 
 const ApplicationDetails = (props) => {
-    console.log(process.env.IS_ENV_DEVELOPMENT);
-    console.log(process.env.isEnvProduction, process.env.IS_ENV_DEVELOPMENT);
     const app_version = process.env.APP_VERSION
     const app_name =  process.env.APP_NAME
     let  serverVersion, healthcheck;
