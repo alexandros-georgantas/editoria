@@ -77,17 +77,17 @@ const SectionWrapper = styled.div`
 
 const ApplicationDetails = (props) => {
     const app_version = process.env.APP_VERSION
-    const app_name =  process.env.APP_NAME
-    let  serverVersion, healthcheck;
-    if(!props.systemInfo) return <Loading/>;
-    if(props.systemInfo) {
+    const app_name = process.env.APP_NAME
+    let serverVersion, healthcheck;
+    if (!props.systemInfo) return <Loading/>;
+    if (props.systemInfo) {
         serverVersion = props.systemInfo.version;
         healthcheck = props.systemInfo.healthcheck;
     }
     return (
         <InnerSectionWrapper>
             <SectionServerDetails>
-                Ketida server{/*{serverName}*/}: v {serverVersion}   <br />
+                Ketida server: v {serverVersion} <br/>
                 {app_name}: v {app_version}
             </SectionServerDetails>
             <MicroServicesDetails healthcheck={healthcheck}/>
@@ -106,7 +106,7 @@ class AboutThisSite extends React.Component {
     }
 
     render() {
-        const {systemInfo,loading} = this.props;
+        const {systemInfo, loading} = this.props;
         if (loading) return <Loading/>
         return (
             <Container>
@@ -116,8 +116,9 @@ class AboutThisSite extends React.Component {
                     </HeaderWrapper>
                     <SectionWrapper>
                         <SectionContent>
-                            Ketida is built by the Coko development team. This version of Ketida is running the
-                            following codebases:
+                            <div>
+                                Ketida is built by the Coko development team. This version of Ketida is running the following codebases:
+                            </div>
                         </SectionContent>
                         <ApplicationDetails systemInfo={systemInfo}/>
                     </SectionWrapper>
