@@ -7,6 +7,13 @@ const GET_SYSTEM_INFO = gql`
       name
       version
       description
+      healthcheck {
+        name
+        message
+        url
+        uptime
+        timestamp
+      }
     }
   }
 `
@@ -20,5 +27,4 @@ const getSystemInfoQuery = props => {
   )
 }
 
-// export { GET_SYSTEM_INFO }
 export default getSystemInfoQuery

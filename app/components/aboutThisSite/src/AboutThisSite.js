@@ -4,6 +4,7 @@ import React from 'react'
 import {th} from '@pubsweet/ui-toolkit'
 import {H3, H4} from '@pubsweet/ui'
 import {Loading} from '../../../ui'
+import MicroServicesDetails from "./microServisesDetails";
 
 
 const InnerSectionWrapper = styled.div`
@@ -75,19 +76,23 @@ const SectionWrapper = styled.div`
 `
 
 const ApplicationDetails = (props) => {
+    console.log(process.env.IS_ENV_DEVELOPMENT);
+    console.log(process.env.isEnvProduction, process.env.IS_ENV_DEVELOPMENT);
     const app_version = process.env.APP_VERSION
     const app_name =  process.env.APP_NAME
-    let  serverName ,serverVersion;
+    let  serverVersion, healthcheck;
+    if(!props.systemInfo) return <Loading/>;
     if(props.systemInfo) {
-        serverName = props.systemInfo.name
         serverVersion = props.systemInfo.version;
+        healthcheck = props.systemInfo.healthcheck;
     }
     return (
         <InnerSectionWrapper>
             <SectionServerDetails>
-                {serverName}: V {serverVersion}   <br />
-                {app_name}: V {app_version}
+                Ketida server{/*{serverName}*/}: v {serverVersion}   <br />
+                {app_name}: v {app_version}
             </SectionServerDetails>
+            <MicroServicesDetails healthcheck={healthcheck}/>
         </InnerSectionWrapper>
     )
 }
@@ -104,7 +109,6 @@ class AboutThisSite extends React.Component {
 
     render() {
         const {systemInfo,loading} = this.props;
-
         if (loading) return <Loading/>
         return (
             <Container>
