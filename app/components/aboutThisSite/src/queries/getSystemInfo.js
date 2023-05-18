@@ -4,6 +4,7 @@
 import React from 'react'
 import { Query } from '@apollo/client/react/components'
 import { gql } from '@apollo/client'
+
 const GET_SYSTEM_INFO = gql`
   query systeminfo {
     systemInfo{
