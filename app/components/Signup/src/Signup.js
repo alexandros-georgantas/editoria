@@ -40,6 +40,13 @@ const StyledCenterColumn = styled(CenteredColumn)`
   height: 100%;
 `
 
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100vh;
+`
+
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
@@ -150,54 +157,56 @@ const PasswordInput = props => (
 
 const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
   <StyledCenterColumn>
-    {logo && (
-      <Logo>
-        <img alt="ketida-logo" src={`${logo}`} />
-      </Logo>
-    )}
-    <HeadingWrapper>
-      <H1>Sign up</H1>
-    </HeadingWrapper>
-    <FormContainer>
-      {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
-      {status && <SuccessText>User created</SuccessText>}
+    <StyledDiv>
+      {logo && (
+        <Logo>
+          <img alt="ketida-logo" src={`${logo}`} />
+        </Logo>
+      )}
+      <HeadingWrapper>
+        <H1>Sign up</H1>
+      </HeadingWrapper>
+      <FormContainer>
+        {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
+        {status && <SuccessText>User created</SuccessText>}
 
-      <Form onSubmit={handleSubmit}>
-        <ValidatedFieldFormik
-          component={GivenNameInput}
-          name="givenNames"
-          validate={validateNames}
-        />
-        <ValidatedFieldFormik
-          component={SurnameInput}
-          name="surname"
-          validate={validateNames}
-        />
-        <ValidatedFieldFormik
-          component={UsernameInput}
-          name="username"
-          validate={validateUsername}
-        />
-        <ValidatedFieldFormik
-          component={EmailInput}
-          name="email"
-          validate={validateEmail}
-        />
-        <ValidatedFieldFormik
-          component={PasswordInput}
-          name="password"
-          validate={validatePassword}
-        />
-        <Button disabled={error || !isEmpty(errors)} primary type="submit">
-          Sign up
-        </Button>
-      </Form>
+        <Form onSubmit={handleSubmit}>
+          <ValidatedFieldFormik
+            component={GivenNameInput}
+            name="givenNames"
+            validate={validateNames}
+          />
+          <ValidatedFieldFormik
+            component={SurnameInput}
+            name="surname"
+            validate={validateNames}
+          />
+          <ValidatedFieldFormik
+            component={UsernameInput}
+            name="username"
+            validate={validateUsername}
+          />
+          <ValidatedFieldFormik
+            component={EmailInput}
+            name="email"
+            validate={validateEmail}
+          />
+          <ValidatedFieldFormik
+            component={PasswordInput}
+            name="password"
+            validate={validatePassword}
+          />
+          <Button disabled={error || !isEmpty(errors)} primary type="submit">
+            Sign up
+          </Button>
+        </Form>
 
-      <div>
-        <span>Already have an account? </span>
-        <Link to="/login">Login</Link>
-      </div>
-    </FormContainer>
+        <div>
+          <span>Already have an account? </span>
+          <Link to="/login">Login</Link>
+        </div>
+      </FormContainer>
+    </StyledDiv>
   </StyledCenterColumn>
 )
 
