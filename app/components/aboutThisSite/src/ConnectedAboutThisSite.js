@@ -19,15 +19,15 @@ const mapProps = args => ({
   systemInfo: get(args.getSystemInfoQuery,'data.systemInfo'),
   loading: get(args.getSystemInfoQuery.loading),
   refetching:
-    args.getSystemInfoQuery .networkStatus === 4 ||
+    args.getSystemInfoQuery.networkStatus === 4 ||
     args.getSystemInfoQuery.networkStatus === 2,
   onWarning: () => {
-    const { withModal: withModalFromArgs } = args
-    const { showModal, hideModal } = withModalFromArgs
+    const { withModal: withModalFromArgs } = args;
+    const { showModal, hideModal } = withModalFromArgs;
     showModal('warningModal', {
       onConfirm: hideModal,
       warning: `You don't have permissions to view this page`,
-    })
+    });
   },
 })
 

@@ -7,26 +7,6 @@ import {Loading} from '../../../ui'
 import MicroServicesDetails from "./microServisesDetails";
 
 
-const InnerSectionWrapper = styled.div`
-  align-items: start;
-  display: flex;
-  flex-direction: column;
-  margin-bottom: calc(${th('gridUnit')} * 2);
-`
-
-const SectionServerDetails = styled(H4)`
-  color: ${th('colorText')};
-  font-family: ${th('fontInterface')};
-  font-weight: normal;
-  margin: calc(${th('gridUnit')} * 2) 0;
-`
-const SectionContent = styled(H4)`
-  color: ${th('colorText')};
-  font-family: ${th('fontInterface')};
-  font-weight: normal;
-  margin: calc(${th('gridUnit')} * 2) 0;
-`
-
 const Container = styled.div`
   clear: both;
   display: block;
@@ -34,17 +14,6 @@ const Container = styled.div`
   height: 100%;
   margin: 0 auto;
   max-width: 100%;
-`
-
-const Title = styled(H3)`
-  color: #3f3f3f;
-  font-family: ${th('fontReading')};
-  font-weight: normal;
-  margin: 0;
-  margin-right: calc(3 * ${th('gridUnit')});
-  padding-bottom: 0;
-  padding-top: 3px;
-  text-transform: uppercase;
 `
 
 const InnerWrapper = styled.div`
@@ -75,6 +44,39 @@ const SectionWrapper = styled.div`
   justify-content: center;
 `
 
+const SectionContent = styled(H4)`
+  color: ${th('colorText')};
+  font-family: ${th('fontInterface')};
+  font-weight: normal;
+  margin: calc(${th('gridUnit')} * 2) 0;
+`
+
+const InnerSectionWrapper = styled.div`
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: calc(${th('gridUnit')} * 2);
+`
+
+const SectionServerDetails = styled(H4)`
+  color: ${th('colorText')};
+  font-family: ${th('fontInterface')};
+  font-weight: normal;
+  margin: calc(${th('gridUnit')} * 2) 0;
+`
+
+
+const Title = styled(H3)`
+  color: #3f3f3f;
+  font-family: ${th('fontReading')};
+  font-weight: normal;
+  margin: 0;
+  margin-right: calc(3 * ${th('gridUnit')});
+  padding-bottom: 0;
+  padding-top: 3px;
+  text-transform: uppercase;
+`
+
 const ApplicationDetails = (props) => {
     const app_version = process.env.APP_VERSION
     const app_name = process.env.APP_NAME
@@ -87,10 +89,10 @@ const ApplicationDetails = (props) => {
     return (
         <InnerSectionWrapper>
             <SectionServerDetails>
-                Ketida server: v {serverVersion} <br/>
-                {app_name}: v {app_version}
+                    Ketida server: v {serverVersion} <br/>
+                    {app_name}: v {app_version} <br/>
+                <MicroServicesDetails healthcheck={healthcheck}/>
             </SectionServerDetails>
-            <MicroServicesDetails healthcheck={healthcheck}/>
         </InnerSectionWrapper>
     )
 }
