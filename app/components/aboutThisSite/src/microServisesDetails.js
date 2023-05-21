@@ -16,7 +16,7 @@ const MicroServicesDetails =  (props) => {
                         <li key={index}>
                             <b>{item.name}</b><br />
                             {item.message} <br /> <b> URL: </b> {item.url} <b> Uptime: </b> { item.uptime } minutes
-                            <b> Timestamp: </b> {item.timestamp} ({item.convertedtime}) <b> Status: </b> {item.status}
+                            <b> Timestamp: </b> ({item.convertedtime}) <b> Status: </b> {item.status}
                         </li>
                     ))}
                 </ul>
