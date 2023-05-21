@@ -17,6 +17,7 @@ const GET_SYSTEM_INFO = gql`
         url
         uptime
         timestamp
+        convertedtime
         status
       }
     }

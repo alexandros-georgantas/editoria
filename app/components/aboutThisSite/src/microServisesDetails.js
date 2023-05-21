@@ -3,6 +3,7 @@
 /* stylelint-disable string-quotes, font-family-no-missing-generic-family-keyword */
 import React from 'react';
 import {Loading} from "../../../ui";
+
 const MicroServicesDetails =  (props) => {
     if (!props.healthcheck) return <Loading/>
     let data = props.healthcheck;
@@ -15,7 +16,7 @@ const MicroServicesDetails =  (props) => {
                         <li key={index}>
                             <b>{item.name}</b><br />
                             {item.message} <br /> <b> URL: </b> {item.url} <b> Uptime: </b> { item.uptime } minutes
-                            <b> Timestamp: </b> {item.timestamp} <b> Status: </b> {item.status}
+                            <b> Timestamp: </b> {item.timestamp} ({item.convertedtime}) <b> Status: </b> {item.status}
                         </li>
                     ))}
                 </ul>
