@@ -18,8 +18,8 @@ import styled from 'styled-components'
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
-  margin: 0;
-  width: 100%;
+  margin: auto;
+  width: 320px;
   height: auto;
 `
 /* stylelint-enable order/properties-alphabetical-order */

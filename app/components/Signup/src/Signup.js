@@ -22,7 +22,7 @@ const emailRegex =
 /* stylelint-disable order/properties-alphabetical-order */
 const FormContainer = styled.div`
   ${override('Login.FormContainer')};
-  height: 50%;
+  height: 60%;
   overflow-y: auto;
   border: 0;
 `
@@ -41,17 +41,15 @@ const StyledCenterColumn = styled(CenteredColumn)`
 `
 
 const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
   height: 100vh;
+  overflow-y: auto;
 `
 
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
   ${override('Login.Logo')};
-  margin: 0;
-  width: 100%;
+  margin: auto;
+  width: 320px;
   height: auto;
 `
 /* stylelint-enable order/properties-alphabetical-order */
