@@ -195,6 +195,7 @@ const Actions = props => {
 
   if (
     featureBookStructureEnabled &&
+    bookStructure &&
     !bookStructure.finalized &&
     !canDeleteBooks
   ) {
