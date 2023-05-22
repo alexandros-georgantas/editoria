@@ -200,7 +200,7 @@ class TemplateModal extends React.Component {
         author,
         trimSize,
         thumbnail,
-        thumbnailPreview: thumbnail ? thumbnail.source : undefined,
+        thumbnailPreview: thumbnail ? thumbnail.url : undefined,
         files: cloneDeep(files),
         mode,
         target: target ? find(selectOptions, { value: target }) : undefined,
