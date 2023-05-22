@@ -1089,7 +1089,7 @@ const StepThree = ({ bookStructure, updateLevelContentStructure }) => (
                                 dragHandleProps={providedL2.dragHandleProps}
                                 grabFreeMoveIcon
                                 headerComponent={
-                                  <span>Self-reflection Activity</span>
+                                  <span>Self-reflection Activities</span>
                                 }
                                 isAccordion={false}
                               />
