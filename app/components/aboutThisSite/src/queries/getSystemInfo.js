@@ -18,6 +18,7 @@ const GET_SYSTEM_INFO = gql`
         uptime
         timestamp
         convertedtime
+        convertedUpTime
         status
       }
     }
@@ -27,7 +28,7 @@ const GET_SYSTEM_INFO = gql`
 const getSystemInfoQuery = props => {
   const { render } = props
   return (
-      <Query fetchPolicy="cache-and-network" query={GET_SYSTEM_INFO}>
+      <Query fetchPolicy="cache-and-network" query={GET_SYSTEM_INFO} pollInterval={5000}>
         {render}
       </Query>
   )
