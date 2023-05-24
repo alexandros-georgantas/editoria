@@ -11,15 +11,19 @@ const MicroServicesDetails =  (props) => {
         <div>
             <br/>
             The following microservices are in use:
-                <ul>
-                    {data.map((item, index) => (
-                        <li key={index}>
-                            <b>{item.name}</b><br />
-                            {item.message} <br /> <b> URL: </b> {item.url} <b> Uptime: </b> { item.uptime } minutes
-                            <b> Timestamp: </b> ({item.convertedtime}) <b> Status: </b> {item.status}
-                        </li>
-                    ))}
-                </ul>
+            <ul>
+                {data.map((microServicesData, index) => (
+                    <li key={index}>
+                        <b>{microServicesData.name}</b><br />
+                        <b> URL: </b> {microServicesData.url}
+                        <b> Uptime: </b> { microServicesData.convertedUpTime }
+                        <b> Timestamp: </b> ({microServicesData.convertedtime}) <b> Status: </b> {microServicesData.status}
+                        <br />{microServicesData.message}
+                    </li>
+                ))}
+            </ul>
+            <br/>
+            For more information on releases and ongoing development, as well as Ketida's user guide, see the <a href="https://ketida.community/" target="_blank">Ketida website.</a>
         </div>
     );
 }
