@@ -5,16 +5,13 @@ describe('Tests describing for imports', () => {
   const dropdownValues = ['PagedJS', null, 'Chapter end notes']
   let docs
   before(() => {
-    /*    cy.exec(
-      'docker exec kdk_server_1 node ./server/scripts/helpers/_clearDB.js',
-    ) */
     cy.fixture('files').then(paths => {
       docs = paths.docs
     })
     cy.login(admin.username, admin.password)
     cy.addBook('Test_book')
     cy.contains('Test_book').should('exist')
-    // cy.planBookOen()
+    cy.planBookOen()
   })
 
   beforeEach(() => {
@@ -22,7 +19,6 @@ describe('Tests describing for imports', () => {
   })
 
   it('Creating a template, book and adding components for export', () => {
-    // cy.login(admin.username, admin.password)
     cy.get("[href='/templates']", { timeout: 8000 }).click()
     cy.get("[title='Add TEMPLATE']", { timeout: 8000 }).click()
     cy.get("[name='name']").type('export_template')
@@ -41,45 +37,47 @@ describe('Tests describing for imports', () => {
 
     cy.get("[title='Save']").click({ force: true })
     cy.contains('a', 'Books', { timeout: 8000 }).click()
-    // cy.reload()
     cy.contains('a', 'Edit').click()
 
-    // if (Cypress.env(oen') === true) {
-    //   cy.log('You can not upload a doc in OEN')
-    // } else {
-    cy.get("[id='file-uploader-generic']").selectFile(docs.frontmatter.path, {
-      force: true,
-    })
-    cy.contains('span', docs.frontmatter.name, { timeout: 10000 })
+    if (Cypress.env('oenBoolean') === true) {
+      cy.log('You can not upload a doc in OEN')
+    } else {
+      cy.get("[id='file-uploader-generic']").selectFile(docs.frontmatter.path, {
+        force: true,
+      })
+      cy.contains('span', docs.frontmatter.name, { timeout: 10000 })
 
-    cy.get("[id='file-uploader-generic']").selectFile(docs.body.path, {
-      force: true,
-    })
-    cy.contains('span', docs.body.name, { timeout: 10000 })
+      cy.get("[id='file-uploader-generic']").selectFile(docs.body.path, {
+        force: true,
+      })
+      cy.contains('span', docs.body.name, { timeout: 10000 })
 
-    cy.get("[id='file-uploader-generic']").selectFile(docs.backmatter.path, {
-      force: true,
-    })
-    cy.contains('span', docs.backmatter.name, { timeout: 10000 })
+      cy.get("[id='file-uploader-generic']").selectFile(docs.backmatter.path, {
+        force: true,
+      })
+      cy.contains('span', docs.backmatter.name, { timeout: 10000 })
 
-    cy.get("[id='file-uploader-generic']").selectFile(
-      docs.second_chapter.path,
-      { force: true },
-    )
-    cy.contains('span', docs.backmatter.name, { timeout: 10000 })
-    //   }
+      cy.get("[id='file-uploader-generic']").selectFile(
+        docs.second_chapter.path,
+        { force: true },
+      )
+      cy.contains('span', docs.backmatter.name, { timeout: 10000 })
+    }
   })
 
   it('Customising the components of the book', () => {
-    cy.login(admin.username, admin.password)
     cy.log('Removing body from table of content...')
     cy.contains('a', 'Edit', { timeout: 10000 }).click()
     cy.get('[id="TOC-icon"]:nth(1)').parent().click()
-    cy.get('[id="left"]:nth(1)').click({ force: true })
+
+    if (Cypress.env('oenBoolean') === true) {
+      cy.log('You can not align the components left or right in OEN')
+    } else {
+      cy.get('[id="left"]:nth(1)').click({ force: true })
+    }
   })
 
   it('Exporting the book - Preview modal', () => {
-    // cy.login(admin.username, admin.password)
     cy.contains('a', 'Edit', { timeout: 8000 }).click()
     cy.get('[title="Export Book"]').click()
 
@@ -95,27 +93,8 @@ describe('Tests describing for imports', () => {
     cy.contains(
       'View your book in PagedJS for more granular styles tunning',
     ).should('exist')
-    ;[0, 1, 2].forEach(pagedjsOption => {
-      cy.get('.react-select__control').click({ force: true })
-      cy.get(`#react-select-3-option-${pagedjsOption}`)
-        .should('be.visible')
-        .click({
-          force: true,
-        })
 
-      cy.get('.react-select__control')
-        .invoke('text')
-        .then(text => {
-          // Perform assertions or checks on the text here
-          cy.log('Template:', text)
-          cy.wrap(text).should('be.oneOf', [
-            'export_template',
-            'Atla (chapterEnd)',
-            'Atla (footnotes)',
-          ])
-        })
-    })
-    // cy.checkPagedjsTemplates(2)
+    cy.checkPagedjsTemplates()
 
     let selectedTemplate
 
@@ -164,7 +143,6 @@ describe('Tests describing for imports', () => {
   })
 
   it('Exporting the book - Download modal', () => {
-    cy.login(admin.username, admin.password)
     cy.contains('a', 'Edit', { timeout: 8000 }).click()
     cy.get('[title="Export Book"]').click()
 
@@ -193,13 +171,13 @@ describe('Tests describing for imports', () => {
     ;[0, 1].forEach(option => {
       cy.get('.react-select__control').click({ force: true })
       cy.get(`#react-select-3-option-${option}`)
+        .trigger('mouseover')
         .should('be.visible')
         .click({ force: true })
 
       cy.get('.react-select__control')
         .invoke('text')
         .then(text => {
-          // Perform assertions or checks on the text here
           cy.log('Template:', text)
           cy.wrap(text).should('be.oneOf', [
             'Atla (chapterEnd)',
@@ -219,24 +197,8 @@ describe('Tests describing for imports', () => {
     cy.contains(
       'Using PagedJS, we’ll generate a PDF version of your book',
     ).should('exist')
-    ;[0, 1, 2].forEach(pagedjsOption => {
-      cy.get('.react-select__control').click({ force: true })
-      cy.get(`#react-select-3-option-${pagedjsOption}`)
-        .should('be.visible')
-        .click({ force: true })
-      cy.get('.react-select__control')
-        .invoke('text')
-        .then(text => {
-          // Perform assertions or checks on the text here
-          cy.log('Template:', text)
-          cy.wrap(text).should('be.oneOf', [
-            'export_template',
-            'Atla (chapterEnd)',
-            'Atla (footnotes)',
-          ])
-        })
-    })
-    //  cy.checkPagedjsTemplates(3)
+
+    cy.checkPagedjsTemplates()
 
     cy.contains('Ok').should('be.enabled')
 
@@ -250,21 +212,75 @@ describe('Tests describing for imports', () => {
       'You will get a compressed zip file containing all images used in the book and the ICML file ready to be imported in Adobe inDesign.',
     ).should('exist')
     cy.contains('Ok').should('be.enabled')
-    // cy.contains('Cancel').click()
+    cy.contains('Cancel').click()
+  })
+
+  it('Checking Book Settings', () => {
+    if (Cypress.env('oenBoolean') === true) {
+      cy.log('There is no Book Settings modal in OEN.')
+    } else {
+      cy.contains('a', 'Edit', { timeout: 8000 }).click()
+      cy.get('[title="Book Settings"]').click()
+      cy.contains('RUNNING HEADERS').should('exist')
+      cy.contains('Component Title').should('exist')
+      cy.contains('Page Left').should('exist')
+      cy.contains('Page Right').should('exist')
+
+      // The expected texts for each cell
+      const expectedTexts = [
+        ['Table of Contents', '', ''],
+        ['a-Font_matter', 'a-Font_matter', 'a-Font_matter'],
+        ['body', 'body', 'body'],
+        ['second_chapter', 'second_chapter', 'second_chapter'],
+        ['w-back_matter', 'w-back_matter', 'w-back_matter'],
+      ]
+
+      // Iterating over each row
+      cy.get('table')
+        .find('tbody tr')
+        .each(($row, rowIndex) => {
+          const expectedRowTexts = expectedTexts[rowIndex]
+
+          // Iterating over each column within the current row
+          Cypress.$.each(expectedRowTexts, (columnIndex, expectedText) => {
+            // Interpolating to dynamically construct the selector for each cell
+            const cellSelector = `:nth-child(1) > :nth-child(${
+              rowIndex + 1
+            }) > :nth-child(${columnIndex + 1})`
+
+            // Gets the text of the current cell
+            cy.get('table')
+              .find(cellSelector)
+              .invoke('text')
+              .then(text => {
+                cy.log(
+                  `Cell Text [Row ${rowIndex + 1}, Column ${columnIndex + 1}]:`,
+                  text,
+                )
+                cy.wrap(text).should('contain', expectedText)
+              })
+          })
+        })
+
+      cy.get('button[title="Switch"]').should('be.enabled').click()
+      cy.get('button[title="Cancel"]').should('be.enabled')
+      cy.get('button[title="Save"]').should('be.enabled').click()
+    }
   })
 })
 
-/*
-Cypress.Commands.add('checkPagedjsTemplates', menuVersion => {
+Cypress.Commands.add('checkPagedjsTemplates', () => {
   ;[0, 1, 2].forEach(pagedjsOption => {
     cy.get('.react-select__control').click({ force: true })
-    cy.get(`[id='react-select-${menuVersion}-option-${pagedjsOption}']`).click({
-      force: true,
-    })
+    cy.get(`[id='react-select-3-option-${pagedjsOption}']`)
+      .trigger('mouseover')
+      .should('be.visible')
+      .click({
+        force: true,
+      })
     cy.get('.react-select__control')
       .invoke('text')
       .then(text => {
-        // Perform assertions or checks on the text here
         cy.log('Template:', text)
         cy.wrap(text).should('be.oneOf', [
           'export_template',
@@ -274,5 +290,3 @@ Cypress.Commands.add('checkPagedjsTemplates', menuVersion => {
       })
   })
 })
-
-*/
