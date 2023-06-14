@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types,react/no-unused-state */
 import styled from 'styled-components'
 import React from 'react'
-import {th} from '@pubsweet/ui-toolkit'
-import {H3, H4} from '@pubsweet/ui'
-import {Loading} from '../../../ui'
-import MicroServicesDetails from "./microServisesDetails";
-
+import { th } from '@pubsweet/ui-toolkit'
+import { H3, H4 } from '@pubsweet/ui'
+import { Loading } from '../../../ui'
+import MicroServicesDetails from './microServisesDetails'
 
 const Container = styled.div`
   clear: both;
@@ -36,6 +35,7 @@ const HeaderWrapper = styled.div`
   top: 0;
   z-index: 1;
 `
+
 const SectionWrapper = styled.div`
   align-items: start;
   display: flex;
@@ -65,7 +65,6 @@ const SectionServerDetails = styled(H4)`
   margin: calc(${th('gridUnit')} * 2) 0;
 `
 
-
 const Title = styled(H3)`
   color: #3f3f3f;
   font-family: ${th('fontReading')};
@@ -77,62 +76,64 @@ const Title = styled(H3)`
   text-transform: uppercase;
 `
 
-const ApplicationDetails = (props) => {
-    const app_version = process.env.APP_VERSION
-    const app_name = process.env.APP_NAME
-    let serverVersion, healthcheck;
-    if (!props.systemInfo) return <Loading/>;
-    if (props.systemInfo) {
-        serverVersion = props.systemInfo.version;
-        healthcheck = props.systemInfo.healthcheck;
-    }
-    return (
-        <InnerSectionWrapper>
-            <SectionServerDetails>
-                    Ketida server: v {serverVersion} <br/>
-                    {app_name}: v {app_version} <br/>
-                <MicroServicesDetails healthcheck={healthcheck}/>
-            </SectionServerDetails>
-        </InnerSectionWrapper>
-    )
+const ApplicationDetails = props => {
+  const { APP_VERSION } = process.env
+  const { systemInfo } = props
+
+  if (!systemInfo) {
+    return <Loading />
+  }
+
+  const { version, healthcheck } = systemInfo
+
+  return (
+    <InnerSectionWrapper>
+      <SectionServerDetails>
+        Ketida server: v {version} <br />
+        Client Version: v {APP_VERSION} <br />
+        <MicroServicesDetails healthcheck={healthcheck} />
+      </SectionServerDetails>
+    </InnerSectionWrapper>
+  )
 }
 
 class AboutThisSite extends React.Component {
-    constructor(props) {
-        super(props)
+  constructor(props) {
+    super(props)
 
-        this.state = {
-            hideRibbon: true,
-            ready: false,
-        }
+    this.state = {
+      hideRibbon: true,
+      ready: false,
     }
+  }
 
-    render() {
-        const {systemInfo, loading} = this.props;
-        if (loading) return <Loading/>
-        return (
-            <Container>
-                <InnerWrapper>
-                    <HeaderWrapper>
-                        <Title>About This Site</Title>
-                    </HeaderWrapper>
-                    <SectionWrapper>
-                        <SectionContent>
-                            <div>
-                                Ketida is built by the Coko development team. This version of Ketida is running the following codebases:
-                            </div>
-                        </SectionContent>
-                        <ApplicationDetails systemInfo={systemInfo}/>
-                    </SectionWrapper>
-                </InnerWrapper>
-            </Container>
-        )
-    }
+  render() {
+    const { systemInfo, loading } = this.props
+    if (loading) return <Loading />
+    return (
+      <Container>
+        <InnerWrapper>
+          <HeaderWrapper>
+            <Title>About This Site</Title>
+          </HeaderWrapper>
+          <SectionWrapper>
+            <SectionContent>
+              <div>
+                Ketida is built by the Coko development team. This version of
+                Ketida is running the following codebases:
+              </div>
+            </SectionContent>
+            <ApplicationDetails systemInfo={systemInfo} />
+          </SectionWrapper>
+        </InnerWrapper>
+      </Container>
+    )
+  }
 }
 
 AboutThisSite.defaultProps = {
-    name: null,
-    users: null,
+  name: null,
+  users: null,
 }
 
 export default AboutThisSite
