@@ -4,6 +4,7 @@ import { get } from 'lodash'
 import { adopt } from 'react-adopt'
 
 import withModal from '../../common/src/withModal'
+import Loading from '../../../ui/Loading'
 import Dashboard from './Dashboard'
 import {
   archiveBookMutation,
@@ -172,7 +173,7 @@ const Connected = () => (
         onChangeSort(sortingParams)
       }, [sortingParams])
 
-      if (!collections) return null
+      if (!collections || !rules || loadingRules || loading) return <Loading />
 
       return (
         <Dashboard

@@ -32,11 +32,12 @@ services:
       - ./config:/home/node/app/config
 
   server:
-    image: cokoapps/ketida-server:1.5.0
+    image: cokoapps/ketida-server:1.7.0
     restart: unless-stopped
     depends_on:
       - db
       - s3
+      - createbucket
       - xsweet
       - epubchecker
       - pagedjs
