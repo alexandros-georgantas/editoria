@@ -121,7 +121,7 @@ const MicroServicesDetails = props => {
   if (!healthcheck) return <Loading />
   return (
     <SectionWrapper>
-      The following microservices are in use:
+      Services availability:
       <ListContainer>
         {healthcheck.map(microServicesData => (
           <StatusList key={microServicesData.displayName}>
