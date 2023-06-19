@@ -108,7 +108,7 @@ const ListContent = props => {
   const { displayName, isWorking } = microServicesData
   return (
     <StatusAvailable isWorking={!!isWorking}>
-      <DisplayNameWrapper>{displayName + isWorking}</DisplayNameWrapper>
+      <DisplayNameWrapper>{displayName}</DisplayNameWrapper>
     </StatusAvailable>
   )
 }
