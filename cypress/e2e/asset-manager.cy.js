@@ -23,6 +23,29 @@ describe('Book builder asset manager', () => {
 
   it("Adding images to the book's Asset Manager", () => {
     cy.contains('Edit').click()
+
+    if (Cypress.env('oenBoolean') === true) {
+      // Deleting pre-built components in oen
+      cy.contains('Delete').first().click({ force: true })
+      cy.contains(
+        'Are you sure you want to delete this part with title Untitled?',
+      ).should('exist')
+      cy.get('[title="Yes"]').trigger('mouseover').click({ force: true })
+      cy.wait(5000)
+      cy.contains('Untitled').should('exist')
+      cy.contains('Delete').click({ timeout: 8000 })
+      cy.contains(
+        'Are you sure you want to delete this chapter with title Untitled?',
+      ).should('exist')
+      cy.get('[title="Yes"]').trigger('mouseover').click({ force: true })
+      // cy.get('.loading-spinner', { timeout: 15000 }).should('not.exist')
+      // cy.reload({ timeout: 8000 })
+      cy.wait(5000)
+      cy.contains('Untitled').should('not.exist')
+    } else {
+      cy.log('Not oen')
+    }
+
     cy.contains('Asset Manager').click()
     cy.get("[id='file-uploader-assets']").selectFile(filePaths.file1.path, {
       force: true,
@@ -39,8 +62,11 @@ describe('Book builder asset manager', () => {
     cy.contains(book.name, { timeout: 10000 })
     cy.contains('Edit').click()
     cy.get("button[title='Add Chapter']").click()
+    cy.wait(5000)
     cy.contains('Untitled').click()
-    cy.get("button[title='Upload Image']").click()
+    cy.get("button[title='Upload Image']", { timeout: 6000 }).click({
+      force: true,
+    })
     cy.get("button[title='Upload Images']").should('be.enabled')
     cy.get("button[title='Insert Image/s']").should('be.disabled')
     cy.get("button[title='Delete Selected']").should('be.disabled')
@@ -110,7 +136,7 @@ describe('Book builder asset manager', () => {
 
   it('Uploading a doc that has an image', () => {
     if (Cypress.env('oenBoolean') === true) {
-      cy.log('You can not upload a doc in OEN')
+      cy.log('You can not upload a doc in OEN.')
     } else {
       cy.contains(book.name, { timeout: 10000 })
       cy.contains('Edit').click()
