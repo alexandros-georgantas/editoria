@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import get from 'lodash/get'
 import { adopt } from 'react-adopt'
 import { Loading } from '../../../ui'
-import AboutThisSite from './AboutThisSite'
+import SystemInfo from './SystemInfo'
 import getSystemInfoQuery from './queries/getSystemInfo'
 
 const mapper = {
@@ -33,7 +33,7 @@ const Connected = () => {
     <Composed>
       {({ systemInfo, loading }) => {
         if (loading) return <Loading />
-        return <AboutThisSite systemInfo={systemInfo} />
+        return <SystemInfo systemInfo={systemInfo} />
       }}
     </Composed>
   )

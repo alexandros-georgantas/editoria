@@ -5,8 +5,8 @@ import { createGlobalStyle } from 'styled-components'
 // Users and Teams
 import GlobalTeamsManager from './components/globalTeamsManager/src/ConnectedGlobalTeams'
 
-// About This Site Page
-import ConnectedAboutThisSite from './components/aboutThisSite/src/ConnectedAboutThisSite';
+// System Info Page
+import ConnectedSystemInfo from './components/systemInfo/src/ConnectedSystemInfo'
 
 // Authentication
 import Login from './components/Login/src/LoginContainer'
@@ -130,7 +130,7 @@ export default (
               path="/books/:bookId/bookComponents/:bookComponentId/:mode"
             />
             <PrivateRoute component={GlobalTeamsManager} path="/globalTeams" />
-            <PrivateRoute component={ConnectedAboutThisSite} path="/aboutThisSite" />
+            <PrivateRoute component={ConnectedSystemInfo} path="/systemInfo" />
           </Switch>
         </Page>
       </PageLayout>

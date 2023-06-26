@@ -79,8 +79,8 @@ const Navigation = props => {
 
   if (currentUser && currentUser.admin) {
     dropdownItems.push(
-        { link: '/globalTeams', label: 'Team Manager' },
-        { link: '/aboutThisSite', label: 'About this site' }
+      { link: '/globalTeams', label: 'Team Manager' },
+      { link: '/systemInfo', label: 'System Info' },
     )
   }
 
