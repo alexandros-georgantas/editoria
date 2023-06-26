@@ -18,11 +18,7 @@ const GET_SYSTEM_INFO = gql`
 const getSystemInfoQuery = props => {
   const { render } = props
   return (
-    <Query
-      fetchPolicy="cache-and-network"
-      pollInterval={5000}
-      query={GET_SYSTEM_INFO}
-    >
+    <Query fetchPolicy="network-only" query={GET_SYSTEM_INFO}>
       {render}
     </Query>
   )
