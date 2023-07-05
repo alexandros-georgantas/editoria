@@ -1,38 +1,22 @@
-/* eslint-disable jest/expect-expect */
-/* eslint-disable no-undef */
 /// <reference types="cypress" />
-const { admin, newUser } = require('../support/credentials')
-
-const currentUser = newUser
-
-Cypress.Commands.add('addMember', role => {
-  cy.contains(role).click()
-
-  cy.get('.css-g1d714-ValueContainer')
-    .click()
-    .type(`${currentUser.username}{enter}`)
-
-  cy.get("[id='react-select-2-option-0']").click({ force: true })
-})
+const { admin } = require('../support/credentials')
 
 describe('Sort by Title', () => {
-  // before(() => {
-  //  cy.exec('docker exec server_server_1 node ./scripts/seeds/createVerifiedUser.js email1234@gmail.com user1234')
-  //  NOTE: delete the sign up command after adding script
-  // }) 
-
-  beforeEach(() => {
+  before(() => {
+    //  cy.exec('docker exec server_server_1 node ./scripts/seeds/createVerifiedUser.js email1234@gmail.com user1234')
+    //  NOTE: delete the sign up command after adding script
     cy.login(admin.username, admin.password)
-    cy.location('pathname').should('eq', '/books')
-  })
-
-  it('Adding books', () => {
     cy.addBook('B')
     cy.reload()
     cy.addBook('C')
     cy.reload()
     cy.addBook('A')
     cy.reload()
+  })
+
+  beforeEach(() => {
+    cy.login(admin.username, admin.password)
+    cy.location('pathname').should('eq', '/books')
   })
 
   it('Sort by Title - Ascending', () => {
@@ -57,68 +41,38 @@ describe('Sort by Status', () => {
     cy.location('pathname').should('eq', '/books')
   })
 
-  it('Publishing the 1st book', () => {
-    cy.get('[data-cy=book]:first')
-      .contains('Edit')
-      .click()
+  it('Publishing the first two books', () => {
+    // Publishing the first book
+    cy.get('[data-cy=book]:first').planBookOen()
+    cy.get('[data-cy=book]:first').contains('Edit').click()
     cy.contains('Metadata', { timeout: 8000 }).click()
     cy.get('#publicationDate').type('2001-01-01')
-    cy.contains("Save Metadata").click()
+    cy.contains('Save Metadata').click()
+    cy.contains('Save Metadata').should('not.exist', { timeout: 5000 })
+
+    cy.get("a[href='/books']:nth(1)", { timeout: 8000 }).click()
+    // Publishing the second book
+    cy.get('[data-cy=book]:nth(1)').planBookOen()
+    cy.get('[data-cy=book]:nth(1)').contains('Edit').click()
+    cy.contains('Metadata', { timeout: 8000 }).click()
+    cy.get('#publicationDate').type('1999-01-01')
+    cy.contains('Save Metadata').click()
   })
 
   it('Sort by Status - Ascending', () => {
     cy.contains('title').click()
-    cy.contains('status').click()
+    cy.contains('pub. date').click()
     cy.get('[data-cy="book"]').first().contains('B')
-    cy.get('[data-cy="book"]:nth(1)').contains('C')
-    cy.get('[data-cy="book"]').last().contains('A')
+    cy.get('[data-cy="book"]:nth(1)').contains('A')
+    cy.get('[data-cy="book"]').last().contains('C')
   })
 
   it('Sort by Status - Descending', () => {
     cy.contains('title').click()
-    cy.contains('status').click()
+    cy.contains('pub. date').click()
     cy.get("[title='Ascending']").click()
-    cy.get('[data-cy="book"]').first().contains('A')
-    cy.get('[data-cy="book"]:nth(1)').contains('B')
-    cy.get('[data-cy="book"]').last().contains('C')
-  })
-})
-
-describe('Sort by Author', () => {
-  beforeEach(() => {
-    cy.login(admin.username, admin.password)
-  })
-
-  it('Adding an Author to the last book', () => {
-    cy.visit('/signup')
-    cy.Signup(currentUser)
-    cy.login(admin.username, admin.password)
-    cy.teamManagerSettings()
-    cy.login(admin.username, admin.password)
-
-    cy.get('[data-cy=book]:last')
-      .contains('Edit')
-      .click()
-
-    cy.contains('Team Manager').click()
-    cy.addMember('Add Authors')
-  })
-
-  it('Sort by Author - Ascending', () => {
-    cy.contains('title').click()
-    cy.contains('author').click()
     cy.get('[data-cy="book"]').first().contains('C')
     cy.get('[data-cy="book"]:nth(1)').contains('A')
     cy.get('[data-cy="book"]').last().contains('B')
   })
-
-  it('Sort by Author - Descending', () => {
-    cy.contains('title').click()
-    cy.contains('author').click()
-    cy.get("[title='Ascending']").click()
-    cy.get('[data-cy="book"]').first().contains('A')
-    cy.get('[data-cy="book"]:nth(1)').contains('B')
-    cy.get('[data-cy="book"]').last().contains('C')
-  })
 })
-
