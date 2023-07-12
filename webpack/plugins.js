@@ -46,6 +46,8 @@ module.exports = (opts = {}) => {
       'process.env.LOCKS_WS_URL': `"${opts.clientEnv.locksWSURL}"`,
       'process.env.FEATURE_UPLOAD_DOCX_FILES':
         opts.clientEnv.featureUploadDOCXFiles,
+      'process.env.APP_VERSION': `"${opts.clientEnv.appVersion}"`,
+      'process.env.APP_NAME': `"${opts.clientEnv.appName}"`,
     }),
   )
 

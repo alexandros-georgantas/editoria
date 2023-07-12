@@ -13,8 +13,9 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
+  /* height: auto !important; */
   line-height: ${th('lineHeightBase')};
-  max-height: 240px;
+  max-height: 280px;
   padding: ${grid(1)};
   width: 222px;
 `
