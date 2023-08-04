@@ -3,7 +3,6 @@ import React, { Fragment } from 'react'
 import styled from 'styled-components'
 import DashboardHeader from './DashboardHeader'
 import BookList from './BookList'
-import Loading from '../../../ui/Loading'
 
 const Container = styled.div`
   clear: both;
@@ -42,8 +41,6 @@ const Dashboard = ({
   setSortingParams,
   sortingParams,
 }) => {
-  if (loading || loadingRules) return <Loading />
-
   return (
     <Container>
       {collections.map(collection => (

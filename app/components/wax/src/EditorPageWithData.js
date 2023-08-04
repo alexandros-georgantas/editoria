@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
+import {
+  useQuery,
+  useMutation,
+  useLazyQuery,
+  useSubscription,
+} from '@apollo/client'
 import uuid from 'uuid/v4'
 
 import {
@@ -38,19 +43,21 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
    * QUERIES SECTION START
    */
   const {
-    subscribeToMore: subscribeToMoreForBook,
+    // subscribeToMore: subscribeToMoreForBook,
     loading: bookLoading,
     error: bookError,
     data: bookData,
+    refetch: refetchBook,
   } = useQuery(GET_BOOK, {
     variables: { id: bookId },
   })
 
   const {
-    subscribeToMore: subscribeToMoreForBookComponent,
+    // subscribeToMore: subscribeToMoreForBookComponent,
     loading: bookComponentLoading,
     error: bookComponentError,
     data: bookComponentData,
+    refetch: refetchBookComponent,
   } = useQuery(GET_BOOK_COMPONENT, {
     variables: { id: bookComponentId },
     fetchPolicy: 'network-only', // this is due to quick header navigation in Wax. When going back there are potential cached data about lock and an unlock subscription message will not have the chance to arrive in time
@@ -69,15 +76,39 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
   })
 
   const {
-    subscribeToMore: subscribeToMoreForCustomTags,
+    // subscribeToMore: subscribeToMoreForCustomTags,
     loading: customTagsLoading,
     error: customTagsError,
     data: customTagsData,
+    refetch: refetchCustomTags,
   } = useQuery(GET_CUSTOM_TAGS)
 
   const [getSpecificFiles] = useLazyQuery(GET_SPECIFIC_FILES)
   /**
    * QUERIES SECTION END
+   */
+
+  /**
+   * SUBSCRIPTIONS SECTION START
+   */
+  useSubscription(BOOK_COMPONENT_UPDATED_SUBSCRIPTION, {
+    variables: { id: bookComponentId },
+    onSubscriptionData: () => refetchBookComponent({ id: bookComponentId }),
+  })
+  useSubscription(BOOK_UPDATED_SUBSCRIPTION, {
+    variables: { id: bookId },
+    onSubscriptionData: () => {
+      refetchBook({ id: bookId })
+    },
+  })
+
+  useSubscription(CUSTOM_TAGS_UPDATED_SUBSCRIPTION, {
+    onSubscriptionData: () => {
+      refetchCustomTags()
+    },
+  })
+  /**
+   * SUBSCRIPTIONS SECTION END
    */
 
   /**
@@ -194,52 +225,53 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
     })
   }
 
-  const onBookUpdated = () => {
-    return subscribeToMoreForBook({
-      document: BOOK_UPDATED_SUBSCRIPTION,
-      variables: { id: bookId },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const { data } = subscriptionData
-        const { bookUpdated } = data
+  // const onBookUpdated = () => {
+  //   return subscribeToMoreForBook({
+  //     document: BOOK_UPDATED_SUBSCRIPTION,
+  //     variables: { id: bookId },
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev
+  //       const { data } = subscriptionData
+  //       const { bookUpdated } = data
 
-        return {
-          getBook: bookUpdated,
-        }
-      },
-    })
-  }
+  //       return {
+  //         getBook: bookUpdated,
+  //       }
+  //     },
+  //   })
+  // }
 
-  const onBookComponentUpdated = () => {
-    return subscribeToMoreForBookComponent({
-      document: BOOK_COMPONENT_UPDATED_SUBSCRIPTION,
-      variables: { id: bookComponentId },
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const { data } = subscriptionData
-        const { bookComponentUpdated } = data
+  // const onBookComponentUpdated = () => {
 
-        return {
-          getBookComponent: bookComponentUpdated,
-        }
-      },
-    })
-  }
+  //   return subscribeToMoreForBookComponent({
+  //     document: BOOK_COMPONENT_UPDATED_SUBSCRIPTION,
+  //     variables: { id: bookComponentId },
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev
+  //       const { data } = subscriptionData
+  //       const { bookComponentUpdated } = data
 
-  const onCustomTagsUpdated = () => {
-    return subscribeToMoreForCustomTags({
-      document: CUSTOM_TAGS_UPDATED_SUBSCRIPTION,
-      updateQuery: (prev, { subscriptionData }) => {
-        if (!subscriptionData.data) return prev
-        const { data } = subscriptionData
-        const { customTagsUpdated } = data
+  //       return {
+  //         getBookComponent: bookComponentUpdated,
+  //       }
+  //     },
+  //   })
+  // }
 
-        return {
-          getCustomTags: customTagsUpdated,
-        }
-      },
-    })
-  }
+  // const onCustomTagsUpdated = () => {
+  //   return subscribeToMoreForCustomTags({
+  //     document: CUSTOM_TAGS_UPDATED_SUBSCRIPTION,
+  //     updateQuery: (prev, { subscriptionData }) => {
+  //       if (!subscriptionData.data) return prev
+  //       const { data } = subscriptionData
+  //       const { customTagsUpdated } = data
+
+  //       return {
+  //         getCustomTags: customTagsUpdated,
+  //       }
+  //     },
+  //   })
+  // }
 
   const onTriggerModal = (withConfirm, msg, url = undefined) => {
     if (withConfirm) {
@@ -351,9 +383,9 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
       rules={rules}
       setTabId={setTabId}
       showModal={showModal}
-      subscribeToBookComponentUpdates={onBookComponentUpdated}
-      subscribeToBookUpdates={onBookUpdated}
-      subscribeToCustomTagsUpdates={onCustomTagsUpdated}
+      // subscribeToBookComponentUpdates={onBookComponentUpdated}
+      // subscribeToBookUpdates={onBookUpdated}
+      // subscribeToCustomTagsUpdates={onCustomTagsUpdated}
       tabId={tabId}
       tags={tags}
       user={user}

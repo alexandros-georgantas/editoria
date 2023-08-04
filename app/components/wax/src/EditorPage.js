@@ -28,10 +28,10 @@ const EditorPage = props => {
     bookComponent,
     onBookComponentLock,
     onBookComponentTitleChange,
-    subscribeToBookComponentUpdates,
-    subscribeToBookUpdates,
+    // subscribeToBookComponentUpdates,
+    // subscribeToBookUpdates,
     onInfoModal,
-    subscribeToCustomTagsUpdates,
+    // subscribeToCustomTagsUpdates,
     rules,
     setTabId,
     tabId,
@@ -157,16 +157,16 @@ const EditorPage = props => {
   const previousConnectionStatus = usePrevious(connectionStatus)
 
   useEffect(() => {
-    const unsubscribeFromBookComponentUpdates =
-      subscribeToBookComponentUpdates()
+    // const unsubscribeFromBookComponentUpdates =
+    //   subscribeToBookComponentUpdates()
 
-    const unsubscribeFromBookUpdates = subscribeToBookUpdates()
-    const unsubscribeFromCustomTagsUpdates = subscribeToCustomTagsUpdates()
+    // const unsubscribeFromBookUpdates = subscribeToBookUpdates()
+    // const unsubscribeFromCustomTagsUpdates = subscribeToCustomTagsUpdates()
 
     return () => {
-      unsubscribeFromBookUpdates()
-      unsubscribeFromBookComponentUpdates()
-      unsubscribeFromCustomTagsUpdates()
+      // unsubscribeFromBookUpdates()
+      // unsubscribeFromBookComponentUpdates()
+      // unsubscribeFromCustomTagsUpdates()
 
       onPeriodicBookComponentContentChange.cancel()
       onPeriodicBookComponentTitleChange.cancel()

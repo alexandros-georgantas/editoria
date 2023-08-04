@@ -146,12 +146,8 @@ const options = [
     value: 'title',
   },
   {
-    label: 'author',
-    value: 'author',
-  },
-  {
-    label: 'status',
-    value: 'status',
+    label: 'pub. date',
+    value: 'publicationDate',
   },
 ]
 

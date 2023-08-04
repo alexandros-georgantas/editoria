@@ -15,6 +15,7 @@ fs.ensureDirSync(output)
 const clientConfigPath = path.join(output, 'client-config.json')
 fs.writeJsonSync(clientConfigPath, clientConfig, { spaces: 2 })
 
+const packageJson = require('../package.json')
 const plugins = require('./plugins')
 
 module.exports = webpackEnv => {
@@ -22,6 +23,8 @@ module.exports = webpackEnv => {
   const isEnvProduction = webpackEnv === 'production'
   const serverProtocol = process.env.SERVER_PROTOCOL
   const locksWSURL = process.env.LOCKS_WS_URL
+  const appVersion = packageJson.version
+  const appName = packageJson.name
 
   const featureBookStructure =
     (process.env.FEATURE_BOOK_STRUCTURE &&
@@ -99,6 +102,8 @@ module.exports = webpackEnv => {
         featureBookStructure,
         featureUploadDOCXFiles,
         locksWSURL,
+        appVersion,
+        appName,
       },
     }),
   }

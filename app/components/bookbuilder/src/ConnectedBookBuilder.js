@@ -330,7 +330,6 @@ const mapProps = args => ({
 
     const onConfirm = (mode, viewer, templateId, format) => {
       const payload = {
-        mode,
         templateId: undefined,
         previewer: undefined,
         fileExtension: undefined,

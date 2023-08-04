@@ -9,16 +9,16 @@ const BOOK_UPDATED_SUBSCRIPTION = gql`
   subscription BookUpdated($id: ID!) {
     bookUpdated(id: $id) {
       id
-      title
-      divisions {
-        id
-        label
-        bookComponents {
-          id
-          title
-          componentType
-        }
-      }
+      # title
+      # divisions {
+      #   id
+      #   label
+      #   bookComponents {
+      #     id
+      #     title
+      #     componentType
+      #   }
+      # }
     }
   }
 `
@@ -28,33 +28,33 @@ const BOOK_COMPONENT_UPDATED_SUBSCRIPTION = !featureBookStructureEnabled
       subscription BookComponentUpdated($id: ID!) {
         bookComponentUpdated(id: $id) {
           id
-          divisionId
-          divisionType
-          bookTitle
-          title
-          bookId
-          hasContent
-          componentTypeOrder
-          uploading
-          componentType
-          trackChangesEnabled
-          status
-          workflowStages {
-            label
-            type
-            value
-          }
-          lock {
-            userId
-            username
-            created
-            givenNames
-            tabId
-            isAdmin
-            surname
-            id
-          }
-          content
+          # divisionId
+          # divisionType
+          # bookTitle
+          # title
+          # bookId
+          # hasContent
+          # componentTypeOrder
+          # uploading
+          # componentType
+          # trackChangesEnabled
+          # status
+          # workflowStages {
+          #   label
+          #   type
+          #   value
+          # }
+          # lock {
+          #   userId
+          #   username
+          #   created
+          #   givenNames
+          #   tabId
+          #   isAdmin
+          #   surname
+          #   id
+          # }
+          # content
         }
       }
     `
@@ -62,43 +62,43 @@ const BOOK_COMPONENT_UPDATED_SUBSCRIPTION = !featureBookStructureEnabled
       subscription BookComponentUpdated($id: ID!) {
         bookComponentUpdated(id: $id) {
           id
-          divisionId
-          divisionType
-          bookTitle
-          title
-          bookId
-          hasContent
-          bookStructureElements {
-            groupHeader
-            items {
-              displayName
-              headingLevel
-              className
-              nestedHeadingLevel
-              isSection
-            }
-          }
-          componentTypeOrder
-          uploading
-          componentType
-          trackChangesEnabled
-          status
-          workflowStages {
-            label
-            type
-            value
-          }
-          lock {
-            userId
-            username
-            tabId
-            created
-            givenNames
-            isAdmin
-            surname
-            id
-          }
-          content
+          # divisionId
+          # divisionType
+          # bookTitle
+          # title
+          # bookId
+          # hasContent
+          # bookStructureElements {
+          #   groupHeader
+          #   items {
+          #     displayName
+          #     headingLevel
+          #     className
+          #     nestedHeadingLevel
+          #     isSection
+          #   }
+          # }
+          # componentTypeOrder
+          # uploading
+          # componentType
+          # trackChangesEnabled
+          # status
+          # workflowStages {
+          #   label
+          #   type
+          #   value
+          # }
+          # lock {
+          #   userId
+          #   username
+          #   tabId
+          #   created
+          #   givenNames
+          #   isAdmin
+          #   surname
+          #   id
+          # }
+          # content
         }
       }
     `
@@ -107,8 +107,8 @@ const CUSTOM_TAGS_UPDATED_SUBSCRIPTION = gql`
   subscription CustomTagsUpdated {
     customTagsUpdated {
       id
-      label
-      tagType
+      # label
+      # tagType
     }
   }
 `
