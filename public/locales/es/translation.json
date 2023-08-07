@@ -1,11 +1,19 @@
 {
+<<<<<<< HEAD
   "app_name": "Cliente de Vanilla",
+=======
+  "app_name": "vanilla-client",
+>>>>>>> 314e049 (+ setting up localization)
   "username": "Nombre de usuario",
   "password": "Contraseña",
   "login": "Iniciar sesión",
   "login_out": "Cerrar sesión",
   "email": "Correo electrónico",
+<<<<<<< HEAD
   "are_you_here_by_mistake?_go_back_to": "¿Estás aquí por error? Volver atrás",
+=======
+  "are_you_here_by_mistake?_go_back_to": "¿Estás aquí por error? Vuelve a",
+>>>>>>> 314e049 (+ setting up localization)
   "dont_have_an_account": "¿No tienes una cuenta?",
   "sign_up": "Registrarse",
   "forgot_your_password": "¿Olvidaste tu contraseña?",
@@ -14,21 +22,33 @@
   "add_book": "AGREGAR LIBRO",
   "there_are_no_books_to_display": "No hay libros para mostrar.",
   "system_status": "Estado del sistema",
+<<<<<<< HEAD
   "deployment_details": "Tu implementación utiliza el servidor de Ketida en la versión {{deploymentDetails.version}} y el cliente Vanilla en la versión {{deploymentDetails.APP_VERSION}}",
   "services_availability": "Disponibilidad de servicios",
   "follow_verification_link": "Por favor, sigue el enlace de verificación enviado a tu correo electrónico después del proceso de registro, o solicita un nuevo correo de verificación",
   "resend_verification": "Reenviar verificación",
+=======
+  "deployment_details": "Tu despliegue utiliza el servidor de Ketida en la versión {{deploymentDetails.version}} y el cliente Vanilla en la versión {{deploymentDetails.APP_VERSION}}",
+  "services_availability": "Disponibilidad de servicios",
+  "follow_verification_link": "Por favor, sigue el enlace de verificación enviado a tu correo electrónico después del proceso de registro, o solicita un nuevo correo de verificación",
+  "resend_verification": "reenviar verificación",
+>>>>>>> 314e049 (+ setting up localization)
   "your_user_is_deactivated": "Tu usuario ha sido desactivado por los administradores del sistema",
   "dont_have_account": "¿No tienes una cuenta?",
   "available": "Disponible",
   "not_available": "No disponible",
   "user_profile": "PERFIL DE USUARIO",
+<<<<<<< HEAD
   "given_name": "Nombre propio",
+=======
+  "given_name": "Nombre(s)",
+>>>>>>> 314e049 (+ setting up localization)
   "surname": "Apellido",
   "current_password": "Contraseña actual",
   "new_password": "Nueva contraseña",
   "repeat_new_password": "Repetir nueva contraseña",
   "change_password": "Cambiar contraseña",
+<<<<<<< HEAD
   "personal_information_successfully_updated": "Información personal actualizada exitosamente",
   "personal_information": "Información personal",
   "given_names_are_required": "Se requieren nombres propios",
@@ -106,4 +126,11 @@
   "are_you_here_by_mistake?go_back_to": "¿Estás aquí por error? Volver atrás",
   "enter_your_new_password": "Ingresa tu nueva contraseña",
   "submit": "Enviar"
+=======
+  "personal_information_successfully_updated": "Información personal actualizada correctamente",
+  "given_names_are_required": "Se requieren nombres",
+  "password_reset": "Restablecimiento de contraseña",
+  "something_went_wrong": "Algo salió mal",
+  "confirm_new_password": "Confirmar nueva contraseña"
+>>>>>>> 314e049 (+ setting up localization)
 }
