@@ -4,9 +4,10 @@ import {useTranslation} from "react-i18next";
 import styled from 'styled-components'
 import { override } from '@pubsweet/ui-toolkit'
 import { CenteredColumn, ErrorText, H1, Button, TextField } from '@pubsweet/ui'
-
+import {useTranslation} from "react-i18next";
 import { Loading } from '../../ui'
 import LanguageSwitcher from "../LanguageSwitcher";
+
 
 
 
