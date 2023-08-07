@@ -3,8 +3,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import NavBarLink from './NavBarLink'
 import ActionButton from './ActionButton'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 const Wrapper = styled.div`
   box-shadow: ${th('boxShadow')};
@@ -65,6 +67,7 @@ const DropComponent = ({
   setIsOpen,
 }) => {
   const { givenNames, surname, username } = currentUser
+  const { t } = useTranslation()
 
   return (
     <Wrapper>
@@ -74,6 +77,8 @@ const DropComponent = ({
         </UserInfo>
         <Username>{username}</Username>
       </UserSection>
+      <Divider />
+      <LanguageSwitcher />
       <Divider />
       <MainArea>
         {dropdownItems.map(item => {
@@ -93,12 +98,14 @@ const DropComponent = ({
       <LogoutSection>
         <ActionButton
           disabled={false}
-          label="Logout"
+          // label="Logout"
+          label={t('login_out')}
           onClick={() => {
             setIsOpen(false)
             logoutUser(client)
           }}
-          title="Logout"
+          // title="Logout"
+          title={t('login_out')}
         />
       </LogoutSection>
     </Wrapper>

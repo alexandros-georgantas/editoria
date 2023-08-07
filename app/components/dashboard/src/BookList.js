@@ -3,6 +3,7 @@ import { isEmpty } from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import Loading from '../../../ui/Loading'
 
 import Book from './Book'
@@ -27,10 +28,17 @@ const BookList = props => {
     bookRules,
   } = props
 
+  const { t } = useTranslation()
+
   if (loading) return <Loading />
 
   if (isEmpty(books)) {
-    return <div>There are no books to display.</div>
+    return (
+      <div>
+        {t('there_are_no_books_to_display')}
+        {/* There are no books to display. */}
+      </div>
+    )
   }
 
   return (

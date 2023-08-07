@@ -3,6 +3,7 @@ import React from 'react'
 import { H3 } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 import PropTypes from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { Loading } from '../../../ui'
 
 const Container = styled.div`
@@ -142,10 +143,13 @@ ListContent.propTypes = {
 
 const MicroServicesDetails = props => {
   const { healthcheck } = props
+  const { t } = useTranslation()
   if (!healthcheck) return <Loading />
   return (
     <SectionWrapper>
-      <ServicesHeading>Services availability:</ServicesHeading>
+      {/* <ServicesHeading>Services availability:</ServicesHeading> */}
+
+      <ServicesHeading>{t('services_availability')}:</ServicesHeading>
       <ServicesAvailability>
         {healthcheck.map(microServicesData => (
           <StatusItem key={microServicesData.displayName}>
@@ -162,18 +166,21 @@ MicroServicesDetails.propTypes = {
 }
 
 const KeyWrapper = () => {
+  const { t } = useTranslation()
   return (
     <StatusExplainerContainer>
       <StatusItem>
         <DisplayNameWrapper>
           <StatusImage isWorking />
-          <Label>Available</Label>
+          {/* <Label>Available</Label> */}
+          <Label>{t('available')}</Label>
         </DisplayNameWrapper>
       </StatusItem>
       <StatusItem>
         <DisplayNameWrapper>
           <StatusImage isWorking={false} />
-          <Label>Not Available</Label>
+          {/* <Label>Not Available</Label> */}
+          <Label>{t('not_available')}</Label>
         </DisplayNameWrapper>
       </StatusItem>
     </StatusExplainerContainer>
@@ -183,16 +190,18 @@ const KeyWrapper = () => {
 const ApplicationDetails = props => {
   const { APP_VERSION } = process.env
   const { systemInfo } = props
+  const { t } = useTranslation()
 
   if (!systemInfo) return <Loading />
   const { version, healthcheck } = systemInfo
-
+  const deploymentDetails = { APP_VERSION, version }
   return (
     <SectionServerDetails>
       <KeyWrapper />
       <SectionWrapper>
-        Your deployment uses Ketida’s server on version {version} and Vanilla
-        client on version {APP_VERSION}
+        {/* Your deployment uses Ketida’s server on version {version} and Vanilla
+        client on version {APP_VERSION} */}
+        {t('deployment_details', { deploymentDetails })}
       </SectionWrapper>
       <MicroServicesDetails healthcheck={healthcheck} />
     </SectionServerDetails>
@@ -208,12 +217,13 @@ ApplicationDetails.defaultProps = {
 
 const SystemInfo = props => {
   const { systemInfo, loading } = props
+  const { t } = useTranslation()
   if (loading && systemInfo.length === 0) return <Loading />
   return (
     <Container>
       <InnerWrapper>
         <HeaderWrapper>
-          <Title>System Status</Title>
+          <Title>{t('system_status')}</Title>
         </HeaderWrapper>
         <SectionWrapper>
           <ApplicationDetails systemInfo={systemInfo} />

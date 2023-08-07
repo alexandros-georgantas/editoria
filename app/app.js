@@ -37,6 +37,9 @@ import theme from './theme'
 
 import routes from './routes'
 
+// language translation service
+import '../services/i18n'
+
 const featureBookStructureEnabled =
   (process.env.FEATURE_BOOK_STRUCTURE &&
     JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
@@ -97,9 +100,11 @@ if (featureBookStructureEnabled) {
 }
 
 ReactDOM.render(
-  <ModalProvider modals={modals}>
-    <Root history={history} routes={routes} theme={theme} />
-  </ModalProvider>,
+  <React.Suspense fallback="Loading">
+    <ModalProvider modals={modals}>
+      <Root history={history} routes={routes} theme={theme} />
+    </ModalProvider>
+  </React.Suspense>,
   rootEl,
 )
 

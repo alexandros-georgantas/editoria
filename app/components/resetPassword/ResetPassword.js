@@ -3,8 +3,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { override } from '@pubsweet/ui-toolkit'
 import { CenteredColumn, ErrorText, H1, Button, TextField } from '@pubsweet/ui'
-
+import {useTranslation} from "react-i18next";
 import { Loading } from '../../ui'
+
 
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
@@ -43,9 +44,12 @@ const ResetPassword = props => {
     redirectToLogin,
   } = props
 
+  const { t } = useTranslation()
+
   if (hasSuccess) {
     redirectToLogin()
   }
+
 
   return (
     <StyledCenterColumn>
@@ -55,7 +59,10 @@ const ResetPassword = props => {
 
       <FormContainer>
         {loading && <Loading />}
-        <H1>Password Reset</H1>
+
+        {/* <H1>Password Reset</H1> */}
+
+        <H1>{t('password_reset')} </H1>
 
         <div>
           <TextField
@@ -67,13 +74,21 @@ const ResetPassword = props => {
             value={newPassword}
           />
           {mainPasswordError && <ErrorText>{mainPasswordError}</ErrorText>}
-          <TextField
+          {/* <TextField
             label="Confirm New Password"
             name="confirm_new_password"
             onChange={event => handleInputChange(event.target.value)}
             placeholder="Confirm your new password"
             type="password"
             value={confirmNewPassword}
+          />  */}
+          <TextField
+              label={t("confirm_new_password")}
+              name="confirm_new_password"
+              onChange={event => handleInputChange(event.target.value)}
+              placeholder={t("confirm_new_password")}
+              type="password"
+              value={confirmNewPassword}
           />
           {formError && <ErrorText>{formError}</ErrorText>}
           <Button
@@ -92,7 +107,8 @@ const ResetPassword = props => {
           >
             Submit
           </Button>
-          {hasError && <ErrorText>Something went wrong</ErrorText>}
+          {/* {hasError && <ErrorText>Something went wrong</ErrorText>} */}
+          {t('something_went_wrong')}
         </div>
       </FormContainer>
     </StyledCenterColumn>

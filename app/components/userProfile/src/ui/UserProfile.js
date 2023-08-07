@@ -6,6 +6,7 @@ import * as yup from 'yup'
 
 import { H3, H4 } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
+import {useTranslation} from "react-i18next";
 
 import RibbonFeedback from './RibbonFeedback'
 import { Loading, Button } from '../../../../ui'
@@ -77,6 +78,7 @@ const SectionHeader = styled(H4)`
 
 const PersonalInformation = props => {
   const { givenNames, surname, update, userId } = props
+
 
   const initialValues = {
     givenNames,
@@ -302,15 +304,16 @@ const Password = props => {
 
 const UserProfile = props => {
   const { data, loading, updatePassword, updatePersonalInformation } = props
+    const { t } = useTranslation()
 
-  if (loading) return <Loading />
+    if (loading) return <Loading />
   const { givenNames, surname, id } = data
 
   return (
     <Container>
       <InnerWrapper>
         <HeaderWrapper>
-          <Title>User Profile</Title>
+          <Title>{t('user_profile')}</Title>
         </HeaderWrapper>
         <SectionWrapper>
           <PersonalInformation
