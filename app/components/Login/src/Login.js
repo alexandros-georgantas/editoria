@@ -50,18 +50,19 @@ const FormContainer = styled.div`
 
 const UsernameInput = props => {
     // return (<TextField label="Username" placeholder="Username" {...props.field} />)
-    const {t} = useTranslation()
+    // const {t} = useTranslation()
+    // const
     return (
         <TextField
-            label={t('username')}
-            placeholder={t('username')}
+            label='Username'
+            placeholder='Username'
             {...props.field}
         />
     )
 }
 
 const PasswordInput = props => {
-    const {t} = useTranslation()
+    // const {t} = useTranslation()
     /* <TextField
       label="Password"
       placeholder="Password"
@@ -70,8 +71,8 @@ const PasswordInput = props => {
     /> */
     return (
         <TextField
-            label={t('password')}
-            placeholder={t('password')}
+            label='Password'
+            placeholder='password'
             {...props.field}
             type="password"
         />
@@ -81,16 +82,21 @@ const PasswordInput = props => {
 const renderError = msg => {
     const {t} = useTranslation()
 
+    // eslint-disable-next-line no-console
+    console.log(msg);
+
     if (msg === 100 || msg === 120) {
+        const followVerificationLink = t('follow_verification_link')
+        const resendVerification = t('resend_verification')
         return (
             <span>
         <ErrorText>
-          {t('follow_verification_link')}
+          {followVerificationLink}
             {/* Please follow the verification link sent to your email after
           registration process, or request a new verification email */}
         </ErrorText>
         <Link to="/resend-verification">
-          {t('resend_verification')}
+          {resendVerification}
             {/* resend verification */}
         </Link>
       </span>
@@ -98,10 +104,11 @@ const renderError = msg => {
     }
 
     if (msg === 110) {
+        const yourUserIsDeactivated = t('your_user_is_deactivated')
         return (
             <ErrorText>
                 {/* Your user is deactivated by the admins of the system */}
-                {t('your_user_is_deactivated')}
+                {yourUserIsDeactivated}
             </ErrorText>
         )
     }
@@ -118,6 +125,8 @@ const Login = ({
                    redirectLink,
                }) => {
     const {t} = useTranslation()
+    const login = t('login')
+    const dontHaveAnAccount =t('dont_have_an_account')
     return redirectLink ? (
         <Redirect to={redirectLink}/>
     ) : (
@@ -133,7 +142,7 @@ const Login = ({
 
             <FormContainer>
                 <H1>
-                    {/* Login */} {t('login')}
+                    {/* Login */} {login}
                 </H1>
 
                 {!isEmpty(errors) && renderError(errors.api)}
@@ -141,14 +150,14 @@ const Login = ({
                     <Field component={UsernameInput} name="username"/>
                     <Field component={PasswordInput} name="password"/>
                     <Button primary type="submit">
-                        {t('login')} {/* Login */}
+                        {login} {/* Login */}
                     </Button>
                 </form>
 
                 {signup && (
                     <div>
             <span>
-              {t('dont_have_an_account')}
+              {dontHaveAnAccount}
                 {/* Don&apos;t have an account? */}
             </span>
                         <Link to="/signup">
