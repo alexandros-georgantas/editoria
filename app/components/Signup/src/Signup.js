@@ -7,12 +7,12 @@ import {
   ValidatedFieldFormik,
   CenteredColumn,
   Link,
-  H1,
   ErrorText,
   Button,
   TextField,
 } from '@pubsweet/ui'
 import styled from 'styled-components'
+import {useTranslation} from "react-i18next";
 
 /* eslint-disable no-useless-escape, no-control-regex */
 const emailRegex =
@@ -55,40 +55,45 @@ const Logo = styled.div`
 /* stylelint-enable order/properties-alphabetical-order */
 
 const validateEmail = value => {
+  const { t } = useTranslation()
   let error
 
   if (!value) {
-    error = 'Required'
+    error = t('required')
   } else if (
     !emailRegex.test(value) // https://www.w3resource.com/javascript/form/email-validation.php
   ) {
-    error = 'Invalid email address'
+    error = t('invalid_email_address'); // 'Invalid email address'
   }
 
   return error
 }
 
 const validateUsername = value => {
+  const { t } = useTranslation()
   let error
 
   if (value === 'admin') {
     error = 'Nice try!'
   } else if (value === 'null') {
-    error = 'This is not a valid username'
+    // error = 'This is not a valid username'
+    error = t('this_is_not_a_valid_username');
   } else if (!value) {
-    error = 'Required'
+    error = t('required')
   }
 
   return error
 }
 
 const validateNames = value => {
+  const { t } = useTranslation()
   let error
 
   if (value === 'null') {
-    error = 'This is not a valid name'
+    // error = 'This is not a valid name'
+    error = t('this_is_not_a_valid_name')
   } else if (!value) {
-    error = 'Required'
+    error = t('required')
   }
 
   return error
@@ -96,116 +101,126 @@ const validateNames = value => {
 
 const validatePassword = value => {
   let error
+  const { t } = useTranslation()
 
   if (!value) {
-    error = 'Required'
+    error = t('required')
   } else if (value.length < 8) {
-    error = 'Password should be more than 7 characters'
+    error = t('password_should_be_more_than_7_characters')
   }
 
   return error
 }
 
-const GivenNameInput = props => (
-  <TextField
+const GivenNameInput = props => {
+const { t } = useTranslation()
+  return <TextField
     data-test-id="givenName"
-    label="Given Name"
+    label={t("given_name")}
     {...props}
     placeholder="Given Name"
   />
-)
+        }
 
-const SurnameInput = props => (
-  <TextField
+const SurnameInput = props => {
+  const { t } = useTranslation()
+ return <TextField
     data-test-id="surname"
-    label="Surname"
+    label={t("surname")}
     {...props}
-    placeholder="Surname"
+    placeholder={t("surname")}
   />
-)
+}
 
-const UsernameInput = props => (
-  <TextField
-    data-test-id="username"
-    label="Username"
-    {...props}
-    placeholder="Username"
+const UsernameInput = props => {
+  const { t } = useTranslation()
+  return <TextField
+      data-test-id="username"
+      label={t("username")}
+      {...props}
+      placeholder={t("username")}
   />
-)
+}
 
-const EmailInput = props => (
-  <TextField
-    data-test-id="email"
-    label="Email"
-    {...props}
-    placeholder="Email"
-    type="email"
+const EmailInput = props => {
+  const { t } = useTranslation()
+  return <TextField
+      data-test-id="email"
+      label={t("email")}
+      {...props}
+      placeholder={t("email")}
+      type="email"
   />
-)
+}
 
-const PasswordInput = props => (
-  <TextField
+const PasswordInput = props => {
+  const { t } = useTranslation()
+ return <TextField
     data-test-id="password"
-    label="Password"
+    label={t("password")}
     {...props}
-    placeholder="Password"
+    placeholder={t("password")}
     type="password"
   />
-)
+}
 
-const Signup = ({ error, errors, status, handleSubmit, logo = null }) => (
-  <StyledCenterColumn>
-    <StyledDiv>
-      {logo && (
-        <Logo>
-          <img alt="ketida-logo" src={`${logo}`} />
-        </Logo>
-      )}
-      <HeadingWrapper>
-        <H1>Sign up</H1>
-      </HeadingWrapper>
-      <FormContainer>
-        {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
-        {status && <SuccessText>User created</SuccessText>}
+const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
+    {
+      const { t } = useTranslation()
+      return <StyledCenterColumn>
+        <StyledDiv>
+          {logo && (
+              <Logo>
+                <img alt="ketida-logo" src={`${logo}`}/>
+              </Logo>
+          )}
+          <HeadingWrapper>
+            { /* <H1>Sign up</H1> */ }
+            {t('sign_up')}
+          </HeadingWrapper>
+          <FormContainer>
+            {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
+            {status && <SuccessText>{t('user_created')}</SuccessText>}
 
-        <Form onSubmit={handleSubmit}>
-          <ValidatedFieldFormik
-            component={GivenNameInput}
-            name="givenNames"
-            validate={validateNames}
-          />
-          <ValidatedFieldFormik
-            component={SurnameInput}
-            name="surname"
-            validate={validateNames}
-          />
-          <ValidatedFieldFormik
-            component={UsernameInput}
-            name="username"
-            validate={validateUsername}
-          />
-          <ValidatedFieldFormik
-            component={EmailInput}
-            name="email"
-            validate={validateEmail}
-          />
-          <ValidatedFieldFormik
-            component={PasswordInput}
-            name="password"
-            validate={validatePassword}
-          />
-          <Button disabled={error || !isEmpty(errors)} primary type="submit">
-            Sign up
-          </Button>
-        </Form>
+            <Form onSubmit={handleSubmit}>
+              <ValidatedFieldFormik
+                  component={GivenNameInput}
+                  name="givenNames"
+                  validate={validateNames}
+              />
+              <ValidatedFieldFormik
+                  component={SurnameInput}
+                  name="surname"
+                  validate={validateNames}
+              />
+              <ValidatedFieldFormik
+                  component={UsernameInput}
+                  name="username"
+                  validate={validateUsername}
+              />
+              <ValidatedFieldFormik
+                  component={EmailInput}
+                  name="email"
+                  validate={validateEmail}
+              />
+              <ValidatedFieldFormik
+                  component={PasswordInput}
+                  name="password"
+                  validate={validatePassword}
+              />
+              <Button disabled={error || !isEmpty(errors)} primary type="submit">
+                {t('sign up')}
+              </Button>
+            </Form>
 
-        <div>
-          <span>Already have an account? </span>
-          <Link to="/login">Login</Link>
-        </div>
-      </FormContainer>
-    </StyledDiv>
-  </StyledCenterColumn>
-)
+            <div>
+              <span>{t('already_have_an_account?')} </span>
+              <Link to="/login">{t('login')} </Link>
+            </div>
+          </FormContainer>
+        </StyledDiv>
+      </StyledCenterColumn>
+    }
+
 
 export default Signup

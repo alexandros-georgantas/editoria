@@ -79,6 +79,8 @@ const SectionHeader = styled(H4)`
 const PersonalInformation = props => {
   const { givenNames, surname, update, userId } = props
 
+    const { t } = useTranslation()
+
 
   const initialValues = {
     givenNames,
@@ -86,16 +88,16 @@ const PersonalInformation = props => {
   }
 
   const validations = yup.object().shape({
-    givenNames: yup.string().required('Given names are required'),
-    surname: yup.string().required('Surname is required'),
+    givenNames: yup.string().required(t('given_names_are_required')),
+    surname: yup.string().required(t('surname_is_required')),
   })
 
   return (
     <InnerSectionWrapper>
-      <SectionHeader>Personal Information</SectionHeader>
+      <SectionHeader>{t('personal_information')}</SectionHeader>
       <RibbonFeedback
         keepSpaceOccupied={false}
-        successMessage="Personal Information successfully updated"
+        successMessage={t("personal_information_successfully_updated")}
       >
         {notifyRibbon => {
           const handleSubmit = (formValues, formkikBag) => {
@@ -129,7 +131,7 @@ const PersonalInformation = props => {
                       error={errors.givenNames}
                       handleBlur={handleBlur}
                       handleChange={handleChange}
-                      label="Given Name"
+                      label={t("given_name")}
                       name="givenNames"
                       touched={touched}
                       value={values.givenNames}
@@ -139,7 +141,7 @@ const PersonalInformation = props => {
                       error={errors.surname}
                       handleBlur={handleBlur}
                       handleChange={handleChange}
-                      label="Surname"
+                      label={t("surname")}
                       name="surname"
                       touched={touched}
                       value={values.surname}
@@ -147,8 +149,8 @@ const PersonalInformation = props => {
 
                     <Button
                       disabled={disabled}
-                      label="Update"
-                      title="Update"
+                      label={t("update")}
+                      title={t("update")}
                       type="submit"
                     />
                   </>
@@ -165,6 +167,8 @@ const PersonalInformation = props => {
 const Password = props => {
   const { update, userId } = props
 
+    const { t } = useTranslation()
+
   const initialValues = {
     currentPassword: '',
     newPassword1: '',
@@ -172,14 +176,16 @@ const Password = props => {
   }
 
   const validations = yup.object().shape({
-    currentPassword: yup.string().required('Current password is required'),
-    newPassword1: yup.string().required('New password is required'),
+    currentPassword: yup.string().required(t('current_password_is_required')),
+    // newPassword1: yup.string().required('New password is required'),
+      newPassword1: yup.string().required(t('new_password_is_required')),
     newPassword2: yup
       .string()
-      .required('Please re-enter your new password')
+      .required(t('please_re_enter_your_new_password'))
       .test(
         'new-password-match',
-        'Passwords do not match',
+        /* 'Passwords do not match', */
+          t('passwords_do_not_match'),
         /* eslint-disable func-names, react/no-this-in-sfc */
         function (val) {
           return val === this.parent.newPassword1
@@ -189,11 +195,13 @@ const Password = props => {
 
   return (
     <InnerSectionWrapper>
-      <SectionHeader>Change password</SectionHeader>
+      <SectionHeader>{t("change_password")}</SectionHeader>
       <RibbonFeedback
-        errorMessage="Current password is incorrect"
+        /* errorMessage="Current password is incorrect" */
+          errorMessage={t("current_password_is_incorrect")}
         keepSpaceOccupied={false}
-        successMessage="Password successfully updated"
+        /* successMessage="Password successfully updated" */
+          successMessage={t("password_successfully_updated")}
       >
         {notifyRibbon => {
           const handleSubmit = (formValues, { resetForm }) => {
@@ -222,13 +230,19 @@ const Password = props => {
                   .pop()
                   .trim()
 
-                const messages = [
+                /* const messages = [
                   'Current password is not valid',
                   'New password must be different from current password',
-                ]
+                ] */
+                  const messages = [
+                      t('current password is not valid'),
+                      t('new_password_must_be_different_from_current_password'),
+                  ]
 
-                let msg = 'Something went wrong!'
-                if (messages.includes(errorMessage)) msg = errorMessage
+                // let msg = 'Something went wrong!'
+
+                   let msg = t('something_went_wrong!')
+                  if (messages.includes(errorMessage)) msg = errorMessage
 
                 notifyRibbon(false, msg)
               })
@@ -256,7 +270,7 @@ const Password = props => {
                       error={errors.currentPassword}
                       handleBlur={handleBlur}
                       handleChange={handleChange}
-                      label="Current password"
+                      label={t("current_password")}
                       name="currentPassword"
                       touched={touched}
                       type="password"
@@ -267,7 +281,7 @@ const Password = props => {
                       error={errors.newPassword1}
                       handleBlur={handleBlur}
                       handleChange={handleChange}
-                      label="New password"
+                      label={t("new_password")}
                       name="newPassword1"
                       touched={touched}
                       type="password"
@@ -278,7 +292,7 @@ const Password = props => {
                       error={errors.newPassword2}
                       handleBlur={handleBlur}
                       handleChange={handleChange}
-                      label="Repeat new password"
+                      label={t("repeat_new_password")}
                       name="newPassword2"
                       touched={touched}
                       type="password"
@@ -287,8 +301,8 @@ const Password = props => {
 
                     <Button
                       disabled={!isValid}
-                      label="Change password"
-                      title="Change password"
+                      label={t("change_password")}
+                      title={t("change_password")}
                       type="submit"
                     />
                   </>

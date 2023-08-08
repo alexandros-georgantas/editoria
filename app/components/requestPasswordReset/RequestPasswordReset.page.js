@@ -1,8 +1,10 @@
 import React from 'react'
 import { useMutation } from '@apollo/client'
 import debounce from 'lodash/debounce'
+import {useTranslation} from "react-i18next";
 import RequestPasswordReset from './RequestPasswordReset'
 import REQUEST_PASSWORD_RESET from './queries/requestPasswordReset.queries'
+
 
 /* eslint-disable no-useless-escape, no-control-regex */
 const emailRegex =
@@ -28,13 +30,17 @@ const RequestPasswordResetPage = props => {
   }
 
   const inputValidation = debounce(value => {
+    const { t } = useTranslation()
+
     if (!value || value.length === 0) {
-      setFormError('This field is required and should not be empty')
+      // setFormError('This field is required and should not be empty')
+      setFormError(t('this_field_is_required_and_should_not_be_empty'))
       return false
     }
 
     if (!emailRegex.test(value)) {
-      setFormError('This is not a valid email format')
+      // setFormError('This is not a valid email format')
+      setFormError(t('this_is_not_a_valid_email_format'))
       return false
     }
 

@@ -10,8 +10,10 @@ import {
   TextField,
   Link,
 } from '@pubsweet/ui'
+import {useTranslation} from "react-i18next";
 
 import { Loading } from '../../ui'
+
 
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
@@ -48,6 +50,8 @@ const RequestPasswordReset = props => {
     email,
   } = props
 
+  const { t } = useTranslation()
+
   return (
     <StyledCenterColumn>
       <Logo>
@@ -56,14 +60,15 @@ const RequestPasswordReset = props => {
 
       <FormContainer>
         {loading && <Loading />}
-        <H1>Password Reset</H1>
+        {/* <H1>Password Reset</H1> */}
+        <H1>{t('password_reset')}</H1>
 
         <div>
           <TextField
             label="Email"
             name="email"
             onChange={event => handleInputChange(event.target.value)}
-            placeholder="Enter your email"
+            placeholder={t("enter_your_email")}
             type="text"
             value={email}
           />
@@ -82,12 +87,13 @@ const RequestPasswordReset = props => {
           >
             Send email
           </Button>
-          {hasError && <ErrorText>Something went wrong</ErrorText>}
-          {hasSuccess && <div>{`An email has been sent to ${userEmail}`}</div>}
+          {hasError && <ErrorText>{t("something_went_wrong")}</ErrorText>}
+          {/* {hasSuccess && <div>{`An email has been sent to ${userEmail}`}</div>} */}
+          {hasSuccess && <div>{t("An email has been sent to ",{userEmail})}</div>}
         </div>
         <div>
-          <span>Are you here by mistake? Go back to </span>
-          <Link to="/login">Login</Link>
+          <span>{t("are_you_here_by_mistake?_go_back_to")} </span>
+          <Link to="/login">{t("login")}</Link>
         </div>
       </FormContainer>
     </StyledCenterColumn>
