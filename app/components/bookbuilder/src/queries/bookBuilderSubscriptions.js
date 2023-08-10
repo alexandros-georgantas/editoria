@@ -4,17 +4,13 @@ import { gql } from '@apollo/client'
 
 const BOOK_COMPONENT_ORDER_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentOrderUpdated {
-    bookComponentOrderUpdated {
-      id
-    }
+    bookComponentOrderUpdated
   }
 `
 
 const BOOK_COMPONENT_UPLOADING_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentUploadingUpdated {
-    bookComponentUploadingUpdated {
-      id
-    }
+    bookComponentUploadingUpdated
   }
 `
 
@@ -26,65 +22,49 @@ const RUNNING_HEADERS_UPDATED_SUBSCRIPTION = gql`
 
 const BOOK_COMPONENT_ADDED_SUBSCRIPTION = gql`
   subscription BookComponentAdded {
-    bookComponentAdded {
-      id
-    }
+    bookComponentAdded
   }
 `
 
 const BOOK_COMPONENT_DELETED_SUBSCRIPTION = gql`
   subscription BookComponentDeleted {
-    bookComponentDeleted {
-      id
-    }
+    bookComponentDeleted
   }
 `
 
 const BOOK_COMPONENT_PAGINATION_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentPaginationUpdated {
-    bookComponentPaginationUpdated {
-      id
-    }
+    bookComponentPaginationUpdated
   }
 `
 
 const BOOK_COMPONENT_WORKFLOW_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentWorkflowUpdated {
-    bookComponentWorkflowUpdated {
-      id
-    }
+    bookComponentWorkflowUpdated
   }
 `
 
 const BOOK_COMPONENT_LOCK_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentLockUpdated {
-    bookComponentLockUpdated {
-      id
-    }
+    bookComponentLockUpdated
   }
 `
 
 const BOOK_COMPONENTS_LOCK_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentsLockUpdated {
-    bookComponentsLockUpdated {
-      id
-    }
+    bookComponentsLockUpdated
   }
 `
 
 const BOOK_COMPONENT_TITLE_UPDATED_SUBSCRIPTION = gql`
   subscription BookComponentTitleUpdated {
-    bookComponentTitleUpdated {
-      id
-    }
+    bookComponentTitleUpdated
   }
 `
 
 const TEAM_MEMBERS_UPDATED_SUBSCRIPTION = gql`
   subscription TeamMembersUpdated {
-    teamMembersUpdated {
-      role
-    }
+    teamMembersUpdated
   }
 `
 
@@ -134,9 +114,7 @@ const addTeamMemberSubscription = props => {
 
 const PRODUCTION_EDITORS_UPDATED_SUBSCRIPTION = gql`
   subscription ProductionEditorsUpdated {
-    productionEditorsUpdated {
-      role
-    }
+    productionEditorsUpdated
   }
 `
 
@@ -162,17 +140,41 @@ const orderChangeSubscription = props => {
 
 const COMPONENT_TYPE_UPDATED_SUBSCRIPTION = gql`
   subscription ComponentTypeUpdated {
-    bookComponentTypeUpdated {
-      id
-    }
+    bookComponentTypeUpdated
   }
 `
 
+const BOOK_UPDATED_SUBSCRIPTION = gql`
+  subscription BookUpdated($id: ID!) {
+    bookUpdated(id: $id)
+  }
+`
+
+const bookUpdatedSubscription = props => {
+  const { bookId, render, statefull, getBookQuery } = props
+  const { pauseUpdates } = statefull
+  const { refetch } = getBookQuery
+
+  const triggerRefetch = () => {
+    console.log('hahaha')
+    if (pauseUpdates) return
+    refetch()
+  }
+
+  return (
+    <Subscription
+      onSubscriptionData={triggerRefetch}
+      subscription={BOOK_UPDATED_SUBSCRIPTION}
+      variables={{ id: bookId }}
+    >
+      {render}
+    </Subscription>
+  )
+}
+
 const INCLUDE_IN_TOC_UPDATED_SUBSCRIPTION = gql`
   subscription IncludeInTOCUpdated {
-    bookComponentTOCToggled {
-      id
-    }
+    bookComponentTOCToggled
   }
 `
 
@@ -505,4 +507,5 @@ export {
   bookComponentIncludeInTOCSubscription,
   runningHeadersUpdatedSubscription,
   uploadingUpdatedSubscription,
+  bookUpdatedSubscription,
 }

@@ -100,9 +100,7 @@ const bookDeletedSubscription = props => {
 
 const TEAM_MEMBERS_UPDATED_SUBSCRIPTION = gql`
   subscription TeamMembersUpdated {
-    teamMembersUpdated {
-      objectId
-    }
+    teamMembersUpdated
   }
 `
 

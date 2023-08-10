@@ -4,12 +4,7 @@ import { gql } from '@apollo/client'
 
 const UPDATE_APPLICATION_PARAMETERS_SUBSCRIPTION = gql`
   subscription UpdateApplicationParameters {
-    updateApplicationParameters {
-      id
-      context
-      area
-      config
-    }
+    updateApplicationParameters
   }
 `
 
