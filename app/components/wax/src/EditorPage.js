@@ -278,7 +278,7 @@ const EditorPage = props => {
       divisionType={divisionType}
       editorMode={editorMode}
       history={history}
-      key={id}
+      key={`${id}-${editorMode}`}
       nextBookComponent={nextBookComponent}
       onAssetManager={onAssetManager}
       onBookComponentTrackChangesChange={onBookComponentTrackChangesChange}

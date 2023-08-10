@@ -4,9 +4,7 @@ import { gql } from '@apollo/client'
 
 const TEAM_MEMBERS_UPDATED_SUBSCRIPTION = gql`
   subscription TeamMembersUpdated {
-    teamMembersUpdated {
-      role
-    }
+    teamMembersUpdated
   }
 `
 

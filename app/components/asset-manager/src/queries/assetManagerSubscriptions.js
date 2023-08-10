@@ -16,9 +16,7 @@ const FILES_DELETED_SUBSCRIPTION = gql`
 
 const FILE_UPDATED_SUBSCRIPTION = gql`
   subscription FileUpdated {
-    fileUpdated {
-      id
-    }
+    fileUpdated
   }
 `
 
