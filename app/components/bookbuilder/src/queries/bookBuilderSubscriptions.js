@@ -145,8 +145,8 @@ const COMPONENT_TYPE_UPDATED_SUBSCRIPTION = gql`
 `
 
 const BOOK_UPDATED_SUBSCRIPTION = gql`
-  subscription BookUpdated {
-    bookUpdated
+  subscription BookUpdated($id: ID!) {
+    bookUpdated(id: $id)
   }
 `
 
@@ -156,6 +156,7 @@ const bookUpdatedSubscription = props => {
   const { refetch } = getBookQuery
 
   const triggerRefetch = () => {
+    console.log('hahaha')
     if (pauseUpdates) return
     refetch()
   }
