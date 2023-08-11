@@ -104,6 +104,7 @@ ReactDOM.render(
     <ModalProvider modals={modals}>
       <Root history={history} routes={routes} theme={theme} />
     </ModalProvider>
+    ,
   </React.Suspense>,
   rootEl,
 )
