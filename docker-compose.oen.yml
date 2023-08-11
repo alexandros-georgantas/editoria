@@ -32,7 +32,7 @@ services:
       - ./config:/home/node/app/config
 
   server:
-    image: cokoapps/ketida-server:1.11.0
+    image: cokoapps/ketida-server:1.11.2
     restart: unless-stopped
     depends_on:
       - db
