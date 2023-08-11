@@ -28,6 +28,7 @@ export {
   bookComponentIncludeInTOCSubscription,
   runningHeadersUpdatedSubscription,
   uploadingUpdatedSubscription,
+  bookUpdatedSubscription,
 } from './bookBuilderSubscriptions'
 
 export { default as templateUpdatedForPagedStyledSubscription } from './templateUpdatedSubscription'

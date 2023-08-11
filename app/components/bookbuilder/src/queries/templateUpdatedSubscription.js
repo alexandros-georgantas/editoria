@@ -4,9 +4,7 @@ import { gql } from '@apollo/client'
 
 const TEMPLATE_UPDATED_SUBSCRIPTION = gql`
   subscription TemplateUpdated {
-    templateUpdated {
-      id
-    }
+    templateUpdated
   }
 `
 

@@ -4,25 +4,19 @@ import { gql } from '@apollo/client'
 
 const TEMPLATE_CREATED_SUBSCRIPTION = gql`
   subscription TemplateCreated {
-    templateCreated {
-      id
-    }
+    templateCreated
   }
 `
 
 const TEMPLATE_UPDATED_SUBSCRIPTION = gql`
   subscription TemplateUpdated {
-    templateUpdated {
-      id
-    }
+    templateUpdated
   }
 `
 
 const TEMPLATE_DELETED_SUBSCRIPTION = gql`
   subscription TemplateDeleted {
-    templateDeleted {
-      id
-    }
+    templateDeleted
   }
 `
 

@@ -42,6 +42,7 @@ import {
   toggleIncludeInTOCMutation,
   bookComponentIncludeInTOCSubscription,
   uploadingUpdatedSubscription,
+  bookUpdatedSubscription,
 } from './queries'
 
 const mapper = {
@@ -62,6 +63,7 @@ const mapper = {
   productionEditorChangeSubscription,
   componentTypeChangeSubscription,
   bookComponentIncludeInTOCSubscription,
+  bookUpdatedSubscription,
   runningHeadersUpdatedSubscription,
   addTeamMemberSubscription,
   bookMetadataSubscription,

@@ -43,7 +43,6 @@ const mapProps = args => ({
 const Composed = adopt(mapper, mapProps)
 
 const Connected = props => {
-  console.log('props', props)
   const { currentUser, history } = props
 
   return (
