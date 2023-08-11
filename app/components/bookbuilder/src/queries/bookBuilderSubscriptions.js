@@ -156,7 +156,6 @@ const bookUpdatedSubscription = props => {
   const { refetch } = getBookQuery
 
   const triggerRefetch = () => {
-    console.log('hahaha')
     if (pauseUpdates) return
     refetch()
   }

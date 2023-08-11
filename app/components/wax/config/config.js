@@ -53,8 +53,6 @@ import charactersList from './charactersList'
 
 /* eslint-disable no-param-reassign */
 
-// console.log('aaaaaaaaa', disallowPasteImagesPlugin)
-
 export default onInfoModal => ({
   MenuService: [
     {

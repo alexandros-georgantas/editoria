@@ -56,12 +56,6 @@ const Editor = ({
   }
 
   let translatedEditing
-  // useEffect(() => {
-  //   const clonedPmPlugins = [...configWax.PmPlugins]
-  //   configWax.PmPlugins = clonedPmPlugins.concat([
-  //     disallowPasteImagesPlugin(() => console.log('eeeeeeeEEEEEEEEEEEEEE')),
-  //   ])
-  // }, [])
 
   switch (editorMode) {
     case 'selection':
