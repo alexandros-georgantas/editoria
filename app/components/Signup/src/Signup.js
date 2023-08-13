@@ -74,7 +74,8 @@ const validateUsername = value => {
   let error
 
   if (value === 'admin') {
-    error = 'Nice try!'
+    // error = 'Nice try!'
+    error = 'nice_try'
   } else if (value === 'null') {
     // error = 'This is not a valid username'
     error = t('this_is_not_a_valid_username');
@@ -114,11 +115,17 @@ const validatePassword = value => {
 
 const GivenNameInput = props => {
 const { t } = useTranslation()
+  // return <TextField
+  //   data-test-id="givenName"
+  //   label={t("given_name")}
+  //   {...props}
+  //   placeholder="Given Name"
+  // />
   return <TextField
     data-test-id="givenName"
     label={t("given_name")}
     {...props}
-    placeholder="Given Name"
+    placeholder={t("given_name")}
   />
         }
 
@@ -209,7 +216,7 @@ const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
                   validate={validatePassword}
               />
               <Button disabled={error || !isEmpty(errors)} primary type="submit">
-                {t('sign up')}
+                {t('sign_up')}
               </Button>
             </Form>
 

@@ -12,7 +12,7 @@ import {
   Button,
   TextField,
 } from '@pubsweet/ui'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 
 import styled from 'styled-components'
 import LanguageSwitcher from '../../LanguageSwitcher'
@@ -47,7 +47,6 @@ const FormContainer = styled.div`
 `
 /* stylelint-enable order/properties-alphabetical-order */
 
-
 const UsernameInput = props => {
   // return <TextField label="Username" placeholder="Username" {...props.field} />
   const { t } = useTranslation()
@@ -75,7 +74,7 @@ const PasswordInput = props => {
 }
 
 const renderError = msg => {
-  alert(msg);
+  // alert(msg);
 
   // const { t } = useTranslation()
   // eslint-disable-next-line no-console
@@ -83,31 +82,37 @@ const renderError = msg => {
   // const resendVerification = t('resend_verification')
   // const yourUserIsDeactivated = t('your_user_is_deactivated')
 
-  if (msg === 100 || msg === 120) {
+  if (msg === 100 || msg === 120 || msg === 400) {
     return (
       <span>
         <ErrorText>
-          Please follow the verification link sent to your email after
-          registration process, or request a new verification email
+          {/* Please follow the verification link sent to your email after
+          registration process, or request a new verification email */}
+          <Trans i18nKey="follow_verification_link">
+            Please follow the verification link sent to your email after
+            registration process, or request a new verification email
+          </Trans>
         </ErrorText>
-        <Link to="/resend-verification">
-          resend verification
-        </Link>
+        <Link to="/resend-verification"><Trans i18nKey="resend_verification">resend verification</Trans> </Link>
       </span>
     )
   }
 
   if (msg === 110) {
     return (
+      // <ErrorText>
+      //   Your user is deactivated by the admins of the system
+      // </ErrorText>
+
       <ErrorText>
-        Your user is deactivated by the admins of the system
-        </ErrorText>
+        <Trans i18nKey="your_user_is_deactivated">
+          Your user is deactivated by the admins of the system
+        </Trans>
+      </ErrorText>
     )
   }
 
-  return (
-      <ErrorText>{msg}</ErrorText>
-  )
+  return <ErrorText><Trans i18nKey="your_user_is_deactivated">{msg}</Trans> </ErrorText>
 }
 
 const Login = ({
@@ -120,12 +125,12 @@ const Login = ({
 }) => {
   const { t } = useTranslation()
   const login = t('login')
-  const dontHaveAnAccount = t('dont_have_an_account')
+  // const dontHaveAnAccount = t('dont_have_an_account')
   const forgotYourPassword = t('forgot_your_password')
   const resetPassword = t('reset_password')
   const signUpTrans = t('sign_up')
 
-  console.log(login,dontHaveAnAccount,forgotYourPassword,resetPassword,signUpTrans)
+
 
   return redirectLink ? (
     <Redirect to={redirectLink} />
@@ -145,7 +150,7 @@ const Login = ({
           {/* Login */} {login}
         </H1>
 
-        { !isEmpty(errors) && renderError(errors.api)}
+        {!isEmpty(errors) && renderError(errors.api)}
 
         <form onSubmit={handleSubmit}>
           <Field component={UsernameInput} name="username" />
@@ -158,7 +163,8 @@ const Login = ({
         {signup && (
           <div>
             <span>
-              {dontHaveAnAccount}
+              {/* {dontHaveAnAccount} */}
+              <Trans i18nKey="dont_have_an_account">Dont have an account?</Trans>
               {/* Don&apos;t have an account? */}
             </span>
             <Link to="/signup">
