@@ -31,8 +31,7 @@ Logo.displayName = 'Ketida'
 const LanguageSwitcherWrapper = styled.div`
   position: absolute;
   top: 0;
-  right: 0;
-  padding: 10px;
+  right: 50;
 `
 
 const StyledCenterColumn = styled(CenteredColumn)`
@@ -49,67 +48,64 @@ const FormContainer = styled.div`
 /* stylelint-enable order/properties-alphabetical-order */
 
 const UsernameInput = props => {
-    // return <TextField label="Username" placeholder="Username" {...props.field} />
-    const { t } = useTranslation()
-    const username = t('username')
-    return <TextField label={username} placeholder={username} {...props.field} />
+  // return <TextField label="Username" placeholder="Username" {...props.field} />
+  const { t } = useTranslation()
+  const username = t('username')
+  return <TextField label={username} placeholder={username} {...props.field} />
 }
 
 const PasswordInput = props => {
-    const { t } = useTranslation()
-    const password = t('password')
-    /* <TextField
-          label="Password"
-          placeholder="Password"
-          {...props.field}
-          type="password"
-        /> */
-    return (
-        <TextField
-            label={password}
-            placeholder={password}
-            {...props.field}
-            type="password"
-        />
-    )
+  const { t } = useTranslation()
+  const password = t('password')
+  /* <TextField
+        label="Password"
+        placeholder="Password"
+        {...props.field}
+        type="password"
+      /> */
+  return (
+    <TextField
+      label={password}
+      placeholder={password}
+      {...props.field}
+      type="password"
+    />
+  )
 }
 
 const renderError = msg => {
-  alert(msg);
-
-  // const { t } = useTranslation()
-  // eslint-disable-next-line no-console
-  // const followVerificationLink = t('follow_verification_link')
-  // const resendVerification = t('resend_verification')
-  // const yourUserIsDeactivated = t('your_user_is_deactivated')
 
   if (msg === 100 || msg === 120) {
     return (
       <span>
         <ErrorText>
-          Please follow the verification link sent to your email after
-          registration process, or request a new verification email
+          {/* Please follow the verification link sent to your email after
+          registration process, or request a new verification email */}
+          <Trans i18nKey="follow_verification_link">
+            Please follow the verification link sent to your email after
+            registration process, or request a new verification email
+          </Trans>
         </ErrorText>
         <Link to="/resend-verification"><Trans i18nKey="resend_verification">resend verification</Trans> </Link>
       </span>
-        )
-    }
+    )
+  }
 
-    if (msg === 110) {
-        return (
-            // <ErrorText>
-            //   Your user is deactivated by the admins of the system
-            // </ErrorText>
+  if (msg === 110) {
+    return (
+      // <ErrorText>
+      //   Your user is deactivated by the admins of the system
+      // </ErrorText>
 
-            <ErrorText>
-                <Trans i18nKey="your_user_is_deactivated">
-                    Your user is deactivated by the admins of the system
-                </Trans>
-            </ErrorText>
-        )
-    }
+      <ErrorText>
+        <Trans i18nKey="your_user_is_deactivated">
+          Your user is deactivated by the admins of the system
+        </Trans>
+      </ErrorText>
+    )
+  }
 
-    return <ErrorText>{msg}</ErrorText>
+  return <ErrorText>{msg}</ErrorText>
 }
 
 const Login = ({

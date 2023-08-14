@@ -13,10 +13,15 @@ i18next
   .init({
     // lng will override the browser detector if provided
     lng: defaultLanguage,
+    ns: 'translation',
 
     supportedLngs: supportedLanguages.map(lang => lang.code),
 
     nonExplicitSupportedLngs: true,
+    detection: {
+      order: ['path', 'cookie', 'localStorage', 'sessionStorage', 'htmlTag'],
+      caches: ['localStorage', 'cookie'],
+    },
 
     // Good idea to provide a fallback when loading
     // translations from a back-end, to avoid unsuccessful
@@ -27,9 +32,9 @@ i18next
     // preload: ["en", "es"],
 
     // Back-end config
-    // backend: {
-    //   loadPath: "/locales/{{lng}}/{{ns}}.json",
-    // },
+    backend: {
+       loadPath: "/locales/{{lng}}/{{ns}}.json",
+    },
 
     interpolation: {
       // React will escape output values, so we don't need
