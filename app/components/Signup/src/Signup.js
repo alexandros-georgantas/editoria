@@ -12,7 +12,7 @@ import {
   TextField,
 } from '@pubsweet/ui'
 import styled from 'styled-components'
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 
 /* eslint-disable no-useless-escape, no-control-regex */
 const emailRegex =
@@ -55,46 +55,49 @@ const Logo = styled.div`
 /* stylelint-enable order/properties-alphabetical-order */
 
 const validateEmail = value => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   let error
 
   if (!value) {
-    error = t('required')
+    error = (<Trans i18nKey="required">
+      Required
+    </Trans>) // t('required')
   } else if (
     !emailRegex.test(value) // https://www.w3resource.com/javascript/form/email-validation.php
   ) {
-    error = t('invalid_email_address'); // 'Invalid email address'
+    error = (<Trans i18nKey="invalid_email_address">Invalid email address</Trans> )  // t('invalid_email_address'); // 'Invalid email address'
   }
 
   return error
 }
 
 const validateUsername = value => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   let error
 
   if (value === 'admin') {
     // error = 'Nice try!'
-    error = 'nice_try'
+    error = <Trans i18nKey="nice_try">Nice try!</Trans> // 'nice_try'
   } else if (value === 'null') {
     // error = 'This is not a valid username'
-    error = t('this_is_not_a_valid_username');
+    error = <Trans i18nKey="this_is_not_a_valid_username">This is not a valid username</Trans> // t('this_is_not_a_valid_username');
   } else if (!value) {
-    error = t('required')
+    error = <Trans i18nKey='required'>Required</Trans> // t('required')
   }
 
   return error
 }
 
 const validateNames = value => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
   let error
 
   if (value === 'null') {
     // error = 'This is not a valid name'
-    error = t('this_is_not_a_valid_name')
+    error = <Trans i18nKey='this_is_not_a_valid_name'>This is not a valid name</Trans> // t('this_is_not_a_valid_name')
   } else if (!value) {
-    error = t('required')
+    error = <Trans i18nKey='required'>Required</Trans> // t('required')
+
   }
 
   return error
@@ -102,12 +105,13 @@ const validateNames = value => {
 
 const validatePassword = value => {
   let error
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
   if (!value) {
-    error = t('required')
+    error = <Trans i18nKey='required'>Required</Trans> // t('required')
   } else if (value.length < 8) {
-    error = t('password_should_be_more_than_7_characters')
+    // error = t('password_should_be_more_than_7_characters')
+    error = <Trans i18nKey='password_should_be_more_than_7_characters'>Password should be more than 7 characters</Trans> // t('required')
   }
 
   return error
@@ -121,59 +125,64 @@ const { t } = useTranslation()
   //   {...props}
   //   placeholder="Given Name"
   // />
+  const givenName = t("given_name")
   return <TextField
     data-test-id="givenName"
-    label={t("given_name")}
+    label={givenName}
     {...props}
-    placeholder={t("given_name")}
+    placeholder={givenName}
   />
         }
 
 const SurnameInput = props => {
   const { t } = useTranslation()
- return <TextField
+ const surname = t("surname")
+  return <TextField
     data-test-id="surname"
-    label={t("surname")}
+    label={surname}
     {...props}
-    placeholder={t("surname")}
+    placeholder={surname}
   />
 }
 
 const UsernameInput = props => {
   const { t } = useTranslation()
+  const username = t("username");
   return <TextField
       data-test-id="username"
-      label={t("username")}
+      label={username}
       {...props}
-      placeholder={t("username")}
+      placeholder={username}
   />
 }
 
 const EmailInput = props => {
   const { t } = useTranslation()
+  const email = t("email")
   return <TextField
       data-test-id="email"
-      label={t("email")}
+      label={email}
       {...props}
-      placeholder={t("email")}
+      placeholder={email}
       type="email"
   />
 }
 
 const PasswordInput = props => {
   const { t } = useTranslation()
- return <TextField
+ const password = t("password")
+  return <TextField
     data-test-id="password"
-    label={t("password")}
+    label={password}
     {...props}
-    placeholder={t("password")}
+    placeholder={password}
     type="password"
   />
 }
 
 const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
     {
-      const { t } = useTranslation()
+      // const { t } = useTranslation()
       return <StyledCenterColumn>
         <StyledDiv>
           {logo && (
@@ -183,11 +192,12 @@ const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
           )}
           <HeadingWrapper>
             { /* <H1>Sign up</H1> */ }
-            {t('sign_up')}
+             {/* t('sign_up') */}
+            <Trans i18nKey="sign_up">Siugn Up</Trans>
           </HeadingWrapper>
           <FormContainer>
             {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
-            {status && <SuccessText>{t('user_created')}</SuccessText>}
+            {status && <SuccessText><Trans i18nKey='user_created'>User Created</Trans></SuccessText>}
 
             <Form onSubmit={handleSubmit}>
               <ValidatedFieldFormik
@@ -216,13 +226,14 @@ const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
                   validate={validatePassword}
               />
               <Button disabled={error || !isEmpty(errors)} primary type="submit">
-                {t('sign_up')}
+                <Trans i18nKey='sign_up'>Sign Up</Trans>
               </Button>
             </Form>
 
             <div>
-              <span>{t('already_have_an_account?')} </span>
-              <Link to="/login">{t('login')} </Link>
+              {/* <span>{t('already_have_an_account?')} </span> */}
+              <span><Trans i18nKey="already_have_an_account?">Already have an account?</Trans> </span>
+              <Link to="/login"><Trans i18nKey='login'>Login</Trans></Link>
             </div>
           </FormContainer>
         </StyledDiv>

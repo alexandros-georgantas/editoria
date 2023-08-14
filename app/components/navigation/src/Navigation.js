@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { compose, withProps } from 'recompose'
 import styled from 'styled-components'
 import { grid } from '@pubsweet/ui-toolkit'
+import {Trans, useTranslation} from "react-i18next";
 import { NavBar, NavBarLink, Dropdown } from '../../../ui'
 
 const StyledLogo = styled.img`
@@ -29,7 +30,7 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
 
   navLinksLeft.push(
     <NavBarLink active={inDashboard.toString()} key="nav-books" to="/books">
-      Books
+      <Trans i18nKey="books">Books</Trans>
     </NavBarLink>,
   )
 
@@ -46,7 +47,8 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
           key="nav-templates"
           to="/templates"
         >
-          Templates
+          {/* Templates */}
+          <Trans i18nKey="templates">Templates</Trans>
         </NavBarLink>,
       )
     }
@@ -65,7 +67,8 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
       key="nav-templates"
       to="/templates"
     >
-      Templates
+      {/* Templates */}
+      <Trans i18nKey="templates">Templates</Trans>
     </NavBarLink>,
   )
 
@@ -75,10 +78,19 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
 const Navigation = props => {
   const { currentUser, location, client, logoutUser } = props
   const dropdownItems = [{ link: '/profile', label: 'Profile' }]
+  const {t} = useTranslation()
+  const teamManager = t('team_manager')
+  const systemInfo = t('system_info')
+  const userMenuDropdown = t("user_menu_dropdown")
   if (!currentUser) return null
 
   if (currentUser && currentUser.admin) {
-    dropdownItems.push({ link: '/globalTeams', label: 'Team Manager' })
+
+    dropdownItems.push(
+      /* { link: '/globalTeams', label: 'Team Manager' }, */
+        { link: '/globalTeams', label: teamManager },
+        { link: '/systemInfo', label: systemInfo },
+    )
   }
 
   dropdownItems.push({ link: '/systemInfo', label: 'System Info' })
@@ -98,7 +110,7 @@ const Navigation = props => {
           currentUser={currentUser}
           dropdownItems={dropdownItems}
           logoutUser={logoutUser}
-          title="User Menu dropdown"
+          title={userMenuDropdown}
         />
       }
     />

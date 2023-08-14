@@ -31,7 +31,7 @@ Logo.displayName = 'Ketida'
 const LanguageSwitcherWrapper = styled.div`
   position: absolute;
   top: 0;
-  right: 0;
+  right: 50;
 `
 
 const StyledCenterColumn = styled(CenteredColumn)`
@@ -74,15 +74,8 @@ const PasswordInput = props => {
 }
 
 const renderError = msg => {
-  // alert(msg);
 
-  // const { t } = useTranslation()
-  // eslint-disable-next-line no-console
-  // const followVerificationLink = t('follow_verification_link')
-  // const resendVerification = t('resend_verification')
-  // const yourUserIsDeactivated = t('your_user_is_deactivated')
-
-  if (msg === 100 || msg === 120 || msg === 400) {
+  if (msg === 100 || msg === 120) {
     return (
       <span>
         <ErrorText>
@@ -112,7 +105,7 @@ const renderError = msg => {
     )
   }
 
-  return <ErrorText><Trans i18nKey="your_user_is_deactivated">{msg}</Trans> </ErrorText>
+  return <ErrorText>{msg}</ErrorText>
 }
 
 const Login = ({
@@ -129,7 +122,6 @@ const Login = ({
   const forgotYourPassword = t('forgot_your_password')
   const resetPassword = t('reset_password')
   const signUpTrans = t('sign_up')
-
 
 
   return redirectLink ? (

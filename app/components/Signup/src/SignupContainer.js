@@ -1,6 +1,7 @@
 import { compose } from 'recompose'
 import { withFormik } from 'formik'
 import { graphql } from '@apollo/client/react/hoc'
+import {useTranslation} from "react-i18next";
 import SIGNUP_USER from './graphql/mutations'
 
 import Signup from './Signup'
@@ -30,11 +31,13 @@ const handleSubmit = (
 }
 
 const validate = values => {
+  const { t } = useTranslation()
   const errors = {}
+  const sameNames = t('first_name_and_given_name_are_the_same')
 
   if (values.givenNames === values.surname) {
-    errors.givenNames = 'First name and given name are the same'
-    errors.surname = 'First name and given name are the same'
+    errors.givenNames = sameNames // 'First name and given name are the same'
+    errors.surname = sameNames // 'First name and given name are the same'
   }
 
   if (Object.keys(errors).length) {
