@@ -4,6 +4,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import {Trans} from "react-i18next";
 import DialogModal from '../../../../../common/src/DialogModal'
 
 const Text = styled.div`
@@ -27,7 +28,8 @@ const AddEndNoteModal = props => {
       onRequestClose={onHideModal}
     >
       <Text>
-        By creating a notes placeholder you will only be able to see templates
+        <Trans i18nKey="by_creating_a_notes_placeholder_you_will_only_be_able_to_see_templates_with_notes_option_set_to_endnotes">
+        By creating a notes placeholder you will only be able to see templates</Trans>
         with notes option set to endnotes
       </Text>
     </DialogModal>

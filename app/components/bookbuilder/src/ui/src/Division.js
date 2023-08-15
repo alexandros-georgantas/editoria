@@ -7,6 +7,7 @@ import React from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
+import { withTranslation} from "react-i18next";
 import AddComponentButton from './AddComponentButton'
 import BookComponent from './BookComponent'
 
@@ -175,6 +176,7 @@ class Division extends React.Component {
       updateApplicationParameters,
       uploadBookComponent,
       rules,
+        t
     } = this.props
 
     const { canViewAddComponent } = rules
@@ -272,7 +274,7 @@ class Division extends React.Component {
               <AddComponentButton
                 add={this.onAddClick}
                 key={`add-${bookStructure.levels[0].type}`}
-                label={`Add ${bookStructure.levels[0].displayName}`}
+                label={`${t('add')} ${bookStructure.levels[0].displayName}`}
                 type={bookStructure.levels[0].type}
               />,
             )
@@ -283,7 +285,7 @@ class Division extends React.Component {
               <AddComponentButton
                 add={this.onAddClick}
                 key={`add-${bookStructure.levels[0].type}`}
-                label={`Add ${bookStructure.levels[0].displayName}`}
+                label={`${t('add')} ${bookStructure.levels[0].displayName}`}
                 type={bookStructure.levels[0].type}
               />,
             )
@@ -291,7 +293,7 @@ class Division extends React.Component {
               <AddComponentButton
                 add={this.onAddClick}
                 key={`add-${bookStructure.levels[1].type}`}
-                label={`Add ${bookStructure.levels[1].displayName}`}
+                label={`${t('add')} ${bookStructure.levels[1].displayName}`}
                 type={bookStructure.levels[1].type}
               />,
             )
@@ -314,7 +316,7 @@ class Division extends React.Component {
                   }
                   divisionName={componentConfig.name}
                   key={`add-${componentType.value}`}
-                  label={`Add ${componentType.title}`}
+                  label={`${t('add')} ${componentType.title}`}
                   type={componentType.value}
                 />,
               )
@@ -339,7 +341,7 @@ class Division extends React.Component {
                   }
                   divisionName={componentConfig.name}
                   key={`add-${componentType.value}`}
-                  label={`Add ${componentType.title}`}
+                  label={`${t('add')} ${componentType.title}`}
                   type={componentType.value}
                 />
               ) : null,
@@ -361,7 +363,7 @@ class Division extends React.Component {
               }
               divisionName={componentConfig.name}
               key={`add-${componentType.value}`}
-              label={`Add ${componentType.title}`}
+              label={`${t('add')} ${componentType.title}`}
               type={componentType.value}
             />
           ) : null,
@@ -403,7 +405,7 @@ class Division extends React.Component {
                 </BookComponentList>
               ) : (
                 <EmptyList key={`division-${divisionId}-emptyList`}>
-                  There are no items in this division.
+                  {/* There are no items in this division. */} {t('there_are_no_items_in_this_division')}
                 </EmptyList>
               )}
               {provided.placeholder}
@@ -415,4 +417,5 @@ class Division extends React.Component {
   }
 }
 
-export default Division
+// export default Division
+export default withTranslation()(Division);

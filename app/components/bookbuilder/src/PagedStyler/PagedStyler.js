@@ -6,6 +6,7 @@ import { grid } from '@pubsweet/ui-toolkit'
 import 'codemirror/mode/css/css'
 import 'codemirror/lib/codemirror.css'
 import { Controlled as CodeMirror } from 'react-codemirror2'
+import {Trans} from "react-i18next";
 import { Button, NavBarLink } from '../../../../ui'
 
 const serverProtocol = process.env.SERVER_PROTOCOL
@@ -177,7 +178,7 @@ const PagedStyler = ({
               />
             )}
             <NavBarLink to={`/books/${bookId}/book-builder`}>
-              Back to book
+              {/* Back to book */}<Trans i18nKey="back_to_book" >Back to book</Trans>
             </NavBarLink>
           </EditorToolbar>
           <EditorArea>

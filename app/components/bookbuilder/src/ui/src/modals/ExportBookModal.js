@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import find from 'lodash/find'
 import { th } from '@pubsweet/ui-toolkit'
 import map from 'lodash/map'
+import {withTranslation} from "react-i18next";
 import DialogModal from '../../../../../common/src/DialogModal'
 
 import WrappedSelect from '../WrappedSelect'
@@ -315,6 +316,8 @@ class ExportBookModal extends React.Component {
     const { mode, format, selectOptions, selectedValue, hasEndnotes } =
       this.state
 
+    const {t}=this.props
+
     if (mode === 'download' && format === 'icml') {
       return null
     }
@@ -322,7 +325,7 @@ class ExportBookModal extends React.Component {
     return (
       <>
         <TemplateRow>
-          <TemplateLabel>Template</TemplateLabel>
+          <TemplateLabel>{t('template')}</TemplateLabel>
           <StyledSelect
             isClearable={false}
             isDisabled={false}
@@ -345,9 +348,18 @@ class ExportBookModal extends React.Component {
 
   renderFormatOptions() {
     const { mode, viewer, format } = this.state
+    const {t} = this.props
 
+    /*
     const textMapper = {
       epub: 'You are about to export a valid EPUB v3 file.',
+      icml: 'You will get a compressed zip file containing all images used in the book and the ICML file ready to be imported in Adobe inDesign.',
+      pdf: 'Using PagedJS, we’ll generate a PDF version of your book',
+      pagedjs: 'View your book in PagedJS for more granular styles tunning',
+    }
+    */
+    const textMapper = {
+      epub: t('You are about to export a valid EPUB v3 file.'),
       icml: 'You will get a compressed zip file containing all images used in the book and the ICML file ready to be imported in Adobe inDesign.',
       pdf: 'Using PagedJS, we’ll generate a PDF version of your book',
       pagedjs: 'View your book in PagedJS for more granular styles tunning',
@@ -415,7 +427,7 @@ class ExportBookModal extends React.Component {
   }
 
   render() {
-    const { isOpen, hideModal, data } = this.props
+    const { isOpen, hideModal, data, t } = this.props
     const { bookTitle } = data
     const { mode, templateId, format, generating, validating } = this.state
     const mainSection = this.renderFormatOptions()
@@ -436,7 +448,7 @@ class ExportBookModal extends React.Component {
         disableConfirm={
           (!templateId && format !== 'icml') || generating || validating
         }
-        headerText="EXPORT BOOK"
+        headerText={t('export_book')} // "EXPORT BOOK"
         isOpen={isOpen}
         notCentered
         onConfirm={this.handleSubmit}
@@ -448,12 +460,12 @@ class ExportBookModal extends React.Component {
           <ModeRow>
             <StyledButton
               active={mode === 'preview'}
-              label="Preview"
+              label={t('preview')}
               onClick={() => this.changeMode('preview')}
             />
             <StyledButton
               active={mode === 'download'}
-              label="Download"
+              label={t("download")}
               last
               onClick={() => this.changeMode('download')}
             />
@@ -466,4 +478,5 @@ class ExportBookModal extends React.Component {
   }
 }
 
-export default ExportBookModal
+// export default ExportBookModal
+export default withTranslation()(ExportBookModal)

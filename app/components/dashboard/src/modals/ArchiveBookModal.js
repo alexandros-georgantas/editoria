@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
+import {Trans} from "react-i18next";
 import DialogModal from '../../../common/src/DialogModal'
 
 const Text = styled.div`
@@ -26,9 +27,11 @@ const ArchiveBookModal = props => {
       onRequestClose={hideModal}
     >
       <Text>
+        <Trans i18nKey="">
         {`Are you sure you want to ${
           archived ? 'unarchive' : 'archive'
         } the book with title ${bookTitle}?`}
+        </Trans>
       </Text>
     </DialogModal>
   )

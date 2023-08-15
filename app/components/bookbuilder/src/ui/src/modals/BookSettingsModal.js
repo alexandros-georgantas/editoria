@@ -7,6 +7,7 @@ import uniq from 'lodash/uniq'
 import indexOf from 'lodash/indexOf'
 import { th, grid } from '@pubsweet/ui-toolkit'
 import { Formik } from 'formik'
+import {withTranslation} from "react-i18next";
 import FormModal from '../../../../../common/src/FormModal'
 import { Button } from '../../../../../../ui'
 
@@ -161,7 +162,7 @@ class BookSettings extends React.Component {
   }
 
   renderBody() {
-    const { data, hideModal } = this.props
+    const { data, hideModal ,t} = this.props
     const { onConfirm, bookComponents: bcs } = data
     const { bookComponents } = this.state
 
@@ -226,10 +227,11 @@ class BookSettings extends React.Component {
             <StyledForm onSubmit={handleSubmit}>
               <Body>
                 <HeaderContainer>
-                  <HeaderType1 align="left">Component Title</HeaderType1>
-                  <HeaderType2 align="left">Page Left</HeaderType2>
-                  <Button icon={icon} onClick={switcher} title="Switch" />
-                  <HeaderType2 align="right">Page Right</HeaderType2>
+                  <HeaderType1 align="left">{/* Component Title */}{t('component_title')}</HeaderType1>
+                  <HeaderType2 align="left">{/* Page Left */}{t('page_left')}</HeaderType2>
+                  {/* <Button icon={icon} onClick={switcher} title="Switch" /> */}
+                    <Button icon={icon} onClick={switcher} title={t('switch')} />
+                  <HeaderType2 align="right">{/* Page Right */}{t('page_right')}</HeaderType2>
                 </HeaderContainer>
                 <TableContainer>
                   <StyledTable>
@@ -237,7 +239,7 @@ class BookSettings extends React.Component {
                       {bcs.map(bc => (
                         <StyledTR key={bc.id}>
                           <StyledTD align="left">
-                            {bc.title || 'Untitled'}
+                            {bc.title || t('untitled')}
                           </StyledTD>
                           <StyledTD align="left">
                             <Input
@@ -271,15 +273,15 @@ class BookSettings extends React.Component {
                 <Footer>
                   <Button
                     disabled={isSubmitting}
-                    label="Save"
-                    title="Save"
+                    label={t("save")}
+                    title={t("save")}
                     type="submit"
                   />
                   <Button
                     danger
-                    label="Cancel"
+                    label={t("cancel")}
                     onClick={hideModal}
-                    title="Cancel"
+                    title={t("cancel")}
                   />
                 </Footer>
               </Body>
@@ -291,12 +293,12 @@ class BookSettings extends React.Component {
   }
 
   render() {
-    const { isOpen, hideModal } = this.props
+    const { isOpen, hideModal,t } = this.props
     const body = this.renderBody()
 
     return (
       <FormModal
-        headerText="Running Headers"
+        headerText={t("running_headers")}
         isOpen={isOpen}
         onRequestClose={hideModal}
         size="medium"
@@ -307,4 +309,5 @@ class BookSettings extends React.Component {
   }
 }
 
-export default BookSettings
+// export default BookSettings
+export default withTranslation()(BookSettings)

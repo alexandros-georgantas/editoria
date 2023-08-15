@@ -8,6 +8,7 @@ import keys from 'lodash/keys'
 import cloneDeep from 'lodash/cloneDeep'
 import { th } from '@pubsweet/ui-toolkit'
 import { H3 } from '@pubsweet/ui'
+import {Trans} from "react-i18next";
 import { Loading, Button } from '../../../ui'
 
 const Container = styled.div`
@@ -257,7 +258,7 @@ class GlobalTeamsManager extends React.Component {
       <Container>
         <InnerWrapper>
           <HeaderWrapper>
-            <Title>Global Teams Manager</Title>
+            <Title><Trans i18nKey="global_teams_manager">Global Teams Manager</Trans></Title>
           </HeaderWrapper>
           <Ribbon hide={hideRibbon}>{infoMessage}</Ribbon>
 

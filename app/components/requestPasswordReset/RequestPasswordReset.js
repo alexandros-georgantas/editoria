@@ -65,7 +65,7 @@ const RequestPasswordReset = props => {
 
         <div>
           <TextField
-            label="Email"
+            label={t(email)} // "Email"
             name="email"
             onChange={event => handleInputChange(event.target.value)}
             placeholder={t("enter_your_email")}
@@ -85,11 +85,11 @@ const RequestPasswordReset = props => {
             onClick={onSubmit}
             primary
           >
-            Send email
+            {t('send_email')}
           </Button>
           {hasError && <ErrorText>{t("something_went_wrong")}</ErrorText>}
           {/* {hasSuccess && <div>{`An email has been sent to ${userEmail}`}</div>} */}
-          {hasSuccess && <div>{t("An email has been sent to ",{userEmail})}</div>}
+          {hasSuccess && <div>{t("an_email_has_been_sent_to",{userEmail})}</div>}
         </div>
         <div>
           <span>{t("are_you_here_by_mistake?_go_back_to")} </span>

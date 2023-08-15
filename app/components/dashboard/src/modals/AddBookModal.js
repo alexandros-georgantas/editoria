@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
 import { Formik } from 'formik'
-
+import { withTranslation } from "react-i18next";
 import { Button } from '../../../../ui'
 import FormModal from '../../../common/src/FormModal'
 
@@ -90,12 +90,14 @@ class AddBookModal extends React.Component {
   }
 
   renderBody() {
-    const { data } = this.props
+    const { data ,t} = this.props
     const { onConfirm, hideModal } = data
 
-    const confirmLabel = 'Save'
-    const cancelLabel = 'Cancel'
-
+    const save = t('save') // 'Save'
+    const cancel = t('cancel') // 'Cancel'
+    const titelOfTheBookShouldNotBeEmpty= t('titel_of_the_book_should_not_be_empty')
+    const enterTheTitleOfTheNewBook = t('enter_the_title_of_the_new_book')
+    const egMyNewTitle = t('eg_my_new_title')
     return (
       <StyledFormik
         initialValues={{ title: '' }}
@@ -109,7 +111,7 @@ class AddBookModal extends React.Component {
           const errors = {}
 
           if (!values.title) {
-            errors.title = '* The title of the book should not be empty'
+            errors.title = titelOfTheBookShouldNotBeEmpty // '* The title of the book should not be empty'
           }
 
           return errors
@@ -127,13 +129,14 @@ class AddBookModal extends React.Component {
         }) => (
           <StyledForm onSubmit={handleSubmit}>
             <Body>
-              <Text>Enter the title of the new book</Text>
+              {/* <Text>Enter the title of the new book</Text> */}
+              <Text>{enterTheTitleOfTheNewBook}</Text>
               <Input
                 errors={errors}
                 name="title"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                placeholder="eg. My new title"
+                placeholder={egMyNewTitle}
                 type="text"
                 value={values.title}
               />
@@ -142,15 +145,15 @@ class AddBookModal extends React.Component {
             <Footer>
               <Button
                 disabled={isSubmitting || errors.title}
-                label={confirmLabel}
-                title={confirmLabel}
+                label={save}
+                title={save}
                 type="submit"
               />
               <Button
                 danger
-                label={cancelLabel}
+                label={cancel}
                 onClick={hideModal}
-                title={cancelLabel}
+                title={cancel}
               />
             </Footer>
           </StyledForm>
@@ -160,12 +163,14 @@ class AddBookModal extends React.Component {
   }
 
   render() {
-    const { isOpen, hideModal } = this.props
-    const body = this.renderBody()
+    const { isOpen, hideModal , t } = this.props
 
+    const createANewBook = t('create_a_new_book') // "Create a new Book"
+
+    const body = this.renderBody()
     return (
       <FormModal
-        headerText="Create a new Book"
+        headerText={createANewBook}
         isOpen={isOpen}
         onRequestClose={hideModal}
         size="small"
@@ -176,4 +181,5 @@ class AddBookModal extends React.Component {
   }
 }
 
-export default AddBookModal
+// export default AddBookModal
+export default withTranslation()(AddBookModal);

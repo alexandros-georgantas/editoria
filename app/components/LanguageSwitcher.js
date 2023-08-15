@@ -2,7 +2,6 @@
 import React, { useState} from 'react'
 import 'flag-icon-css/css/flag-icon.min.css'
 import cookies from 'js-cookie'
-// import {Trans, useTranslation} from 'react-i18next'
 import styled from 'styled-components'
 import {th} from "@pubsweet/ui-toolkit";
 import {Trans} from "react-i18next";
@@ -23,12 +22,15 @@ const DropdownButton = styled.button`
   padding: 5px;
   cursor: pointer;
   border: none;
+  min-width: 50px;
+  top: 100%;
+  left: 0;
 `;
 
 const IoGlobeOutline = () => (
     <svg
         fill="#0B65CB"
-        height='20'
+        height='15'
         viewBox="0 0 16 16"
         width='21'
         xmlns="http://www.w3.org/2000/svg"
@@ -62,9 +64,10 @@ const DropdownList = styled.ul`
   padding: 0;
   margin: 0;
   background-color: #fff;
-  // border: 1px solid #ccc;
+  border: 0px 0px 0px 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 10;
+  white-space: nowrap;
 `;
 
 const DropdownItem = styled.li`
@@ -77,7 +80,7 @@ const DropdownItem = styled.li`
 `;
 
 const FlagIcon = styled.span`
-  margin-right: 10px;
+  margin-right: 5px;
   opacity: ${({ isActive }) => (isActive ? 0.5 : 1)};
 `
 
@@ -110,7 +113,7 @@ const LanguageSwitcher = () => {
                     <IoGlobeOutline />
                 </GlobeIcon>
                 {/* {selectedLanguage.name} */}
-                <span><Trans i18nKey="language">language</Trans></span>
+                <span>&nbsp;<Trans i18nKey="language">language</Trans></span>
                 <CaretIcon isOpen={isOpen} viewBox="0 0 320 512">
                     <path
                         fill="#0B65CB"

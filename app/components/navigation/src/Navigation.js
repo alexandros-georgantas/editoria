@@ -77,8 +77,8 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
 
 const Navigation = props => {
   const { currentUser, location, client, logoutUser } = props
-  const dropdownItems = [{ link: '/profile', label: 'Profile' }]
   const {t} = useTranslation()
+  const dropdownItems = [{ link: '/profile', label: t('profile') }]
   const teamManager = t('team_manager')
   const systemInfo = t('system_info')
   const userMenuDropdown = t("user_menu_dropdown")
