@@ -71,5 +71,6 @@
   "save": "Save",
   "cancel": "Cancel",
   "titel_of_the_book_should_not_be_empty":"* The title of the book should not be empty",
-  "eg_my_new_title": "eg. My new title"
+  "eg_my_new_title": "eg. My new title",
+"global_teams_manager":"GLOBAL TEAMS MANAGER"
 }
