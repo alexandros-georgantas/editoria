@@ -31,7 +31,8 @@ Logo.displayName = 'Ketida'
 const LanguageSwitcherWrapper = styled.div`
   position: absolute;
   top: 0;
-  right: 50;
+  right: 0;
+  padding: 10px;
 `
 
 const StyledCenterColumn = styled(CenteredColumn)`
