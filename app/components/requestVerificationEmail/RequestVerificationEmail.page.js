@@ -1,6 +1,7 @@
 import React from 'react'
 import { useMutation } from '@apollo/client'
 import debounce from 'lodash/debounce'
+import {useTranslation} from "react-i18next";
 import RequestVerificationEmail from './RequestVerificationEmail'
 import REQUEST_VERIFICATION_EMAIL from './queries/requestVerificationEmail.queries'
 
@@ -10,6 +11,7 @@ const emailRegex =
 /* eslint-enable no-useless-escape, no-control-regex */
 
 const RequestVerificationEmailPage = props => {
+  const t = useTranslation()
   const [emailUsed, setEmailUsed] = React.useState('')
   const [inputValue, setInputValue] = React.useState('')
   const [formError, setFormError] = React.useState(undefined)
@@ -28,12 +30,16 @@ const RequestVerificationEmailPage = props => {
 
   const inputValidation = debounce(value => {
     if (!value || value.length === 0) {
-      setFormError('This field is required and should not be empty')
+      // setFormError('This field is required and should not be empty')
+      const requiredField = t('this_field_is_required_and_should_not_be_empty')
+      setFormError(requiredField)
       return false
     }
 
     if (!emailRegex.test(value)) {
-      setFormError('This is not a valid email format')
+      const notAvalidEmail = t('this_is_not_a_valid_email_format')
+      // setFormError('This is not a valid email format')
+      setFormError(notAvalidEmail)
       return false
     }
 

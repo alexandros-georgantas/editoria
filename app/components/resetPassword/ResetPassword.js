@@ -1,10 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import {useTranslation} from "react-i18next";
 import styled from 'styled-components'
 import { override } from '@pubsweet/ui-toolkit'
 import { CenteredColumn, ErrorText, H1, Button, TextField } from '@pubsweet/ui'
-import {useTranslation} from "react-i18next";
+
 import { Loading } from '../../ui'
+import LanguageSwitcher from "../LanguageSwitcher";
 
 
 /* stylelint-disable order/properties-alphabetical-order */
@@ -28,6 +30,13 @@ const FormContainer = styled.div`
   border: 0;
   height: 50%;
   overflow-y: auto;
+`
+
+const LanguageSwitcherWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
 `
 
 const ResetPassword = props => {
@@ -57,6 +66,10 @@ const ResetPassword = props => {
         <img alt="ketida-logo" src="/ketida.svg" />
       </Logo>
 
+      <LanguageSwitcherWrapper>
+        <LanguageSwitcher />
+      </LanguageSwitcherWrapper>
+
       <FormContainer>
         {loading && <Loading />}
 
@@ -66,10 +79,10 @@ const ResetPassword = props => {
 
         <div>
           <TextField
-            label="New Password"
+            label={t("new_password")}
             name="new_password"
             onChange={event => handleInputChange(event.target.value, true)}
-            placeholder="Enter your new password"
+            placeholder={t("enter_your_new_password")}
             type="password"
             value={newPassword}
           />
@@ -105,7 +118,7 @@ const ResetPassword = props => {
             onClick={onSubmit}
             primary
           >
-            Submit
+            {t("submit")}
           </Button>
           {/* {hasError && <ErrorText>Something went wrong</ErrorText>} */}
           {t('something_went_wrong')}

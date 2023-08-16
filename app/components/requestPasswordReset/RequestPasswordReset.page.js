@@ -15,6 +15,7 @@ const RequestPasswordResetPage = props => {
   const [emailUsed, setEmailUsed] = React.useState('')
   const [inputValue, setInputValue] = React.useState('')
   const [formError, setFormError] = React.useState(undefined)
+  const { t } = useTranslation()
 
   const [requestPasswordResetMutation, { data, loading, error }] = useMutation(
     REQUEST_PASSWORD_RESET,
@@ -30,17 +31,19 @@ const RequestPasswordResetPage = props => {
   }
 
   const inputValidation = debounce(value => {
-    const { t } = useTranslation()
+
 
     if (!value || value.length === 0) {
       // setFormError('This field is required and should not be empty')
-      setFormError(t('this_field_is_required_and_should_not_be_empty'))
+      const requiredFieldText = t('this_field_is_required_and_should_not_be_empty')
+      setFormError(requiredFieldText)
       return false
     }
 
     if (!emailRegex.test(value)) {
       // setFormError('This is not a valid email format')
-      setFormError(t('this_is_not_a_valid_email_format'))
+      const notValidEmailText = t('this_is_not_a_valid_email_format')
+      setFormError(notValidEmailText)
       return false
     }
 

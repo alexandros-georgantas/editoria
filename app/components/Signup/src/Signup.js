@@ -13,6 +13,7 @@ import {
 } from '@pubsweet/ui'
 import styled from 'styled-components'
 import {Trans, useTranslation} from "react-i18next";
+import LanguageSwitcher from "../../LanguageSwitcher";
 
 /* eslint-disable no-useless-escape, no-control-regex */
 const emailRegex =
@@ -51,6 +52,13 @@ const Logo = styled.div`
   margin: auto;
   width: 320px;
   height: auto;
+`
+
+const LanguageSwitcherWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
 `
 /* stylelint-enable order/properties-alphabetical-order */
 
@@ -182,7 +190,7 @@ const PasswordInput = props => {
 
 const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
     {
-      // const { t } = useTranslation()
+      const { t } = useTranslation()
       return <StyledCenterColumn>
         <StyledDiv>
           {logo && (
@@ -190,10 +198,13 @@ const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
                 <img alt="ketida-logo" src={`${logo}`}/>
               </Logo>
           )}
+          <LanguageSwitcherWrapper>
+            <LanguageSwitcher />
+          </LanguageSwitcherWrapper>
           <HeadingWrapper>
             { /* <H1>Sign up</H1> */ }
-             {/* t('sign_up') */}
-            <Trans i18nKey="sign_up">Siugn Up</Trans>
+             { t('sign_up') }
+            {/* <Trans i18nKey="sign_up">Sign Up</Trans> */}
           </HeadingWrapper>
           <FormContainer>
             {!isEmpty(errors) && <ErrorText>{errors.api}</ErrorText>}
@@ -231,8 +242,8 @@ const Signup = ({ error, errors, status, handleSubmit, logo = null }) =>
             </Form>
 
             <div>
-              {/* <span>{t('already_have_an_account?')} </span> */}
-              <span><Trans i18nKey="already_have_an_account?">Already have an account?</Trans> </span>
+              <span>{t('already_have_an_account?')} </span>
+              {/* <span><Trans i18nKey="already_have_an_account?">Already have an account?</Trans> </span> */}
               <Link to="/login"><Trans i18nKey='login'>Login</Trans></Link>
             </div>
           </FormContainer>

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import styled from 'styled-components'
+import {useTranslation} from "react-i18next";
 import { override } from '@pubsweet/ui-toolkit'
 import {
   CenteredColumn,
@@ -10,9 +11,10 @@ import {
   TextField,
   Link,
 } from '@pubsweet/ui'
-import {useTranslation} from "react-i18next";
+
 
 import { Loading } from '../../ui'
+import LanguageSwitcher from "../LanguageSwitcher";
 
 
 /* stylelint-disable order/properties-alphabetical-order */
@@ -38,6 +40,13 @@ const FormContainer = styled.div`
   border: 0;
 `
 
+const LanguageSwitcherWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+`
+
 const RequestPasswordReset = props => {
   const {
     hasError,
@@ -57,7 +66,9 @@ const RequestPasswordReset = props => {
       <Logo>
         <img alt="ketida-logo" src="/ketida.svg" />
       </Logo>
-
+      <LanguageSwitcherWrapper>
+        <LanguageSwitcher />
+      </LanguageSwitcherWrapper>
       <FormContainer>
         {loading && <Loading />}
         {/* <H1>Password Reset</H1> */}
@@ -65,7 +76,7 @@ const RequestPasswordReset = props => {
 
         <div>
           <TextField
-            label={t(email)} // "Email"
+            label={t('email')} // "Email"
             name="email"
             onChange={event => handleInputChange(event.target.value)}
             placeholder={t("enter_your_email")}
