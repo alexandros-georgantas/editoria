@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {useTransition} from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { override } from '@pubsweet/ui-toolkit'
 import {
@@ -11,6 +11,7 @@ import {
   Link,
 } from '@pubsweet/ui'
 
+import {useTranslation} from "react-i18next";
 import { Loading } from '../../ui'
 import LanguageSwitcher from "../LanguageSwitcher";
 
@@ -56,7 +57,7 @@ const RequestVerificationEmail = props => {
     email,
   } = props
 
-  const {t}= useTransition()
+  const {t}= useTranslation()
 
   return (
     <StyledCenterColumn>
