@@ -76,7 +76,7 @@
   "back_to_book":"Back to book",
   "in_progress": "IN PROGRESS",
   "there_are_no_items_in_this_division": "There are no items in this division.",
-  "by_creating_a_notes_placeholder_you_will_only_be_able_to_see_templates_with_notes_option_set_to_endnotes":"By creating a notes placeholder you will only be able to see templates\n        with notes option set to endnotes",
+  "by_creating_a_notes_placeholder_you_will_only_be_able_to_see_templates_with_notes_option_set_to_endnotes":"By creating a notes placeholder you will only be able to see templates with notes option set to endnotes",
   "add":"Add",
   "production":"Production",
   "production_editor:": "Production Editor:",
@@ -100,5 +100,10 @@
   "unassigned": "Unassigned",
   "export_book": "EXPORT BOOK",
   "preview":"Preview",
-  "download": "Download"
+  "download": "Download",
+  "request_verification_email":"Request Verification email",
+  "a_verification_email_has_been_sent_to_user_email":"A verification email has been sent to {{userEmail}}",
+  "are_you_here_by_mistake?go_back_to": "Are you here by mistake? Go back to",
+  "enter_your_new_password": "Enter your new password",
+  "submit": "Submit"
 }
