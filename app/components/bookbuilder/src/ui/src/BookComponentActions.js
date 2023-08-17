@@ -5,6 +5,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 import { Action as UIAction, ActionGroup as UIActionGroup } from '@pubsweet/ui'
 
+import {useTranslation} from "react-i18next";
 import EditingNotification from './EditingNotification'
 
 const underlineFade = css`
@@ -125,6 +126,7 @@ const BookComponentActions = ({
   onAdminUnlock,
   rules,
 }) => {
+  const {t} = useTranslation()
   const { bookComponentStateRules, canViewDeleteAction } = rules
 
   const { canViewFragmentEdit } =
@@ -140,6 +142,7 @@ const BookComponentActions = ({
   }
 
   const goToEditor = (preview = undefined) => {
+
     if (uploading) return
 
     if (preview) {
@@ -161,14 +164,14 @@ const BookComponentActions = ({
       >
         {componentType !== 'endnotes' && (
           <Action disabled={uploading} onClick={() => goToEditor()}>
-            {canViewFragmentEdit ? 'Edit' : 'View'}
+            {canViewFragmentEdit ? t('edit') : t('view')}
           </Action>
         )}
         <Action
           disabled={uploading || !canViewDeleteAction}
           onClick={handleClick}
         >
-          Delete
+          {t("delete")}
         </Action>
       </ActionGroup>
     )

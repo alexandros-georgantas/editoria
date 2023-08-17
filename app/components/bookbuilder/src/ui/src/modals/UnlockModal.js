@@ -5,6 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
+import {useTranslation} from "react-i18next";
 import DialogModal from '../../../../../common/src/DialogModal'
 
 const Text = styled.div`
@@ -19,7 +20,8 @@ const Text = styled.div`
 const UnlockModal = props => {
   const { isOpen, hideModal, data } = props
   const { componentType, title, onConfirm } = data
-
+  const {t} = useTranslation()
+const copmponent = {componentType,title}
   return (
     <DialogModal
       buttonLabel="Yes"
@@ -28,10 +30,15 @@ const UnlockModal = props => {
       onConfirm={onConfirm}
       onRequestClose={hideModal}
     >
+      {/*
       <Text>
         {`Are you sure you want to unlock this ${componentType} with title ${
           title || 'Untitled'
         }?`}
+      </Text>
+      */}
+      <Text>
+        {t("are_you_sure_you_want_to_unlock_this{component}",copmponent)}
       </Text>
     </DialogModal>
   )

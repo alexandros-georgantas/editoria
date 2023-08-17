@@ -1,11 +1,12 @@
 /* eslint-disable react/prop-types,jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 /* stylelint-disable string-quotes,font-family-no-missing-generic-family-keyword */
-import React from 'react'
+import React, {useTransition} from 'react'
 import styled, { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
 import { Menu as UIMenu } from '@pubsweet/ui'
 
+import {Trans} from "react-i18next";
 import SortIcon from './IconArrows'
 
 const triangle = css`
@@ -132,7 +133,7 @@ const Opener = props => {
   return (
     <OpenerWrapper>
       <span>
-        Sort By <span onClick={toggleMenu}>{selected}</span>
+        <Trans i18nKey="sort_by"> Sort By </Trans><span onClick={toggleMenu}>{selected}</span>
       </span>
 
       <SortIcon ascending={ascending} onClick={onChangeSortOrder} />
@@ -140,13 +141,17 @@ const Opener = props => {
   )
 }
 
+const t = useTransition()
+const transTitle = t('title')
+const pubDate = t('pub._date')
+
 const options = [
   {
-    label: 'title',
+    label: transTitle,
     value: 'title',
   },
   {
-    label: 'pub. date',
+    label: pubDate,
     value: 'publicationDate',
   },
 ]

@@ -4,6 +4,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import {useTranslation} from "react-i18next";
 import DialogModal from '../../../../../common/src/DialogModal'
 
 const Text = styled.div`
@@ -18,7 +19,9 @@ const Text = styled.div`
 const WorkflowModal = props => {
   const { isOpen, hideModal, data } = props
   const { onConfirm, textKey } = data
+  const {t}= useTranslation()
 
+  /*
   const bodyMsg = {
     'cp-no':
       'Copy Editors won’t be able to edit this chapter after updating this workflow status.',
@@ -35,11 +38,28 @@ const WorkflowModal = props => {
     'cp-yes-author-no':
       'Copy Editors will be able to edit but Authors won’t be able to edit this chapter after updating this workflow status.',
   }
+  */
+  const bodyMsg = {
+    'cp-no':
+        t('copy_editors_won’t_be_able_to_edit_this_chapter_after_updating_this_workflow_status.'),
+    'cp-yes':
+        t('copy_editors_will_be_able_to_edit_this_chapter_after_updating_this_workflow_status.'),
+    'author-no':
+        t('authors_won’t_be_able_to_edit_this_chapter_after_updating_this_workflow_status.'),
+    'author-yes':
+        t('authors_will_be_able_to_edit_this_chapter_after_updating_this_workflow_status.'),
+    'cp-no-author-no':
+        t('copy_editors_and_authors_won’t_be_able_to_edit_this_chapter_after_updating_this_workflow_status.'),
+    'cp-no-author-yes':
+        t('copy_editors_won’t_be_able_to_edit_but_authors_will_be_able_to_edit_this_chapter_after_updating_this_workflow_status.'),
+    'cp-yes-author-no':
+        t('copy_editors_will_be_able_to_edit_but_authors_won’t_be_able_to_edit_this_chapter_after_updating_this_workflow_status.'),
+  }
 
   return (
     <DialogModal
-      buttonLabel="Yes"
-      headerText="Change of workflow status"
+      buttonLabel={t("yes")}
+      headerText={t("change_of_workflow_status")}
       isOpen={isOpen}
       onConfirm={onConfirm}
       onRequestClose={hideModal}
@@ -47,7 +67,7 @@ const WorkflowModal = props => {
       <Text>
         {bodyMsg[textKey]}
         <br />
-        Are you sure you wish to continue?
+        {t("are_you_sure_you_wish_to_continue?")}
       </Text>
     </DialogModal>
   )

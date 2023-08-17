@@ -87,7 +87,7 @@ const DashboardHeader = props => {
               icon={addIcon}
               label={t('add_book')}
               onClick={handleClick}
-              title="Add Book"
+              title={t("add_book")}
             />
           )}
         </Side1>

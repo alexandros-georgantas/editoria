@@ -12,6 +12,7 @@ const ProgressModal = ({
   toggle,
   modalType,
 }) => {
+
   return (
     <Modal
       action={`workflow-warning-${modalType}`}
@@ -20,7 +21,7 @@ const ProgressModal = ({
       show={show}
       successAction={changeProgressState}
       successText="OK"
-      title="Change of workflow status"
+      title={t("Change of workflow status")}
       toggle={toggle}
       type={componentType}
     />

@@ -5,6 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
 import { Formik } from 'formik'
+import {withTranslation} from "react-i18next";
 import FormModal from '../../../../../common/src/FormModal'
 import { Button } from '../../../../../../ui'
 
@@ -105,7 +106,7 @@ class MetadataModal extends React.Component {
   }
 
   renderBody() {
-    const { data, hideModal } = this.props
+    const { data, hideModal, t } = this.props
     const { onConfirm, book } = data
 
     return (
@@ -142,7 +143,8 @@ class MetadataModal extends React.Component {
               <Text>{book.title}</Text>
               <Container>
                 <Row>
-                  <Label htmlFor="edition">Edition</Label>
+                  {/* <Label htmlFor="edition">Edition</Label> */}
+                    <Label htmlFor="edition">{t('edition')}</Label>
                   <Input
                     id="edition"
                     max={100}
@@ -150,7 +152,7 @@ class MetadataModal extends React.Component {
                     name="edition"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="eg. 1"
+                    placeholder={t("eg._1")}
                     type="number"
                     value={values.edition}
                   />
@@ -158,14 +160,14 @@ class MetadataModal extends React.Component {
                 </Row>
                 <Row>
                   <Label htmlFor="copyrightStatement">
-                    Copyright Statement
+                      {t('copyright_statement')}
                   </Label>
                   <Input
                     id="copyrightStatement"
                     name="copyrightStatement"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="eg. Some statement"
+                    placeholder={t("eg.some_statement")}
                     type="text"
                     value={values.copyrightStatement}
                   />
@@ -174,7 +176,7 @@ class MetadataModal extends React.Component {
                     errors.copyrightStatement}
                 </Row>
                 <Row>
-                  <Label htmlFor="copyrightYear">Copyright Year</Label>
+                  <Label htmlFor="copyrightYear">{t("copyright_year")}</Label>
                   <Input
                     id="copyrightYear"
                     max={10000000}
@@ -182,7 +184,7 @@ class MetadataModal extends React.Component {
                     name="copyrightYear"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="eg. 2018"
+                    placeholder={t("eg._2018")}
                     type="number"
                     value={values.copyrightYear}
                   />
@@ -191,13 +193,13 @@ class MetadataModal extends React.Component {
                     errors.copyrightYear}
                 </Row>
                 <Row>
-                  <Label htmlFor="copyrightHolder">Copyright Holder</Label>
+                  <Label htmlFor="copyrightHolder">{t("copyright_holder")}</Label>
                   <Input
                     id="copyrightHolder"
                     name="copyrightHolder"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder="eg. University of California"
+                    placeholder={t("eg._university_of_california")}
                     type="text"
                     value={values.copyrightHolder}
                   />
@@ -206,7 +208,7 @@ class MetadataModal extends React.Component {
                     errors.copyrightHolder}
                 </Row>
                 <Row>
-                  <Label htmlFor="license">License</Label>
+                  <Label htmlFor="license">{t('license')}</Label>
                   <Input
                     id="license"
                     name="license"
@@ -218,7 +220,7 @@ class MetadataModal extends React.Component {
                   {errors.license && touched.license && errors.license}
                 </Row>
                 <Row>
-                  <Label htmlFor="isbn">ISBN</Label>
+                  <Label htmlFor="isbn">{t('isbn')}</Label>
                   <Input
                     id="isbn"
                     name="isbn"
@@ -230,7 +232,7 @@ class MetadataModal extends React.Component {
                   {errors.isbn && touched.isbn && errors.isbn}
                 </Row>
                 <Row>
-                  <Label htmlFor="issn">ISSN</Label>
+                  <Label htmlFor="issn">{t('issn')}</Label>
                   <Input
                     id="issn"
                     name="issn"
@@ -242,7 +244,7 @@ class MetadataModal extends React.Component {
                   {errors.issn && touched.issn && errors.issn}
                 </Row>
                 <Row>
-                  <Label htmlFor="issnL">ISSN-L</Label>
+                  <Label htmlFor="issnL">{t('issn_l')}</Label>
                   <Input
                     id="issnL"
                     name="issnL"
@@ -254,7 +256,7 @@ class MetadataModal extends React.Component {
                   {errors.issnL && touched.issnL && errors.issnL}
                 </Row>
                 <Row>
-                  <Label htmlFor="publicationDate">Publication Date</Label>
+                  <Label htmlFor="publicationDate">{t("publication_date")}</Label>
                   <Input
                     id="publicationDate"
                     name="publicationDate"
@@ -273,15 +275,15 @@ class MetadataModal extends React.Component {
             <Footer>
               <Button
                 disabled={isSubmitting}
-                label="Save Metadata"
-                title="Save Metadata"
+                label={t("save_metadata")}
+                title={t("save_metadata")}
                 type="submit"
               />
               <Button
                 danger
-                label="Cancel"
+                label={t("cancel")}
                 onClick={hideModal}
-                title="Cancel"
+                title={t("cancel")}
               />
             </Footer>
           </StyledForm>
@@ -291,12 +293,12 @@ class MetadataModal extends React.Component {
   }
 
   render() {
-    const { isOpen, hideModal } = this.props
+    const { isOpen, hideModal, t } = this.props
     const body = this.renderBody()
 
     return (
       <FormModal
-        headerText="Book Metadata"
+        headerText={t("book_metadata")}
         isOpen={isOpen}
         onRequestClose={hideModal}
         size="medium"
@@ -307,4 +309,5 @@ class MetadataModal extends React.Component {
   }
 }
 
-export default MetadataModal
+// export default MetadataModal
+export default withTranslation()(MetadataModal)

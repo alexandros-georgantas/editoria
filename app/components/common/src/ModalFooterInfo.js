@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 
+import {useTranslation} from "react-i18next";
 import { Button } from '../../../ui'
 
 import ModalFooter from './ModalFooter'
 
 const ModalFooterInfo = props => {
-  const { onConfirm, textSuccess = 'OK', buttonLabel } = props
+    const {t} = useTranslation()
+  const { onConfirm, textSuccess = t('ok'), buttonLabel } = props
 
   return (
     <ModalFooter>

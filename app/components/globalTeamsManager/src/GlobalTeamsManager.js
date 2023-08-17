@@ -8,7 +8,7 @@ import keys from 'lodash/keys'
 import cloneDeep from 'lodash/cloneDeep'
 import { th } from '@pubsweet/ui-toolkit'
 import { H3 } from '@pubsweet/ui'
-import {Trans} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import { Loading, Button } from '../../../ui'
 
 const Container = styled.div`
@@ -163,6 +163,7 @@ const TeamSection = props => {
 
 const TeamManagerForm = props => {
   const { setFieldValue, teams, users, values, dirty } = props
+    const {t}= useTranslation()
 
   return (
     <StyledForm>
@@ -178,7 +179,7 @@ const TeamManagerForm = props => {
       ))}
 
       <ButtonWrapper>
-        <Button disabled={!dirty} label="Save" title="Save" type="submit" />
+        <Button disabled={!dirty} label={t("save")} title={t("save")} type="submit" />
       </ButtonWrapper>
     </StyledForm>
   )
@@ -241,11 +242,13 @@ class GlobalTeamsManager extends React.Component {
   render() {
     const { users, teams, loading } = this.props
     const { hideRibbon } = this.state
+      const {t} = useTranslation()
 
     if (loading) return <Loading />
 
     let globalTeams = (teams || []).filter(team => team.global)
-    const infoMessage = 'Your teams have been successfully updated'
+    // const infoMessage = 'Your teams have been successfully updated'
+      const infoMessage = t('your_teams_have_been_successfully_updated')
 
     const initialValues = {}
     globalTeams.forEach(team => {

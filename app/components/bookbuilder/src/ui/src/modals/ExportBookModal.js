@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import find from 'lodash/find'
 import { th } from '@pubsweet/ui-toolkit'
 import map from 'lodash/map'
-import {withTranslation} from "react-i18next";
+import {Trans,  withTranslation} from "react-i18next";
 import DialogModal from '../../../../../common/src/DialogModal'
 
 import WrappedSelect from '../WrappedSelect'
@@ -338,8 +338,8 @@ class ExportBookModal extends React.Component {
         </TemplateRow>
         {hasEndnotes && (
           <InfoContainer>
-            You have selected a template where the notes of each book component
-            will be gathered and placed at the Backmatter of the book
+            <Trans i18nKey="you_have_selected_a_template_where_the_notes_of_each_book_component_will_be_gathered_and_placed_at_the_backmatter_of_the_book">You have selected a template where the notes of each book component
+              will be gathered and placed at the Backmatter of the book</Trans>
           </InfoContainer>
         )}
       </>
@@ -359,10 +359,10 @@ class ExportBookModal extends React.Component {
     }
     */
     const textMapper = {
-      epub: t('You are about to export a valid EPUB v3 file.'),
-      icml: 'You will get a compressed zip file containing all images used in the book and the ICML file ready to be imported in Adobe inDesign.',
-      pdf: 'Using PagedJS, we’ll generate a PDF version of your book',
-      pagedjs: 'View your book in PagedJS for more granular styles tunning',
+      epub: t('you_are_about_to_export_a_valid_epub_v_3_file.'),
+      icml: t('you_will_get_a_compressed_zip_file_containing_all_images'),
+      pdf: t('using_paged_js, we’ll_generate_a_pdf_version_of_your_book'),
+      pagedjs: t('view_your_book_in_paged_js_for_more_granular_styles_tunning'),
     }
 
     if (mode === 'download') {
@@ -378,7 +378,7 @@ class ExportBookModal extends React.Component {
                 type="radio"
                 value="epub"
               />
-              <span>EPUB</span>
+              <span>{t("epub")}</span>
             </RadioButton>
             <RadioButton>
               <input
@@ -388,7 +388,7 @@ class ExportBookModal extends React.Component {
                 type="radio"
                 value="pdf"
               />
-              <span>PDF</span>
+              <span>{t("pdf")}</span>
             </RadioButton>
             <RadioButton last>
               <input
@@ -398,7 +398,7 @@ class ExportBookModal extends React.Component {
                 type="radio"
                 value="icml"
               />
-              <span>ICML</span>
+              <span>{t("icml")}</span>
             </RadioButton>
           </FormatRow>
           <InfoContainer>{textMapper[format]}</InfoContainer>
@@ -408,7 +408,7 @@ class ExportBookModal extends React.Component {
 
     return (
       <>
-        <FormatLabel>Viewer</FormatLabel>
+        <FormatLabel><Trans i18nKey="viewer">Viewer</Trans></FormatLabel>
         <FormatRow>
           <RadioButton last>
             <input
@@ -435,11 +435,13 @@ class ExportBookModal extends React.Component {
     let confirmLabel
 
     if (generating) {
-      confirmLabel = 'Generating'
+      // confirmLabel = 'Generating'
+      confirmLabel = t('generating')
     }
 
     if (validating) {
-      confirmLabel = 'Validating'
+      // confirmLabel = 'Validating'
+      confirmLabel = t('validating')
     }
 
     return (

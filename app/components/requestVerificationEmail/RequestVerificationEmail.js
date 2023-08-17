@@ -104,7 +104,7 @@ const RequestVerificationEmail = props => {
         <div>
           {/* <span>Are you here by mistake? Go back to </span> */}
           <span>{t('are_you_here_by_mistake?_go_back_to')} </span>
-          <Link to="/login">Login</Link>
+          <Link to="/login">{t('login')}</Link>
         </div>
       </FormContainer>
     </StyledCenterColumn>
