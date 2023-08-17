@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
+import {withTranslation} from "react-i18next";
 import { Button, Icons } from '../../../../ui'
 
 const { saveIcon, editIcon, exitIcon } = Icons
@@ -88,7 +89,7 @@ class InfoItem extends React.Component {
   }
 
   renderItem() {
-    const { editable, value } = this.props
+    const { editable, value, t } = this.props
     const { newValue, editMode, focus } = this.state
 
     if (editable) {
@@ -99,7 +100,7 @@ class InfoItem extends React.Component {
             <Button
               icon={editIcon}
               onClick={this.handleEditMode}
-              title="Edit"
+              title={t("edit")}
             />
           </Actions>
         </>
@@ -117,7 +118,7 @@ class InfoItem extends React.Component {
               danger
               icon={exitIcon}
               onClick={this.handleCancel}
-              title="Cancel"
+              title={t("cancel")}
             />
           </Actions>
         </>
@@ -132,4 +133,5 @@ class InfoItem extends React.Component {
   }
 }
 
-export default InfoItem
+// export default InfoItem
+export default withTranslation()(InfoItem);

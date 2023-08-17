@@ -2,6 +2,7 @@ import React from 'react'
 import { mimetypeHelpers } from '../../../common'
 
 import UploadButton from './UploadButton'
+import {withTranslation} from "react-i18next";
 
 const { assetManagerFileExtensions } = mimetypeHelpers
 /* eslint-disable react/prop-types */
@@ -31,7 +32,9 @@ class UploadFilesButton extends React.Component {
   render() {
     const { uploading } = this.state
 
-    const labelText = uploading ? 'Uploading ...' : 'Upload Images'
+    const {t} = this.props
+
+    const labelText = uploading ? t('Uploading...') : t('upload_images')
 
     return (
       <UploadButton
@@ -46,4 +49,4 @@ class UploadFilesButton extends React.Component {
   }
 }
 
-export default UploadFilesButton
+export default withTranslation()(UploadFilesButton)

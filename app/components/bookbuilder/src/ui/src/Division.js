@@ -73,7 +73,7 @@ class Division extends React.Component {
   }
 
   onAddEndNoteClick = async componentType => {
-    const { add, bookId, divisionId, onEndNoteModal } = this.props
+    const { add, bookId, divisionId, onEndNoteModal, t } = this.props
 
     const confirmClicked = await onEndNoteModal(componentType)
 
@@ -81,7 +81,7 @@ class Division extends React.Component {
       add({
         variables: {
           input: {
-            title: 'Notes',
+            title: t('notes'),
             bookId,
             componentType,
             divisionId,
@@ -134,10 +134,10 @@ class Division extends React.Component {
   }
 
   onUpdateWorkflowState(bookComponentId, workflowStates) {
-    const { updateBookComponentWorkflowState } = this.props
+    const { updateBookComponentWorkflowState, t } = this.props
 
     const workflowStages = map(workflowStates, item => ({
-      label: item.label,
+      label: t(item.label.toLowerCase()),
       type: item.type,
       value: item.value,
     }))
@@ -274,7 +274,7 @@ class Division extends React.Component {
               <AddComponentButton
                 add={this.onAddClick}
                 key={`add-${bookStructure.levels[0].type}`}
-                label={`${t('add')} ${bookStructure.levels[0].displayName}`}
+                label={`${t('add')} ${t(bookStructure.levels[0].displayName.toLowerCase())}`}
                 type={bookStructure.levels[0].type}
               />,
             )
@@ -285,7 +285,7 @@ class Division extends React.Component {
               <AddComponentButton
                 add={this.onAddClick}
                 key={`add-${bookStructure.levels[0].type}`}
-                label={`${t('add')} ${bookStructure.levels[0].displayName}`}
+                label={`${t('add')} ${t(bookStructure.levels[0].displayName.toLowerCase())}`}
                 type={bookStructure.levels[0].type}
               />,
             )
@@ -293,7 +293,7 @@ class Division extends React.Component {
               <AddComponentButton
                 add={this.onAddClick}
                 key={`add-${bookStructure.levels[1].type}`}
-                label={`${t('add')} ${bookStructure.levels[1].displayName}`}
+                label={`${t('add')} ${t(bookStructure.levels[1].displayName.toLowerCase())}`}
                 type={bookStructure.levels[1].type}
               />,
             )
@@ -316,7 +316,7 @@ class Division extends React.Component {
                   }
                   divisionName={componentConfig.name}
                   key={`add-${componentType.value}`}
-                  label={`${t('add')} ${componentType.title}`}
+                  label={`${t('add')} ${t(componentType.title.toLowerCase())}`}
                   type={componentType.value}
                 />,
               )
@@ -341,7 +341,7 @@ class Division extends React.Component {
                   }
                   divisionName={componentConfig.name}
                   key={`add-${componentType.value}`}
-                  label={`${t('add')} ${componentType.title}`}
+                  label={`${t('add')} ${t(componentType.title.toLowerCase())}`}
                   type={componentType.value}
                 />
               ) : null,
@@ -363,7 +363,7 @@ class Division extends React.Component {
               }
               divisionName={componentConfig.name}
               key={`add-${componentType.value}`}
-              label={`${t('add')} ${componentType.title}`}
+              label={`${t('add')} ${t(componentType.title.toLowerCase())}`}
               type={componentType.value}
             />
           ) : null,

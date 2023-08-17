@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { indexOf, forEach, find } from 'lodash'
 
+import {withTranslation} from "react-i18next";
 import DialogModal from '../../../common/src/DialogModal'
 
 import ActionSection from './ActionSection'
@@ -154,7 +155,7 @@ class AssetManager extends React.Component {
   }
 
   renderBody() {
-    const { files, withImport, loading, refetching } = this.props
+    const { files, withImport, loading, refetching, t } = this.props
 
     const { selectedItem, name, updated, checkboxSelected, shouldLoader } =
       this.state
@@ -164,10 +165,19 @@ class AssetManager extends React.Component {
       updated,
     }
 
+    /*
     const columns = [
       { label: 'name', width: 37, sortable: true },
       { label: 'updated', width: 28, sortable: true },
       { label: 'size', width: 15, sortable: false },
+      { label: 'mimetype', width: 17, sortable: false },
+      // { label: 'inUse', width: 1, sortable: false },
+    ]
+    */
+    const columns = [
+      { label: t('name'), width: 37, sortable: true },
+      { label: t('updated'), width: 28, sortable: true },
+      { label: t('size'), width: 15, sortable: false },
       { label: 'mimetype', width: 17, sortable: false },
       // { label: 'inUse', width: 1, sortable: false },
     ]
@@ -210,11 +220,11 @@ class AssetManager extends React.Component {
   }
 
   render() {
-    const { isOpen, hideModal } = this.props
+    const { isOpen, hideModal, t } = this.props
 
     return (
       <DialogModal
-        headerText="Asset Manager"
+        headerText={t("asset_manager")}
         isOpen={isOpen}
         notCentered
         onRequestClose={hideModal}
@@ -228,4 +238,5 @@ class AssetManager extends React.Component {
   }
 }
 
-export default AssetManager
+// export default AssetManager
+export default withTranslation()(AssetManager);

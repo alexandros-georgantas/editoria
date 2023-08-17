@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { indexOf } from 'lodash'
 
+import {useTranslation} from "react-i18next";
 import { dateTimeFormatter, fileSizeFormatter } from './helpers'
 import IconButton from './IconButton'
 import { Loading } from '../../../../ui'
@@ -118,6 +119,7 @@ const FilesTable = ({
   checkboxHandler,
 }) => {
   const renderTableBody = () => {
+    const {t} = useTranslation()
     if (loading || !files) return <Loading />
 
     return files.length > 0 ? (
@@ -166,7 +168,7 @@ const FilesTable = ({
                   if (label === 'inUse') {
                     return (
                       <TableCell key={label} width={width}>
-                        {item[label] ? 'Yes' : 'No'}
+                        {item[label] ? t('yes') : t('no')}
                       </TableCell>
                     )
                   }
@@ -192,7 +194,8 @@ const FilesTable = ({
       </TableBody>
     ) : (
       <TableBodyEmpty>
-        You don&apos;t have any uploaded files for this book yet
+        {/* You don&apos;t have any uploaded files for this book yet */}
+        {t("you_don&apos;t_have_any_uploaded_files_for_this_book_yet")}
       </TableBodyEmpty>
     )
   }

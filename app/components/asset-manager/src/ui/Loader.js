@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import {useTranslation} from "react-i18next";
 
 const StyledSpinner = styled.svg`
   animation: rotate 1s linear infinite;
@@ -54,20 +55,25 @@ const Label = styled.div`
   line-height: ${th('lineHeightBase')};
 `
 
-const Loader = () => (
-  <Wrapper>
-    <StyledSpinner viewBox="0 0 50 50">
-      <circle
-        className="path"
-        cx="25"
-        cy="25"
-        fill="none"
-        r="20"
-        strokeWidth="2"
-      />
-    </StyledSpinner>
-    <Label>Loading ...</Label>
-  </Wrapper>
-)
+const Loader = () => {
+    const {t} = useTranslation()
+
+    return
+        (<Wrapper>
+            <StyledSpinner viewBox="0 0 50 50">
+                <circle
+                    className="path"
+                    cx="25"
+                    cy="25"
+                    fill="none"
+                    r="20"
+                    strokeWidth="2"
+                />
+            </StyledSpinner>
+            <Label>{t('loading')} ...</Label>
+        </Wrapper>)
+
+
+}
 
 export default Loader

@@ -1,21 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import {withTranslation} from "react-i18next";
 import AbModal from '../../common/src/AbstractModal'
 
 class RemoveBookModal extends React.Component {
+
   renderBody() {
-    const { book } = this.props
+    const { book ,t } = this.props
 
     return (
+        /*
       <span>Are you sure you want to permanently delete {book.title}?</span>
+        */
+        <span>{t("are_you_sure_you_want_to_permanently_delete_{book.title}?",book)}</span>
     )
   }
 
   render() {
-    const { container, remove, show, toggle } = this.props
+    const { container, remove, show, toggle ,t } = this.props
 
-    const title = 'Delete Book'
+    const title = t('Delete Book')
     const successText = 'Delete'
 
     const body = this.renderBody()
@@ -51,4 +56,5 @@ RemoveBookModal.defaultProps = {
   book: null,
 }
 
-export default RemoveBookModal
+// export default RemoveBookModal
+export default withTranslation()(RemoveBookModal);
