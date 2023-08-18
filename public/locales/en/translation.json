@@ -220,6 +220,14 @@
   "final": "Finale",
   "frontmatter": "Frontmatter",
   "component": "Component",
-  "introduction": "Introduction"
+  "introduction": "Introduction",
+  "uploading_in_progress,_you_will_be_redirected_back_to_book_builder":"Uploading in progress, you will be redirected back to Book Builder",
+  "you_have_no_permissions_to_access_this_book._you_will_be_redirected_back_to_the_dashboard":"You have no permissions to access this book. You will be redirected back to the dashboard",
+  "unfortunately, something_happened_and_our_server_is_unreachable_at_this_moment":"Unfortunately, something happened and our server is unreachable at this moment. Don't worry your work up until this point is safe. However, as the application does not support offline mode your lock will be released. Please try again later",
+  "unfortunately, something_happened_and_our_server_is_unreachable_at_this_moment2":"Unfortunately, something happened and our server is unreachable at this moment. Don't worry your work up until this point is safe. Please try again later",
+  "you_have_gained_write_access_for_this_book_component!":"You have gained WRITE access for this book component!",
+  "you_are_in_read_only_mode_for_this_book_component!":"You are in READ ONLY mode for this book component!",
+  "comments_or_suggestions":"COMMENTS OR SUGGESTIONS",
+  "locked_by": " locked by "
 
 }

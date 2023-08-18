@@ -141,11 +141,8 @@ const Opener = props => {
   )
 }
 
-const t = useTranslation()
-const transTitle = t('title')
-const pubDate = t('pub._date')
 
-const options = [
+/* const options = [
   {
     label: transTitle,
     value: 'title',
@@ -154,7 +151,22 @@ const options = [
     label: pubDate,
     value: 'publicationDate',
   },
-]
+] */
+const options = () => {
+  const {t} = useTranslation();
+  const transTitle = t('title')
+  const pubDate = t('pub._date')
+  return [
+    {
+      label: transTitle,
+      value: 'title',
+    },
+    {
+      label: pubDate,
+      value: 'publicationDate',
+    },
+  ]
+}
 
 const SortMenu = ({ setSortingParams, sortingParams }) => {
   const { ascending, sortKey, archived } = sortingParams
@@ -172,7 +184,7 @@ const SortMenu = ({ setSortingParams, sortingParams }) => {
       ascending={ascending}
       onChange={handleChangeSortKey}
       onChangeSortOrder={handleChangeSortOrder}
-      options={options}
+      options={options()}
       renderOpener={Opener}
       value={sortKey}
     />

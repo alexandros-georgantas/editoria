@@ -6,7 +6,8 @@ import styled from 'styled-components'
 import { H3 } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 
-import { useTranslation } from 'react-i18next'
+
+import {useTranslation} from "react-i18next";
 import { Button, Icons } from '../../../ui'
 import ToggleArchivedButton from './ToggleArchivedButton'
 import SortMenu from './SortMenu'
@@ -55,6 +56,7 @@ const InnerWrapper = styled.div`
   flex-basis: 76%;
 `
 
+
 const DashboardHeader = props => {
   const {
     title,
@@ -65,11 +67,15 @@ const DashboardHeader = props => {
     sortingParams,
   } = props
 
+
+  const { t } = useTranslation()
+  const addBook = t('add_book')
+
+
   const handleClick = () => {
     onAddBook(collectionId)
   }
 
-  const { t } = useTranslation()
 
   return (
     <HeaderWrapper>
@@ -77,18 +83,22 @@ const DashboardHeader = props => {
         <Side1>
           <Title>{title}</Title>
           {canAddBooks && (
-            /* <Button
+             /*
+              <Button
               icon={addIcon}
               label="ADD BOOK"
               onClick={handleClick}
               title="Add Book"
-            /> */
+            />
+            */
+
             <Button
               icon={addIcon}
-              label={t('add_book')}
+              label={addBook}
               onClick={handleClick}
-              title={t("add_book")}
+              title={addBook}
             />
+
           )}
         </Side1>
 

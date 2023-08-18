@@ -11,7 +11,7 @@ const emailRegex =
 /* eslint-enable no-useless-escape, no-control-regex */
 
 const RequestVerificationEmailPage = props => {
-  const t = useTranslation()
+  const {t} = useTranslation()
   const [emailUsed, setEmailUsed] = React.useState('')
   const [inputValue, setInputValue] = React.useState('')
   const [formError, setFormError] = React.useState(undefined)

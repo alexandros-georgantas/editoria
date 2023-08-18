@@ -120,7 +120,7 @@ const icon = (
 const Author = ({author}) => <TopRowKeyValue key="author" value={author}/>
 
 const TopRowValues = ({authors}) => {
-    const t = useTranslation()
+    const {t} = useTranslation()
     if (authors.length === 0)
         return (
             /*
