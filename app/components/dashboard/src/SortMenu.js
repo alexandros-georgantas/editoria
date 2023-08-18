@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types,jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
 /* stylelint-disable string-quotes,font-family-no-missing-generic-family-keyword */
-import React, {useTransition} from 'react'
+import React from 'react'
 import styled, { css } from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
 import { Menu as UIMenu } from '@pubsweet/ui'
 
-import {Trans} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import SortIcon from './IconArrows'
 
 const triangle = css`
@@ -141,7 +141,7 @@ const Opener = props => {
   )
 }
 
-const t = useTransition()
+const t = useTranslation()
 const transTitle = t('title')
 const pubDate = t('pub._date')
 

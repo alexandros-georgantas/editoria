@@ -6,6 +6,7 @@ import React from 'react'
 
 import { Action as UIAction, ActionGroup as UIActionGroup } from '@pubsweet/ui'
 import styled, { css } from 'styled-components'
+import {useTranslation} from "react-i18next";
 
 const underlineFade = css`
   &::before {
@@ -107,6 +108,7 @@ const EditingNotification = ({
   title,
 }) => {
   const { username, created, userId } = lock
+  const {t} = useTranslation()
 
   // if (isAdmin === null || isAdmin === true) {
   //   message = 'locked'
@@ -144,18 +146,18 @@ const EditingNotification = ({
 
   if (created) {
     const date = formatDate(created)
-    hoverTitle = `${username} has been editing since ${date}`
+    hoverTitle = `${username} ${t("has_been_editing_since")} ${date}`
   }
 
   return (
     <ActionGroup isToplevel={isToplevel}>
-      <Action onClick={() => goToEditor(true)}>Preview</Action>
+      <Action onClick={() => goToEditor(true)}>{t('preview')}</Action>
       <Action
         disabled={!currentUser.admin && currentUser.id !== userId}
         onClick={() => onAdminUnlock(bookComponentId, componentType, title)}
         title={hoverTitle}
       >
-        {currentUser.admin || currentUser.id === userId ? 'Unlock' : 'Locked'}
+        {currentUser.admin || currentUser.id === userId ? t('unlock') : t('locked')}
       </Action>
     </ActionGroup>
   )

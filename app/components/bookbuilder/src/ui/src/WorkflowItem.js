@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import styled from 'styled-components'
+import {useTranslation} from "react-i18next";
 import WorkflowIndicator from './WorkflowIndicator'
 import Label from './Label'
 import Arrow from './Arrow'
@@ -54,6 +55,8 @@ const WorkflowItem = ({
   type,
   currentValues,
 }) => {
+  const {t} = useTranslation()
+
   const handleInteractionLeft = () => {
     if (disabled) return
     const nextIndex = arrayShift(values, index, 'left')
@@ -152,7 +155,7 @@ const WorkflowItem = ({
           completed={values[index] === 1}
           id="workLabel"
         >
-          {item.title}
+          {t(item.title)}
         </Label>
         {progressListRight}
       </FirstRow>

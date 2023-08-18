@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { th, override } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
 import { forEach } from 'lodash'
+// import {useTranslation} from "react-i18next";
 
 // #region styled components
 const Root = styled.div``
@@ -414,12 +415,18 @@ Menu.propTypes = {
   // /** Maximum height of the options container. */
   // maxHeight: PropTypes.number,
 }
+/*
+const translateDefault = (placeholder) => {
+  const {t} = useTranslation()
+  return t(placeholder)
+}
+*/
 
 Menu.defaultProps = {
   renderOption: DefaultMenuOption,
   renderOpener: DefaultOpener,
   reset: false,
-  placeholder: 'Choose in the list',
+  placeholder: 'choose_in_the_list' // translateDefault('choose_in_the_list'),
 }
 
 export { Menu }
