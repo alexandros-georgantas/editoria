@@ -5,6 +5,7 @@ import { th, grid } from '@pubsweet/ui-toolkit'
 import styled, { css } from 'styled-components'
 import uuid from 'uuid/v4'
 
+import { useTranslation } from 'react-i18next'
 import { NavBarLink, Icons } from '../../../ui'
 
 const StyledNavLinks = styled(NavBarLink)`
@@ -88,6 +89,7 @@ const WaxHeader = ({
   title,
   setTabId,
 }) => {
+  const { t } = useTranslation()
   return (
     <Header>
       <Container>
@@ -100,13 +102,13 @@ const WaxHeader = ({
             to={createUrl(bookId, prevBookComponent.id)}
           >
             <Icon>{previousIcon}</Icon>
-            <Text>{`${prevBookComponent.title || 'Untitled'}`}</Text>
+            <Text>{`${prevBookComponent.title || t('Untitled')}`}</Text>
           </StyledNavLinks>
         )}
       </Container>
       <Container>
         <StyledNavLinks position="center" to={`/books/${bookId}/book-builder`}>
-          <Text>{`${bookTitle} - ${title || 'Untitled'}`}</Text>
+          <Text>{`${bookTitle} - ${title || t('Untitled')}`}</Text>
         </StyledNavLinks>
       </Container>
 
@@ -119,7 +121,7 @@ const WaxHeader = ({
             position="right"
             to={createUrl(bookId, nextBookComponent.id, nextBookComponent.lock)}
           >
-            <Text>{`${nextBookComponent.title || 'Untitled'}`}</Text>
+            <Text>{`${nextBookComponent.title || t('Untitled')}`}</Text>
             <Icon>{nextIcon}</Icon>
           </StyledNavLinks>
         )}

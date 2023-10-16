@@ -6,6 +6,7 @@ import React from 'react'
 import { find, indexOf } from 'lodash'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 import withLink from '../../../../common/src/withLink'
 
 const Container = styled.div`
@@ -80,16 +81,18 @@ const BookComponentTitle = ({
   componentType,
   title,
 }) => {
+  const { t } = useTranslation()
+
   const { config: divisions } = find(applicationParameter, {
     context: 'bookBuilder',
     area: 'divisions',
   })
 
-  let componentTitle = title || 'Untitled'
+  let componentTitle = title || t('Untitled')
 
   if (lock) {
     const { username } = lock
-    componentTitle = `${title || 'Untitled'} (locked by ${username})`
+    componentTitle = `${title || t('Untitled')} (${t('locked_by')} ${username})`
   }
 
   const { showNumberBeforeComponents } = find(divisions, ['name', divisionType])
@@ -109,7 +112,7 @@ const BookComponentTitle = ({
       componentType={componentType}
       showNumber={!featureBookStructureEnabled && showNumber}
     >
-      {componentTitle || 'Untitled'}
+      {componentTitle}
     </Title>
   )
   const url = `/books/${bookId}/bookComponents/${bookComponentId}`
@@ -125,7 +128,7 @@ const BookComponentTitle = ({
         componentType={componentType}
         showNumber={!featureBookStructureEnabled && showNumber}
       >
-        {withLink(componentTitle || 'Untitled', url)}
+        {withLink(componentTitle || t('Untitled'), url)}
       </Title>
     )
   }

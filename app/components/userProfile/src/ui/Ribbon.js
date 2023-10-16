@@ -4,6 +4,7 @@ import React from 'react'
 import styled, { css } from 'styled-components'
 
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 
 const background = props => {
   if (props.status === 'success') return th('colorSuccess')
@@ -47,6 +48,7 @@ const StyledRibbon = styled.div`
 `
 
 const Ribbon = props => {
+  const { t } = useTranslation()
   const { className, keepSpaceOccupied = true, message, status } = props
   const hide = !message || !message.length > 0
 
@@ -57,7 +59,7 @@ const Ribbon = props => {
       keepSpaceOccupied={keepSpaceOccupied}
       status={status}
     >
-      {message}
+      {message && t(message.toLowerCase().replace(/ /g, '_'))}
     </StyledRibbon>
   )
 }

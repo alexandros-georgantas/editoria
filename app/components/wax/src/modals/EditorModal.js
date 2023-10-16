@@ -5,6 +5,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 import InfoModal from '../../../common/src/InfoModal'
 import ModalRoot from '../../../common/src/ModalRoot'
 import ModalHeader from '../../../common/src/ModalHeader'
@@ -30,8 +31,8 @@ const Centered = styled.div`
 const EditorModal = props => {
   const { isOpen, hideModal, data, ...rest } = props
   const { warning, noActions } = data
-
-  const headerText = 'Warning'
+  const { t } = useTranslation()
+  const headerText = t('Warning')
 
   if (!noActions) {
     const { onConfirm } = data

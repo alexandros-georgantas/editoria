@@ -6,6 +6,7 @@ import { th } from '@pubsweet/ui-toolkit'
 
 import { Menu as UIMenu } from '@pubsweet/ui'
 
+import { Trans, useTranslation } from 'react-i18next'
 import SortIcon from './IconArrows'
 
 const triangle = css`
@@ -43,8 +44,8 @@ const Menu = styled(UIMenu)`
 
     > div:nth-child(2) {
       left: 95%;
+      min-width: max-content;
       transform: translate(-95%, 0);
-      width: 100px;
       z-index: 100;
     }
 
@@ -53,10 +54,10 @@ const Menu = styled(UIMenu)`
       border: 1px solid #666;
       box-shadow: 0 2px 10px #666;
       margin-top: 16px;
+      min-width: max-content;
       overflow-y: unset;
       position: relative;
       text-transform: uppercase;
-      width: 100px;
 
       &::before {
         left: calc(50% - 15px / 2);
@@ -129,27 +130,49 @@ const OpenerWrapper = styled.div`
 const Opener = props => {
   const { ascending, onChangeSortOrder, selected, toggleMenu } = props
 
+  const { t } = useTranslation()
+
   return (
     <OpenerWrapper>
       <span>
-        Sort By <span onClick={toggleMenu}>{selected}</span>
-      </span>
-
+        <Trans i18nKey="sort_by"> Sort By </Trans>
+        <span onClick={toggleMenu}>
+          {' '}
+          {t(selected.toLowerCase().replace(/ /g, '_'))}
+        </span>
+      </span>{' '}
       <SortIcon ascending={ascending} onClick={onChangeSortOrder} />
     </OpenerWrapper>
   )
 }
 
+/*
 const options = [
   {
-    label: 'title',
+    label: transTitle,
     value: 'title',
   },
   {
-    label: 'pub. date',
+    label: pubDate,
     value: 'publicationDate',
   },
 ]
+*/
+const options = () => {
+  const { t } = useTranslation()
+  const transTitle = t('title')
+  const pubDate = t('pub._date')
+  return [
+    {
+      label: transTitle,
+      value: 'title',
+    },
+    {
+      label: pubDate,
+      value: 'publicationDate',
+    },
+  ]
+}
 
 const SortMenu = ({ setSortingParams, sortingParams }) => {
   const { ascending, sortKey, archived } = sortingParams
@@ -167,7 +190,7 @@ const SortMenu = ({ setSortingParams, sortingParams }) => {
       ascending={ascending}
       onChange={handleChangeSortKey}
       onChangeSortOrder={handleChangeSortOrder}
-      options={options}
+      options={options()}
       renderOpener={Opener}
       value={sortKey}
     />

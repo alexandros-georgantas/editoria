@@ -4,6 +4,7 @@ import React from 'react'
 import AsyncSelect from 'react-select/async'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { withTranslation } from 'react-i18next'
 
 const Container = styled.div`
   margin-bottom: calc(2 * ${th('gridUnit')});
@@ -68,7 +69,7 @@ export class AddMember extends React.Component {
   }
 
   render() {
-    const { show } = this.props
+    const { show, t } = this.props
     const { selectedOption } = this.state
 
     return (
@@ -79,8 +80,9 @@ export class AddMember extends React.Component {
             closeMenuOnSelect
             isClearable={false}
             loadOptions={debounce(this.searchUsers, 500)}
+            noOptionsMessage={() => t('no_options')}
             onChange={this.handleChange}
-            placeholder="Search"
+            placeholder={t('search')}
             value={selectedOption}
           />
         )}
@@ -89,4 +91,4 @@ export class AddMember extends React.Component {
   }
 }
 
-export default AddMember
+export default withTranslation()(AddMember)

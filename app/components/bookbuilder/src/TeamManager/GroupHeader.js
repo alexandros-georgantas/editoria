@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import { Button, Icons } from '../../../../ui'
+import { withTranslation } from 'react-i18next'
 
 const { addIcon } = Icons
 const GroupHeaderContainer = styled.div`
@@ -24,11 +25,12 @@ const GroupTitle = styled.div`
 
 export class GroupHeader extends React.Component {
   render() {
-    const { title, showInput, allowed, show, canViewAddTeamMember } = this.props
-
+    const { title, showInput, allowed, show, canViewAddTeamMember, t } =
+      this.props
+    const titleTrans = t(title.toLowerCase().replace(/ /g, '_'))
     return (
       <GroupHeaderContainer>
-        <GroupTitle>{title}</GroupTitle>
+        <GroupTitle>{titleTrans}</GroupTitle>
         {allowed && canViewAddTeamMember ? (
           !show ? (
             <Button
@@ -55,4 +57,4 @@ GroupHeader.propTypes = {
   showInput: PropTypes.func.isRequired,
 }
 
-export default GroupHeader
+export default withTranslation()(GroupHeader)

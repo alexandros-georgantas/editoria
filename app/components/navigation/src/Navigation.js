@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom'
 import { compose, withProps } from 'recompose'
 import styled from 'styled-components'
 import { grid } from '@pubsweet/ui-toolkit'
+import { Trans, useTranslation } from 'react-i18next'
 import { NavBar, NavBarLink, Dropdown } from '../../../ui'
 
 const StyledLogo = styled.img`
@@ -18,6 +19,7 @@ const featureBookStructureEnabled =
   false
 
 const navLinksBuilder = (location, isAdminOrGlobal) => {
+  const { i18n } = useTranslation()
   const navLinksLeft = []
 
   const inDashboard =
@@ -29,7 +31,8 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
 
   navLinksLeft.push(
     <NavBarLink active={inDashboard.toString()} key="nav-books" to="/books">
-      Books
+      {/* <Trans i18nKey="books">Books</Trans> */}
+      {i18n.t('books')}
     </NavBarLink>,
   )
 
@@ -46,7 +49,10 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
           key="nav-templates"
           to="/templates"
         >
-          Templates
+          {/* Templates
+          <Trans i18nKey="templates">Templates</Trans>
+          */}
+          {i18n.t('templates')}
         </NavBarLink>,
       )
     }
@@ -65,7 +71,8 @@ const navLinksBuilder = (location, isAdminOrGlobal) => {
       key="nav-templates"
       to="/templates"
     >
-      Templates
+      {/* Templates */}
+      <Trans i18nKey="templates">Templates</Trans>
     </NavBarLink>,
   )
 
@@ -78,10 +85,11 @@ const Navigation = props => {
   if (!currentUser) return null
 
   if (currentUser && currentUser.admin) {
-    dropdownItems.push({ link: '/globalTeams', label: 'Team Manager' })
+    dropdownItems.push(
+      { link: '/globalTeams', label: 'Team Manager' },
+      { link: '/systemInfo', label: 'System Info' },
+    )
   }
-
-  dropdownItems.push({ link: '/systemInfo', label: 'System Info' })
 
   const itemsLeft = navLinksBuilder(
     location,

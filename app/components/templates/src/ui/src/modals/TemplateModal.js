@@ -6,6 +6,8 @@ import { th, grid } from '@pubsweet/ui-toolkit'
 import { filter, findIndex, find, cloneDeep, uniqueId, isEmpty } from 'lodash'
 import { Formik } from 'formik'
 import Select from 'react-select'
+import { withTranslation } from 'react-i18next'
+import i18next from 'i18next'
 import FormModal from '../../../../../common/src/FormModal'
 import { UploadFilesButton, UploadThumbnail } from '../..'
 
@@ -18,11 +20,23 @@ const selectOptions = [
   { label: 'PagedJS', value: 'pagedjs' },
 ]
 
-const noteSelectOptions = [
-  { label: 'Footnotes', value: 'footnotes' },
-  { label: 'Endnotes', value: 'endnotes' },
-  { label: 'Chapter end notes', value: 'chapterEnd' },
-]
+const noteSelectOptions = () => {
+  // const {t} = this.props // useTranslation()
+  return [
+    {
+      label: i18next.t('Footnotes'.toLowerCase().replace(/ /g, '_')),
+      value: 'footnotes',
+    },
+    {
+      label: i18next.t('Endnotes'.toLowerCase().replace(/ /g, '_')),
+      value: 'endnotes',
+    },
+    {
+      label: i18next.t('Chapter end notes'.toLowerCase().replace(/ /g, '_')),
+      value: 'chapterEnd',
+    },
+  ]
+}
 
 const StyledFormik = styled(Formik)`
   width: 100%;
@@ -204,7 +218,7 @@ class TemplateModal extends React.Component {
         files: cloneDeep(files),
         mode,
         target: target ? find(selectOptions, { value: target }) : undefined,
-        notes: notes ? find(noteSelectOptions, { value: notes }) : undefined,
+        notes: notes ? find(noteSelectOptions(), { value: notes }) : undefined,
         exportScripts,
       }
     }
@@ -327,12 +341,20 @@ class TemplateModal extends React.Component {
   }
 
   renderFiles(setFieldValue, setFieldTouched) {
+    const { t } = this.props
     const { files } = this.state
 
     if (!files || files.length === 0) {
       return (
         <FormField>
-          <Filename>No files selected</Filename>
+          <Filename>
+            {t(
+              'No files selected'
+                .toLowerCase()
+                .toLowerCase()
+                .replace(/ /g, '_'),
+            )}
+          </Filename>
         </FormField>
       )
     }
@@ -353,7 +375,7 @@ class TemplateModal extends React.Component {
                 e.preventDefault()
                 this.removeFile(file.name, setFieldValue, setFieldTouched)
               }}
-              title="Delete file"
+              title="Delete File"
             />
           </FormField>
         ))}
@@ -362,7 +384,7 @@ class TemplateModal extends React.Component {
   }
 
   renderBody() {
-    const { data } = this.props
+    const { data, t } = this.props
     const { onConfirm, hideModal, mode, scriptOptions } = data
 
     const {
@@ -475,7 +497,7 @@ class TemplateModal extends React.Component {
           const { files: filesFromState } = this.state
 
           if (!values.name || values.name === '') {
-            errors.name = '* The name of the template should not be empty'
+            errors.name = t('* the_name_of_the_template_should_not_be_empty')
           }
 
           if (values.files.length > 0) {
@@ -492,31 +514,36 @@ class TemplateModal extends React.Component {
             }
 
             if (stylesheetCounter > 1) {
-              errors.files =
-                '* Only one stylesheet can be uploaded per Template'
+              errors.files = t(
+                '* only_one_stylesheet_can_be_uploaded_per_template',
+              )
             }
           }
 
           if (!values.target) {
-            errors.target = '* The target of the template should not be empty'
+            errors.target = t(
+              '* the_target_of_the_template_should_not_be_empty',
+            )
           }
 
           if (!values.notes) {
-            errors.notes =
-              '* The notes type of the template should not be empty'
+            errors.notes = t(
+              '* the_notes_type_of_the_template_should_not_be_empty',
+            )
           }
 
           if (values.exportScripts.length > 0) {
             if (!values.target.value) {
-              errors.exportScripts = '* You have to select a target first'
+              errors.exportScripts = t('* you_have_to_select_a_target_first')
             } else {
               for (let i = 0; i < values.exportScripts.length; i += 1) {
                 const { value } = values.exportScripts[i]
                 const tokens = value.split('-')
 
                 if (tokens[1].toLowerCase() !== target.value.toLowerCase()) {
-                  errors.exportScripts =
-                    '* The scope of the scripts should match the selected target'
+                  errors.exportScripts = t(
+                    '* the_scope_of_the_scripts_should_match_the_selected_target',
+                  )
                 }
               }
             }
@@ -554,7 +581,7 @@ class TemplateModal extends React.Component {
                   {thumbnailPreview && (
                     <ThumbnailContainer>
                       <Image
-                        alt="Template's thumbnail"
+                        alt={t("template's_thumbnail")}
                         src={thumbnailPreview}
                       />
                       <UploadThumbnail
@@ -576,7 +603,7 @@ class TemplateModal extends React.Component {
                 </Side1>
                 <Side2>
                   <FormField>
-                    <Text>Name *</Text>
+                    <Text>{t('name_*')}</Text>
                     <FormFieldContainer>
                       <Input
                         errorId="name"
@@ -587,7 +614,7 @@ class TemplateModal extends React.Component {
                         onKeyPress={e => {
                           e.key === 'Enter' && e.preventDefault()
                         }}
-                        placeholder="eg. Booksprints"
+                        placeholder={t('eg. booksprints')}
                         touched={touched}
                         type="text"
                         value={values.name || ''}
@@ -596,7 +623,7 @@ class TemplateModal extends React.Component {
                     </FormFieldContainer>
                   </FormField>
                   <FormField>
-                    <Text>Author</Text>
+                    <Text>{t('author')}</Text>
                     <FormFieldContainer>
                       <Input
                         errorId="author"
@@ -607,7 +634,7 @@ class TemplateModal extends React.Component {
                         onKeyPress={e => {
                           e.key === 'Enter' && e.preventDefault()
                         }}
-                        placeholder="eg. John Smith"
+                        placeholder={t('eg._john_smith')}
                         touched={touched}
                         type="text"
                         value={values.author || ''}
@@ -636,9 +663,10 @@ class TemplateModal extends React.Component {
                     </FormFieldContainer>
                   </FormField> */}
                   <FormField>
-                    <Text>Target *</Text>
+                    <Text>{t('target *')}</Text>
                     <FormFieldContainer>
                       <Select
+                        noOptionsMessage={() => t('no_options')}
                         onChange={selected => {
                           this.handleSelect(
                             selected,
@@ -647,17 +675,19 @@ class TemplateModal extends React.Component {
                           )
                         }}
                         options={selectOptions}
+                        placeholder={t('select')}
                         value={values.target}
                       />
                       <Error>{touched.target ? errors.target : ''}</Error>
                     </FormFieldContainer>
                   </FormField>
                   <FormField>
-                    <Text>Scripts</Text>
+                    <Text>{t('scripts')}</Text>
                     <FormFieldContainer>
                       <Select
                         isDisabled={!values.target}
                         isMulti
+                        noOptionsMessage={() => t('no_options')}
                         onChange={selected => {
                           this.handleSelectScripts(
                             selected,
@@ -666,6 +696,7 @@ class TemplateModal extends React.Component {
                           )
                         }}
                         options={filteredScriptOptions}
+                        placeholder={t('select')}
                         value={values.exportScripts}
                       />
                       <Error>
@@ -674,9 +705,10 @@ class TemplateModal extends React.Component {
                     </FormFieldContainer>
                   </FormField>
                   <FormField>
-                    <Text>Notes *</Text>
+                    <Text>{t('notes_*')}</Text>
                     <FormFieldContainer>
                       <Select
+                        noOptionsMessage={() => t('no_options')}
                         onChange={selected => {
                           this.handleSelectNotes(
                             selected,
@@ -684,14 +716,15 @@ class TemplateModal extends React.Component {
                             setFieldTouched,
                           )
                         }}
-                        options={noteSelectOptions}
+                        options={noteSelectOptions()}
+                        placeholder={t('select')}
                         value={values.notes}
                       />
                       <Error>{touched.notes ? errors.notes : ''}</Error>
                     </FormFieldContainer>
                   </FormField>
                   <FormField>
-                    <Text>Files</Text>
+                    <Text>{t('files')}</Text>
 
                     <UploadFilesButton
                       setFieldTouched={setFieldTouched}
@@ -725,14 +758,14 @@ class TemplateModal extends React.Component {
   }
 
   render() {
-    const { isOpen, hideModal, data } = this.props
+    const { isOpen, hideModal, data, t } = this.props
     const { headerText } = data
 
     const body = this.renderBody()
 
     return (
       <FormModal
-        headerText={headerText}
+        headerText={t(headerText)}
         isOpen={isOpen}
         onRequestClose={hideModal}
         size="largeNarrow"
@@ -743,4 +776,4 @@ class TemplateModal extends React.Component {
   }
 }
 
-export default TemplateModal
+export default withTranslation()(TemplateModal)

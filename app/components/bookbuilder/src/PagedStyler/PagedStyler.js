@@ -6,6 +6,7 @@ import { grid } from '@pubsweet/ui-toolkit'
 import 'codemirror/mode/css/css'
 import 'codemirror/lib/codemirror.css'
 import { Controlled as CodeMirror } from 'react-codemirror2'
+import { useTranslation } from 'react-i18next'
 import { Button, NavBarLink } from '../../../../ui'
 
 const serverProtocol = process.env.SERVER_PROTOCOL
@@ -110,6 +111,8 @@ const PagedStyler = ({
   const [random, setRandom] = useState('')
   const { id } = template
   const templateFile = getCssFile(template)
+
+  const { t } = useTranslation()
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
@@ -177,7 +180,9 @@ const PagedStyler = ({
               />
             )}
             <NavBarLink to={`/books/${bookId}/book-builder`}>
-              Back to book
+              {/* Back to book */}
+              {t('back_to_book')}
+              {/* <Trans i18nKey="back_to_book">Back to book</Trans> */}
             </NavBarLink>
           </EditorToolbar>
           <EditorArea>

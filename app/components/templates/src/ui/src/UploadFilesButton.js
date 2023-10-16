@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
+import { withTranslation } from 'react-i18next'
 import { mimetypeHelpers } from '../../../../common'
 import UploadButton from './UploadButton'
 
@@ -20,6 +21,8 @@ class UploadFilesButton extends React.Component {
   }
 
   render() {
+    // const {t} = this.props
+
     const addIcon = (
       <svg
         fill="black"
@@ -38,13 +41,13 @@ class UploadFilesButton extends React.Component {
         accept={templateFileExtensions}
         icon={addIcon}
         id="files"
-        label="Add files"
+        label="Add Files"
         multiple
         onChange={this.onChange}
-        title="Add files"
+        title="Add Files"
       />
     )
   }
 }
 
-export default UploadFilesButton
+export default withTranslation()(UploadFilesButton)

@@ -3,8 +3,10 @@ import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import NavBarLink from './NavBarLink'
 import ActionButton from './ActionButton'
+import LanguageSwitcher from '../components/LanguageSwitcher'
 
 const Wrapper = styled.div`
   box-shadow: ${th('boxShadow')};
@@ -13,9 +15,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   font-family: ${th('fontInterface')};
   font-size: ${th('fontSizeBase')};
-  /* height: auto !important; */
   line-height: ${th('lineHeightBase')};
-  max-height: 280px;
   padding: ${grid(1)};
   width: 222px;
 `
@@ -57,6 +57,9 @@ const UserInfo = styled.div`
   width: 100%;
 `
 
+const languageSwitch =
+  (process.env.LANG_SWITCH && JSON.parse(process.env.LANG_SWITCH)) || false
+
 const DropComponent = ({
   client,
   currentUser,
@@ -65,6 +68,7 @@ const DropComponent = ({
   setIsOpen,
 }) => {
   const { givenNames, surname, username } = currentUser
+  const { t } = useTranslation()
 
   return (
     <Wrapper>
@@ -75,6 +79,13 @@ const DropComponent = ({
         <Username>{username}</Username>
       </UserSection>
       <Divider />
+      {languageSwitch && (
+        <>
+          <LanguageSwitcher setIsOpen={setIsOpen} />
+          <Divider />
+        </>
+      )}
+      {/* <Divider /> */}
       <MainArea>
         {dropdownItems.map(item => {
           const { link, label } = item
@@ -84,7 +95,8 @@ const DropComponent = ({
               onClick={() => setIsOpen(false)}
               to={link}
             >
-              {label}
+              {/* {label} */}
+              {t(label.toLowerCase().replace(/ /g, '_'))}
             </NavBarLink>
           )
         })}

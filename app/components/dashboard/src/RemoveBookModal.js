@@ -9,6 +9,8 @@ class RemoveBookModal extends React.Component {
 
     return (
       <span>Are you sure you want to permanently delete {book.title}?</span>
+
+      /* <span> {t("are_you_sure_you_want_to_permanently_delete_{book.title}?",book)}</span> */
     )
   }
 

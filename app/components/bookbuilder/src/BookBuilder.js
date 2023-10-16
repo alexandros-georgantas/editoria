@@ -92,6 +92,7 @@ const BookBuilder = ({
 
       onWarning(
         `You don't have permissions to access this book. You will be redirected back to the dashboard`,
+        //  <Trans i18nKey="you_don't_have_permissions_to_access_this_book._you_will_be_redirected_back_to_the_dashboard" t={t}>You don&#39;t have permissions to access this book. You will be redirected back to the dashboard</Trans>,
         onConfirm,
       )
     }

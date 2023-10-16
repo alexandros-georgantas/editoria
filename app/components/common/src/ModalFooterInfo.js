@@ -6,7 +6,7 @@ import { Button } from '../../../ui'
 import ModalFooter from './ModalFooter'
 
 const ModalFooterInfo = props => {
-  const { onConfirm, textSuccess = 'OK', buttonLabel } = props
+  const { onConfirm, textSuccess = 'Ok', buttonLabel } = props
 
   return (
     <ModalFooter>

@@ -44,6 +44,7 @@ module.exports = (opts = {}) => {
       'process.env.SERVER_PORT': `"${opts.clientEnv.serverPort}"`,
       'process.env.FEATURE_BOOK_STRUCTURE': opts.clientEnv.featureBookStructure,
       'process.env.LOCKS_WS_URL': `"${opts.clientEnv.locksWSURL}"`,
+      'process.env.LANG_SWITCH': `"${opts.clientEnv.languageSwitch}"`,
       'process.env.FEATURE_UPLOAD_DOCX_FILES':
         opts.clientEnv.featureUploadDOCXFiles,
       'process.env.APP_VERSION': `"${opts.clientEnv.appVersion}"`,

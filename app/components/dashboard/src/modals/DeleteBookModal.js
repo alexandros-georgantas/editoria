@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 import DialogModal from '../../../common/src/DialogModal'
 
 const Text = styled.div`
@@ -17,16 +18,21 @@ const Text = styled.div`
 const DeleteBookModal = props => {
   const { isOpen, hideModal, data } = props
   const { bookTitle, onConfirm } = data
+  const { t } = useTranslation()
+
   return (
     <DialogModal
       buttonLabel="Yes"
-      headerText="Delete Book"
+      headerText={t('Delete Book')}
       isOpen={isOpen}
       onConfirm={onConfirm}
       onRequestClose={hideModal}
     >
       <Text>
-        {`Are you sure you want to delete the book with title ${bookTitle}?`}
+        {/* {`Are you sure you want to delete the book with title ${bookTitle}?`} */}
+        {t('are_you_sure_you_want_to_delete_the_book_with_title_{bookTitle}?', {
+          bookTitle,
+        })}
       </Text>
     </DialogModal>
   )

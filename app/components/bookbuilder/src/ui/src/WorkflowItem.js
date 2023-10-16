@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import WorkflowIndicator from './WorkflowIndicator'
 import Label from './Label'
 import Arrow from './Arrow'
@@ -54,6 +55,9 @@ const WorkflowItem = ({
   type,
   currentValues,
 }) => {
+  const { t } = useTranslation()
+  const [isHovered, setIsHovered] = useState(false)
+
   const handleInteractionLeft = () => {
     if (disabled) return
     const nextIndex = arrayShift(values, index, 'left')
@@ -123,6 +127,16 @@ const WorkflowItem = ({
   let progressListLeft = ''
   let progressListRight = ''
 
+  const mouseOverStyle = {
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+    ...(isHovered && {
+      whiteSpace: 'nowrap',
+      overflow: 'visible',
+    }),
+  }
+
   if (selectedStage.canChangeProgressListLeft) {
     progressListLeft = renderIndicator(false, 'left')
   } else {
@@ -151,8 +165,11 @@ const WorkflowItem = ({
           active={values[index] === 0}
           completed={values[index] === 1}
           id="workLabel"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          style={mouseOverStyle}
         >
-          {item.title}
+          {t(item.title.toLowerCase().replace(/ /g, '_'))}
         </Label>
         {progressListRight}
       </FirstRow>

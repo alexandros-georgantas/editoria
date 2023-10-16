@@ -11,7 +11,12 @@ import {
   Link,
 } from '@pubsweet/ui'
 
+import { useTranslation } from 'react-i18next'
 import { Loading } from '../../ui'
+import LanguageSwitcher from '../LanguageSwitcher'
+
+const languageSwitch =
+  (process.env.LANG_SWITCH && JSON.parse(process.env.LANG_SWITCH)) || false
 
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
@@ -36,6 +41,13 @@ const FormContainer = styled.div`
   border: 0;
 `
 
+const LanguageSwitcherWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+`
+
 const RequestVerificationEmail = props => {
   const {
     hasError,
@@ -48,26 +60,36 @@ const RequestVerificationEmail = props => {
     email,
   } = props
 
+  const { i18n } = useTranslation()
+
   return (
     <StyledCenterColumn>
       <Logo>
         <img alt="ketida-logo" src="/ketida.svg" />
       </Logo>
-
+      {languageSwitch && (
+        <LanguageSwitcherWrapper>
+          <LanguageSwitcher />
+        </LanguageSwitcherWrapper>
+      )}
       <FormContainer>
         {loading && <Loading />}
-        <H1>Request Verification email</H1>
-
+        {/* <H1>Request Verification email</H1> */}
+        <H1>{i18n.t('request_verification_email')}</H1>
         <div>
           <TextField
-            label="Email"
+            label={i18n.t('email')}
             name="email"
             onChange={event => handleInputChange(event.target.value)}
-            placeholder="Enter your email"
+            placeholder={i18n.t('enter_your_email')}
             type="text"
             value={email}
           />
-          {formError && <ErrorText>{formError}</ErrorText>}
+          {formError && (
+            <ErrorText>
+              {i18n.t(formError.toLowerCase().replace(/ /g, '_'))}
+            </ErrorText>
+          )}
           <Button
             disabled={
               loading ||
@@ -80,16 +102,27 @@ const RequestVerificationEmail = props => {
             onClick={onSubmit}
             primary
           >
-            Send email
+            {i18n.t('send_email')}
           </Button>
-          {hasError && <ErrorText>Something went wrong</ErrorText>}
+          {hasError && (
+            <ErrorText>
+              {i18n.t('Something went wrong'.toLowerCase().replace(/ /g, '_'))}
+            </ErrorText>
+          )}
           {hasSuccess && (
-            <div>{`A verification email has been sent to ${userEmail}`}</div>
+            /* <div>{`A verification email has been sent to ${userEmail}`}</div> */
+            <div>
+              {i18n.t(
+                'a_verification_email_has_been_sent_to_user_email',
+                userEmail,
+              )}
+            </div>
           )}
         </div>
         <div>
-          <span>Are you here by mistake? Go back to </span>
-          <Link to="/login">Login</Link>
+          {/* <span>Are you here by mistake? Go back to </span> */}
+          <span>{i18n.t('are_you_here_by_mistake?_go_back_to')} </span>
+          <Link to="/login">{i18n.t('login')}</Link>
         </div>
       </FormContainer>
     </StyledCenterColumn>

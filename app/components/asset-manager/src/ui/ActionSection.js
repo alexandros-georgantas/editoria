@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th, darken, grid } from '@pubsweet/ui-toolkit'
 
+import { withTranslation } from 'react-i18next'
 import UploadFilesButton from './UploadFilesButton'
 import { Button } from '../../../../ui'
 
@@ -67,17 +68,21 @@ class ActionSection extends React.Component {
       importHandler,
       deleteDisabled,
       importDisabled,
+      t,
     } = this.props
 
     return (
       <Wrapper>
         {shouldWarn ? (
           <WarningAlert>
-            Are you sure you want to proceed with this action?{'   '}
-            <SecondaryAction onClick={this.handleDelete}>Yes</SecondaryAction> |
+            {t('are_you_sure_you_want_to_proceed_with_this_action?')}
             {'   '}
+            <SecondaryAction onClick={this.handleDelete}>
+              {t('yes')}
+            </SecondaryAction>{' '}
+            |{'   '}
             <SecondaryAction onClick={this.handleShouldWarn}>
-              No
+              {t('no')}
             </SecondaryAction>
           </WarningAlert>
         ) : (
@@ -107,4 +112,4 @@ class ActionSection extends React.Component {
   }
 }
 
-export default ActionSection
+export default withTranslation()(ActionSection)

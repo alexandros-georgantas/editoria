@@ -4,6 +4,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 import InfoModal from '../../../../../common/src/InfoModal'
 
 const Text = styled.div`
@@ -19,14 +20,15 @@ const WarningModal = props => {
   const { isOpen, hideModal, data } = props
   const { onConfirm, warning } = data
 
+  const { t } = useTranslation()
   return (
     <InfoModal
-      headerText="Warning"
+      headerText={t('Warning')}
       isOpen={isOpen}
       onConfirm={onConfirm}
       onRequestClose={hideModal}
     >
-      <Text>{`${warning}`}</Text>
+      <Text>{`${t(warning)}`}</Text>
     </InfoModal>
   )
 }

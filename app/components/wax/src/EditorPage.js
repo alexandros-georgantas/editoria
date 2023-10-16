@@ -4,17 +4,40 @@ import useWebSocket, { ReadyState } from 'react-use-websocket'
 import debounce from 'lodash/debounce'
 import findIndex from 'lodash/findIndex'
 import uuid from 'uuid/v4'
+import { useTranslation } from 'react-i18next'
 import Editor from './Editor'
 import usePrevious from './helpers/usePrevious'
 
-const UNLOCK_REASONS = {
-  100: 'Unlocked by the admin of the system',
-  101: 'Unlocked by the owner of the lock',
-  102: 'Unlocked due to inactivity',
-  103: 'Unlocked but found multiple locks',
-  104: 'Unlocked by the system due to server error',
-  105: 'Unlocked due to permission changes',
-  200: 'Idle mode',
+const UNLOCK_REASONS = (t, status) => {
+  // const { t } = useTranslation()
+  switch (status) {
+    case 100:
+      return t('Unlocked by the admin of the system')
+    case 101:
+      return t('Unlocked by the owner of the lock')
+    case 102:
+      return t('Unlocked due to inactivity')
+    case 103:
+      return t('Unlocked but found multiple locks')
+    case 104:
+      return t('Unlocked by the system due to server error')
+    case 105:
+      return t('Unlocked due to permission changes')
+    case 200:
+      return t('Idle mode')
+    default:
+      return null
+  }
+
+  // return {
+  //   100: t('Unlocked by the admin of the system'),
+  //   101: t('Unlocked by the owner of the lock'),
+  //   102: t('Unlocked due to inactivity'),
+  //   103: t('Unlocked but found multiple locks'),
+  //   104: t('Unlocked by the system due to server error'),
+  //   105: t('Unlocked due to permission changes'),
+  //   200: t('Idle mode'),
+  // }
 }
 
 const EditorPage = props => {
@@ -58,6 +81,7 @@ const EditorPage = props => {
   } = bookComponent
 
   const { divisions, id: bookId, title: bookTitle } = book
+  const { t } = useTranslation()
 
   const flatBookComponents = []
 
@@ -199,7 +223,7 @@ const EditorPage = props => {
     ) {
       onTriggerModal(
         true,
-        UNLOCK_REASONS[status],
+        UNLOCK_REASONS(t, status),
         `/books/${bookId}/book-builder`,
       )
     }
@@ -209,7 +233,7 @@ const EditorPage = props => {
     if (uploading) {
       onTriggerModal(
         true,
-        'Uploading in progress, you will be redirected back to Book Builder',
+        t('Uploading in progress, you will be redirected back to Book Builder'),
         `/books/${bookId}/book-builder`,
       )
     }
@@ -219,7 +243,9 @@ const EditorPage = props => {
     if (!canAccessBook) {
       onTriggerModal(
         true,
-        'You have no permissions to access this book. You will be redirected back to the dashboard',
+        t(
+          'You have no permissions to access this book. You will be redirected back to the dashboard',
+        ),
         `/books`,
       )
     }
@@ -232,7 +258,7 @@ const EditorPage = props => {
           ? `Unfortunately, something happened and our server is unreachable at this moment. Don't worry your work up until this point is safe. However, as the application does not support offline mode your lock will be released. Please try again later`
           : `Unfortunately, something happened and our server is unreachable at this moment. Don't worry your work up until this point is safe. Please try again later`
 
-      onTriggerModal(false, msg)
+      onTriggerModal(false, t(msg))
     }
 
     if (!previousIsOnline && isOnline) {
@@ -253,7 +279,7 @@ const EditorPage = props => {
 
       onTriggerModal(
         true,
-        'You have gained WRITE access for this book component!',
+        t('You have gained WRITE access for this book component!'),
       )
     }
 
@@ -262,7 +288,10 @@ const EditorPage = props => {
       editorMode === 'preview' &&
       status === 200
     ) {
-      onTriggerModal(true, 'You are in READ ONLY mode for this book component!')
+      onTriggerModal(
+        true,
+        t('You are in READ ONLY mode for this book component!'),
+      )
     }
   }, [editorMode])
 

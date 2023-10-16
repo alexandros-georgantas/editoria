@@ -2,8 +2,10 @@
 /* stylelint-disable font-family-name-quotes,declaration-no-important */
 /* stylelint-disable string-quotes, font-family-no-missing-generic-family-keyword */
 import React from 'react'
+// import { useTranslation } from "react-i18next";
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 
 const ProductionEditorsContainer = styled.div`
   align-items: center;
@@ -41,11 +43,13 @@ const ProductionEditorActions = styled.div`
 `
 
 const normalizer = productionEditors => {
+  const { t } = useTranslation()
   let names = ''
-  let label = 'Production Editor:'
+  let label = 'Production Editor'
+  // let label = t('Production Editor'.toLowerCase().replace(/ /g,"_"))
 
   if (productionEditors && productionEditors.length > 1) {
-    label = 'Production Editors:'
+    label = 'Production Editors'
 
     for (let i = 0; i < productionEditors.length; i += 1) {
       if (i !== productionEditors.length - 1) {
@@ -59,19 +63,27 @@ const normalizer = productionEditors => {
     names = productionEditors[0]
     /* eslint-enable prefer-destructuring */
   } else {
-    names = 'Unassigned'
+    names = t('unassigned') // Unassigned
+    // names = "Unassigned"
   }
 
   return { names, label }
 }
 
 const ProductionEditorsArea = ({ productionEditors, actions }) => {
+  const { t } = useTranslation()
   const { label, names } = normalizer(productionEditors)
 
   return (
     <ProductionEditorsContainer>
       <NamesContainer>
-        <ProductionEditorLabel>{label}</ProductionEditorLabel>
+        {/*
+          <ProductionEditorLabel>{label}</ProductionEditorLabel>
+          <ProductionEditorNames>{names}</ProductionEditorNames>
+          */}
+        <ProductionEditorLabel>
+          {t(label.toLowerCase().replace(/ /g, '_'))}
+        </ProductionEditorLabel>
         <ProductionEditorNames>{names}</ProductionEditorNames>
       </NamesContainer>
       <ProductionEditorActions>{actions}</ProductionEditorActions>
