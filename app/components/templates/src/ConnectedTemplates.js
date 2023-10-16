@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { get } from 'lodash'
 import { adopt } from 'react-adopt'
+
 import { Loading } from '../../../ui'
 import withModal from '../../common/src/withModal'
 import Templates from './Templates'
@@ -46,7 +47,7 @@ const mapProps = args => ({
       sortKey,
     })
   },
-  onCreateTemplate: () => {
+  onCreateTemplate: t => {
     const {
       createTemplateMutation: createTemplateMutationFromArgs,
       withModal: withModalFromArgs,
@@ -94,13 +95,13 @@ const mapProps = args => ({
       showModal('createTemplateModal', {
         onConfirm,
         hideModal,
-        headerText: 'Create New Template',
+        headerText: t('Create New Template'),
         mode: 'create',
         scriptOptions: options,
       })
     }
   },
-  onUpdateTemplate: templateId => {
+  onUpdateTemplate: (templateId, t) => {
     const {
       updateTemplateMutation: updateTemplateMutationFromArgs,
       withModal: withModalFromArgs,
@@ -156,7 +157,7 @@ const mapProps = args => ({
         hideModal,
         mode: 'update',
         templateId,
-        headerText: 'Update Template',
+        headerText: t('Update Template'),
         scriptOptions: options,
       })
     }
@@ -210,7 +211,7 @@ const featureBookStructureEnabled =
     JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
   false
 
-const Connected = ({ currentUser }) => (
+const Connected = ({ currentUser, t }) => (
   <Composed>
     {({
       templates,

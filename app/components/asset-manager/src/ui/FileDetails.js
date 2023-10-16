@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import { dateTimeFormatter, fileSizeFormatter } from './helpers'
 import InfoItem from './InfoItem'
 import { Button, Icons } from '../../../../ui'
@@ -81,6 +82,7 @@ const FileDetails = ({ file, updateFile, closeHandler }) => {
   const { url, id, updated, storedObjects } = file
   const { size, mimetype, imageMetadata } = storedObjects[0]
 
+  const { t } = useTranslation()
   return (
     <PreviewWrapper>
       <ClosePreview>
@@ -98,7 +100,7 @@ const FileDetails = ({ file, updateFile, closeHandler }) => {
       </ImagePreviewer>
       <InfoSection>
         <InfoHeaderWrapper>
-          <InfoHeader>Info</InfoHeader>
+          <InfoHeader>{t('info')}</InfoHeader>
         </InfoHeaderWrapper>
 
         {/* <ItemWrapper>
@@ -110,30 +112,30 @@ const FileDetails = ({ file, updateFile, closeHandler }) => {
           <InfoItem key={`${id}-alt`} type="alt" value={alt || '-'} />
         </ItemWrapper> */}
         <ItemWrapper>
-          <ItemHeader>Size</ItemHeader>
+          <ItemHeader>{t('size')}</ItemHeader>
           <InfoItem key={`${id}-size`} value={fileSizeFormatter(size)} />
         </ItemWrapper>
         <ItemWrapper>
-          <ItemHeader>Mimetype</ItemHeader>
+          <ItemHeader>{t('mimetype')}</ItemHeader>
           <InfoItem key={`${id}-mimetype`} value={mimetype} />
         </ItemWrapper>
         <ItemWrapper>
-          <ItemHeader>Updated</ItemHeader>
+          <ItemHeader>{t('updated')}</ItemHeader>
           <InfoItem key={`${id}-updated`} value={dateTimeFormatter(updated)} />
         </ItemWrapper>
         <ItemWrapper>
-          <ItemHeader>Dimensions (W x H)</ItemHeader>
+          <ItemHeader>{t('dimensions_(w_x_h)')}</ItemHeader>
           <InfoItem
             key={`${id}-dimensions`}
             value={`${imageMetadata.width} x ${imageMetadata.height}`}
           />
         </ItemWrapper>
         <ItemWrapper>
-          <ItemHeader>Color space</ItemHeader>
+          <ItemHeader>{t('color_space')}</ItemHeader>
           <InfoItem key={`${id}-colorSpace`} value={imageMetadata.space} />
         </ItemWrapper>
         <ItemWrapper>
-          <ItemHeader>Density</ItemHeader>
+          <ItemHeader>{t('density')}</ItemHeader>
           <InfoItem
             key={`${id}-density`}
             value={imageMetadata.density || '-'}

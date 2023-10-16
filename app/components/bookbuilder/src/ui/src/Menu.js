@@ -6,7 +6,10 @@ import styled from 'styled-components'
 import { th, override } from '@pubsweet/ui-toolkit'
 import { Button } from '@pubsweet/ui'
 import { forEach } from 'lodash'
-
+// import {Trans} from "react-i18next";
+import { Trans, withTranslation } from 'react-i18next'
+import i18next from 'i18next'
+// import i18next from "i18next";
 // #region styled components
 const Root = styled.div``
 
@@ -279,7 +282,18 @@ class Menu extends React.Component {
         open={open}
         ref={this.setWrapperRef}
       >
-        {label && <Label>{label}</Label>}
+        {label && (
+          <Label>
+            {
+              {
+                /*label*/
+              }
+            }
+            <Trans i18nKey={label.toLowerCase().replace(/ /g, '_')}>
+              {label}
+            </Trans>
+          </Label>
+        )}
         <Main>
           <RenderOpener
             open={open}
@@ -302,7 +316,16 @@ class Menu extends React.Component {
                     groupedOptions = option.children
                     groupedHeader = option.text ? (
                       <Fragment>
-                        <span>{option.text}</span>
+                        {/*<span>{option.text}</span>*/}
+                        <span>
+                          <Trans
+                            i18nKey={option.text
+                              .toLowerCase()
+                              .replace(/ /g, '_')}
+                          >
+                            {option.text}
+                          </Trans>
+                        </span>
                         <hr />
                       </Fragment>
                     ) : (
@@ -352,7 +375,8 @@ const DefaultMenuOption = ({
       onClick={() => handleSelect({ open: false, selected: value })}
       onKeyPress={event => handleKeyPress(event, value)}
     >
-      {label || value}
+      {i18next.t(label.toLowerCase().replace(/ /g, '_')) ||
+        i18next.t(value.toLowerCase().replace(/ /g, '_'))}
     </Option>
   )
 
@@ -368,31 +392,41 @@ const DefaultOpener = ({
   optionLabel,
   removeSelect,
   selectOneOfMultiElement,
-}) => (
-  <Opener onClick={toggleMenu} open={open}>
-    {(!selected || selected.length === 0) && (
-      <Placeholder>{placeholder}</Placeholder>
-    )}
-    {selected && !Array.isArray(selected) && (
-      <Value>{optionLabel(selected)}</Value>
-    )}
-    {selected && selected.length > 0 && Array.isArray(selected) && (
-      <Value>
-        {selected.map(select => (
-          <MultipleValue
-            onClick={event => selectOneOfMultiElement(event, select)}
-          >
-            {optionLabel(select)}
-            <Button onClick={event => removeSelect(event, select)}>x</Button>
-          </MultipleValue>
-        ))}
-      </Value>
-    )}
-    <ArrowContainer>
-      <Arrow open={open}>▼</Arrow>
-    </ArrowContainer>
-  </Opener>
-)
+}) => {
+  return (
+    <Opener onClick={toggleMenu} open={open}>
+      {(!selected || selected.length === 0) && (
+        /* <Placeholder>{placeholder}</Placeholder> */
+        <Placeholder>
+          <Trans i18nKey={placeholder.toLowerCase().replace(/ /g, '_')}>
+            placeholder
+          </Trans>
+        </Placeholder>
+      )}
+      {selected && !Array.isArray(selected) && (
+        /*<Value>{optionLabel(selected)}</Value>*/
+        <Value>
+          {i18next.t(optionLabel(selected).toLowerCase().replace(/ /g, '_'))}
+        </Value>
+      )}
+      {selected && selected.length > 0 && Array.isArray(selected) && (
+        <Value>
+          {selected.map(select => (
+            <MultipleValue
+              onClick={event => selectOneOfMultiElement(event, select)}
+            >
+              {i18next.t(optionLabel(select).toLowerCase().replace(/ /g, '_'))}
+              <Button onClick={event => removeSelect(event, select)}>x</Button>
+            </MultipleValue>
+          ))}
+        </Value>
+      )}
+      <ArrowContainer>
+        <Arrow open={open}>▼</Arrow>
+      </ArrowContainer>
+    </Opener>
+  )
+}
 
 Menu.propTypes = {
   /** Menu items. */
@@ -419,7 +453,8 @@ Menu.defaultProps = {
   renderOption: DefaultMenuOption,
   renderOpener: DefaultOpener,
   reset: false,
-  placeholder: 'Choose in the list',
+  // placeholder: 'Choose in the list',
+  placeholder: 'choose_in_the_list', // translateDefault('choose_in_the_list'),
 }
 
 export { Menu }

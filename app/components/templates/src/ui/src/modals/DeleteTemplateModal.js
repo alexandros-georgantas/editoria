@@ -4,6 +4,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 import DialogModal from '../../../../../common/src/DialogModal'
 
 const Text = styled.div`
@@ -17,18 +18,23 @@ const Text = styled.div`
 `
 
 const DeleteBookModal = props => {
+  const { t } = useTranslation()
   const { isOpen, hideModal, data } = props
   const { templateName, onConfirm } = data
+
   return (
     <DialogModal
       buttonLabel="Yes"
-      headerText="Delete Template"
+      headerText={t('Delete Template')}
       isOpen={isOpen}
       onConfirm={onConfirm}
       onRequestClose={hideModal}
     >
       <Text>
-        {`Are you sure you want to delete the template with name ${templateName}?`}
+        {`${t(
+          'are_you_sure_you_want_to_delete_the_template_with_name {templateName}?',
+          { templateName },
+        )}`}
       </Text>
     </DialogModal>
   )

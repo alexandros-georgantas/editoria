@@ -6,6 +6,7 @@ import get from 'lodash/get'
 
 import { TextField as UiTextField } from '@pubsweet/ui'
 import { fadeIn, th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 
 const readOnly = css`
   background: ${th('colorBackgroundHue')};
@@ -66,6 +67,7 @@ const Field = ({
   value,
   ...props
 }) => {
+  const { i18n } = useTranslation()
   const touchedThis = get(touched, name)
 
   const showError = () => {
@@ -85,7 +87,9 @@ const Field = ({
   return (
     <FieldWithError>
       <StyledTextField
-        label={inline ? null : fieldLabel}
+        label={
+          inline ? null : i18n.t(fieldLabel.toLowerCase().replace(/ /g, '_'))
+        }
         name={name}
         onBlur={handleBlur}
         onChange={handleChange}
@@ -93,7 +97,9 @@ const Field = ({
         value={value}
         {...props}
       />
-      {showError() && !hideErrorMessage && <Error>{error}</Error>}
+      {showError() && !hideErrorMessage && (
+        <Error>{i18n.t(error.toLowerCase().replace(/ /g, '_'))}</Error>
+      )}
     </FieldWithError>
   )
 }
@@ -104,10 +110,11 @@ const FieldWithError = styled.div`
 
 const TextField = props => {
   const { className, inline, label } = props
+  const { t } = useTranslation()
 
   return (
     <Wrapper className={className} inline={inline}>
-      {inline && <Label>{label}</Label>}
+      {inline && <Label>{t(label.toLowerCase().replace(/ /g, '_'))}</Label>}
       <Field {...props} />
     </Wrapper>
   )

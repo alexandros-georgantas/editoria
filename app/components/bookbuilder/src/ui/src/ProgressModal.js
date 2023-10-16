@@ -20,6 +20,7 @@ const ProgressModal = ({
       show={show}
       successAction={changeProgressState}
       successText="OK"
+      // title={t("Change of workflow status")}
       title="Change of workflow status"
       toggle={toggle}
       type={componentType}

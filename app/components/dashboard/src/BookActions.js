@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components'
 
 // import Authorize from 'pubsweet-client/src/helpers/Authorize'
 import { Action as UIAction, ActionGroup as UIActionGroup } from '@pubsweet/ui'
+import { Trans, useTranslation } from 'react-i18next'
 
 const underlineFade = css`
   &::before {
@@ -106,12 +107,19 @@ const renderRename = (
   if (isRenaming && canRenameBooks) {
     return (
       <Action key="book-rename" onClick={onClickSave}>
-        Save
+        {/* Save */}
+        <Trans i18nKey="save">Save</Trans>
       </Action>
     )
   }
 
-  return canRenameBooks && <Action onClick={onClickRename}>Rename</Action>
+  return (
+    canRenameBooks && (
+      <Action onClick={onClickRename}>
+        <Trans i18nKey="rename">Rename</Trans>
+      </Action>
+    )
+  )
 }
 
 const renderRemove = (book, onDeleteBook, canDeleteBooks) => {
@@ -122,7 +130,7 @@ const renderRemove = (book, onDeleteBook, canDeleteBooks) => {
   return (
     canDeleteBooks && (
       <Action key="book-remove" onClick={handleClick}>
-        Delete
+        <Trans i18nKey="delete">Delete</Trans>
       </Action>
     )
   )
@@ -130,12 +138,14 @@ const renderRemove = (book, onDeleteBook, canDeleteBooks) => {
 
 const renderArchive = (book, onArchiveBook, canArchiveBooks) => {
   const { archived } = book
+  const { t } = useTranslation()
 
   const handleClick = () => {
     onArchiveBook(book.id, book.title, archived)
   }
 
-  const label = archived ? 'Unarchive' : 'Archive'
+  // const label = archived ? 'Unarchive' : 'Archive'
+  const label = archived ? t('unarchive') : t('archive')
   return (
     canArchiveBooks && (
       <Action key="book-archive" onClick={handleClick}>
@@ -152,7 +162,7 @@ const renderTeamManager = (bookId, onAssignMembers) => {
 
   return (
     <Action key="book-assign-members" onClick={handleClick}>
-      Assign Members
+      <Trans i18nKey="asssign_Members">Assign Members</Trans>
     </Action>
   )
 }
@@ -187,10 +197,18 @@ const Actions = props => {
       bookStructure &&
       !bookStructure.finalized
     ) {
-      return <Action to={`/books/${id}/book-structure`}>Plan Book</Action>
+      return (
+        <Action to={`/books/${id}/book-structure`}>
+          <Trans i18nKey="plan_book">Plan Book</Trans>
+        </Action>
+      )
     }
 
-    return <Action to={`/books/${id}/book-builder`}>Edit</Action>
+    return (
+      <Action to={`/books/${id}/book-builder`}>
+        <Trans i18nKey="edit">Edit</Trans>
+      </Action>
+    )
   }
 
   if (

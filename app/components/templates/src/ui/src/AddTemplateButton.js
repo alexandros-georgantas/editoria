@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 
 /* stylelint-disable font-family-no-missing-generic-family-keyword, string-quotes */
 const Button = styled.button`
@@ -90,11 +91,17 @@ const addTemplateButton = (
 
 const label = 'Add Template'
 
-const AddTemplateButton = ({ onClick }) => (
-  <Button data-cy="add-book-btn" onClick={onClick}>
-    <Icon>{addTemplateButton}</Icon>
-    <Label>{label.toLocaleUpperCase()}</Label>
-  </Button>
-)
+const AddTemplateButton = ({ onClick }) => {
+  const { t } = useTranslation()
+
+  return (
+    <Button data-cy="add-book-btn" onClick={onClick}>
+      <Icon>{addTemplateButton}</Icon>
+      <Label>
+        {t(label.toLowerCase().replace(/ /g, '_')).toLocaleUpperCase()}
+      </Label>
+    </Button>
+  )
+}
 
 export default AddTemplateButton

@@ -5,6 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th, lighten, darken } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import DialogModal from '../../../common/src/DialogModal'
 import ModalFooter from '../../../common/src/ModalFooter'
 
@@ -82,6 +83,8 @@ const Label = styled.span`
 `
 
 const Footer = props => {
+  const { t } = useTranslation()
+
   const {
     saveCssAllBook,
     saveCssBook,
@@ -90,17 +93,19 @@ const Footer = props => {
     textCancel = 'Cancel',
   } = props
 
+  const textCancelTrans = t(textCancel)
+
   return (
     <ModalFooter>
       <ConfirmButton onClick={saveCssAllBook} primary>
-        <Label>Modify</Label>
+        <Label>{t('modify')}</Label>
       </ConfirmButton>
       <ConfirmButton onClick={saveCssBook} primary>
-        <Label>Create New</Label>
+        <Label>{t('create_new')}</Label>
       </ConfirmButton>
       {showCancelButton && (
         <CancelButton onClick={onRequestClose}>
-          <Label>{textCancel}</Label>
+          <Label>{textCancelTrans}</Label>
         </CancelButton>
       )}
     </ModalFooter>
@@ -108,6 +113,7 @@ const Footer = props => {
 }
 
 const WarningModal = props => {
+  const { t } = useTranslation()
   const { isOpen, hideModal, data } = props
   const { saveCssAllBook, saveCssBook, name } = data
 
@@ -116,14 +122,18 @@ const WarningModal = props => {
       footerComponent={
         <Footer saveCssAllBook={saveCssAllBook} saveCssBook={saveCssBook} />
       }
-      headerText="Modify Css"
+      headerText={t('Modify CSS')}
       isOpen={isOpen}
       onRequestClose={hideModal}
       saveCssAllBook={saveCssAllBook}
       saveCssBook={saveCssBook}
     >
       <Text>
-        {`Do you want to modify the css of template "${name}" or create a new Template for the specific book.`}
+        {/* {`Do you want to modify the css of template "${name}" or create a new Template for the specific book.`} */}
+        {t(
+          'do_you_want_to_modify_the_css_of_template_{name}_or_create_a_new_template_for_the_specific_book.',
+          { name },
+        )}
         <br />
       </Text>
     </DialogModal>

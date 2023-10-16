@@ -2,6 +2,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import { useTranslation } from 'react-i18next'
 import RootButton from './RootButton'
 
 const StyledIcon = styled.i`
@@ -27,15 +28,17 @@ const Button = props => {
     type,
   } = props
 
+  const { t } = useTranslation()
+
   return (
     <RootButton
       active={active}
       className={className}
       danger={danger}
       disabled={disabled}
-      label={label}
+      label={label && t(label.toLowerCase().replace(/ /g, '_'))}
       onClick={onClick}
-      title={title}
+      title={title && t(title?.toLowerCase().replace(/ /g, '_'))}
       type={type}
     >
       {icon && (
@@ -43,7 +46,11 @@ const Button = props => {
           {icon}
         </StyledIcon>
       )}
-      {label && <Label hasIcon={!!icon}>{label}</Label>}
+      {label && (
+        <Label hasIcon={!!icon}>
+          {t(label.toLowerCase().replace(/ /g, '_'))}
+        </Label>
+      )}
     </RootButton>
   )
 }

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { useTranslation } from 'react-i18next'
 
 const transition = css`
   transition: 0.2s ease;
@@ -33,12 +34,13 @@ const Wrapper = styled.div`
 
 const Arrows = props => {
   const { ascending, className, ...rest } = props
+  const { t } = useTranslation()
 
   return (
     <Wrapper
       ascending={ascending}
       className={className}
-      title={ascending ? 'Ascending' : 'Descending'}
+      title={ascending ? t('ascending') : t('descending')}
       {...rest}
     >
       <svg viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">

@@ -29,11 +29,15 @@ const RequestVerificationEmailPage = props => {
   const inputValidation = debounce(value => {
     if (!value || value.length === 0) {
       setFormError('This field is required and should not be empty')
+      // const requiredField = t('this_field_is_required_and_should_not_be_empty')
+      // setFormError(requiredField)
       return false
     }
 
     if (!emailRegex.test(value)) {
+      // const notAvalidEmail = t('this_is_not_a_valid_email_format')
       setFormError('This is not a valid email format')
+      // setFormError(notAvalidEmail)
       return false
     }
 

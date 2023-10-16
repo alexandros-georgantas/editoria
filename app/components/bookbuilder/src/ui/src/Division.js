@@ -7,6 +7,8 @@ import React from 'react'
 import { Draggable, Droppable } from 'react-beautiful-dnd'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
+import { withTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 import AddComponentButton from './AddComponentButton'
 import BookComponent from './BookComponent'
 
@@ -175,8 +177,10 @@ class Division extends React.Component {
       updateApplicationParameters,
       uploadBookComponent,
       rules,
+      t,
     } = this.props
 
+    // const { t } = useTranslation()
     const { canViewAddComponent } = rules
 
     const bookComponentInstances = map(bookComponents, (bookComponent, i) => {
@@ -376,7 +380,8 @@ class Division extends React.Component {
       >
         <HeaderContainer key={`division-${divisionId}-container-header`}>
           <DivisionHeader key={`division-${divisionId}-header`}>
-            {label.toUpperCase()}
+            {/* {label.toUpperCase()} */}
+            {t(label?.toLowerCase().replace(/ /g, '_')).toUpperCase()}
           </DivisionHeader>
           <DivisionActions key={`division-${divisionId}-header-actions`}>
             {addButtons}
@@ -403,7 +408,8 @@ class Division extends React.Component {
                 </BookComponentList>
               ) : (
                 <EmptyList key={`division-${divisionId}-emptyList`}>
-                  There are no items in this division.
+                  {/* There are no items in this division. */}{' '}
+                  {t('there_are_no_items_in_this_division')}
                 </EmptyList>
               )}
               {provided.placeholder}
@@ -415,4 +421,5 @@ class Division extends React.Component {
   }
 }
 
-export default Division
+// export default Division
+export default withTranslation()(Division)

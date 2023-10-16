@@ -12,6 +12,7 @@ import {
 import { grid, th } from '@pubsweet/ui-toolkit'
 import 'wax-prosemirror-core/dist/index.css'
 import 'wax-prosemirror-services/dist/index.css'
+import {useTranslation} from "react-i18next";
 import cokoTheme from './theme'
 import EditorElements from './EditorElements'
 
@@ -218,6 +219,7 @@ const BottomRightInfo = ComponentPlugin('BottomRightInfo')
 
 const KetidaLayout = props => {
   const { editor, isReadOnly } = props
+  const {t} = useTranslation()
 
   const {
     pmViews: { main },
@@ -290,8 +292,8 @@ const KetidaLayout = props => {
                 <CommentsContainer>
                   <CommentTrackToolsContainer>
                     <CommentTrackTools>
-                      {commentsTracksCount + trackBlockNodesCount} COMMENTS OR
-                      SUGGESTIONS
+                      {commentsTracksCount + trackBlockNodesCount} {' '}
+                      {t("COMMENTS OR SUGGESTIONS".toLowerCase().replace(/ /g,"_"))}
                       <CommentTrackOptions>
                         <CommentTrackToolBar />
                       </CommentTrackOptions>

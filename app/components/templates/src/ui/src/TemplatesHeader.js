@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { H3 } from '@pubsweet/ui'
 import { th } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import { Button, Icons } from '../../../../../ui'
 import SortMenu from './SortMenu'
 
@@ -62,21 +63,23 @@ const TemplatesHeader = props => {
     onCreateTemplate,
   } = props
 
+  const { t } = useTranslation()
+
   const handleClick = () => {
-    onCreateTemplate()
+    onCreateTemplate(t)
   }
 
   return (
     <HeaderWrapper>
       <InnerWrapper>
         <Side1>
-          <Title>{title}</Title>
+          <Title>{t(title.toLowerCase().replace(/ /g, '_'))}</Title>
           {canAddTemplates && (
             <Button
               icon={addIcon}
-              label="ADD TEMPLATE"
+              label="Add Template"
               onClick={handleClick}
-              title="Add TEMPLATE"
+              title="Add Template"
             />
           )}
         </Side1>

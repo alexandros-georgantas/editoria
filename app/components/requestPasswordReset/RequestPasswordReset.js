@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import styled from 'styled-components'
+import { useTranslation } from 'react-i18next'
 import { override } from '@pubsweet/ui-toolkit'
 import {
   CenteredColumn,
@@ -12,6 +13,10 @@ import {
 } from '@pubsweet/ui'
 
 import { Loading } from '../../ui'
+import LanguageSwitcher from '../LanguageSwitcher'
+
+const languageSwitch =
+  (process.env.LANG_SWITCH && JSON.parse(process.env.LANG_SWITCH)) || false
 
 /* stylelint-disable order/properties-alphabetical-order */
 const Logo = styled.div`
@@ -36,6 +41,13 @@ const FormContainer = styled.div`
   border: 0;
 `
 
+const LanguageSwitcherWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+`
+
 const RequestPasswordReset = props => {
   const {
     hasError,
@@ -48,26 +60,37 @@ const RequestPasswordReset = props => {
     email,
   } = props
 
+  const { i18n } = useTranslation()
+
   return (
     <StyledCenterColumn>
       <Logo>
         <img alt="ketida-logo" src="/ketida.svg" />
       </Logo>
-
+      {languageSwitch && (
+        <LanguageSwitcherWrapper>
+          <LanguageSwitcher />
+        </LanguageSwitcherWrapper>
+      )}
       <FormContainer>
         {loading && <Loading />}
-        <H1>Password Reset</H1>
+        {/* <H1>Password Reset</H1> */}
+        <H1>{i18n.t('password_reset')}</H1>
 
         <div>
           <TextField
-            label="Email"
+            label={i18n.t('email')} // "Email"
             name="email"
             onChange={event => handleInputChange(event.target.value)}
-            placeholder="Enter your email"
+            placeholder={i18n.t('enter_your_email')}
             type="text"
             value={email}
           />
-          {formError && <ErrorText>{formError}</ErrorText>}
+          {formError && (
+            <ErrorText>
+              {i18n.t(formError.toLowerCase().replace(/ /g, '_'))}
+            </ErrorText>
+          )}
           <Button
             disabled={
               loading ||
@@ -80,14 +103,17 @@ const RequestPasswordReset = props => {
             onClick={onSubmit}
             primary
           >
-            Send email
+            {i18n.t('send_email')}
           </Button>
-          {hasError && <ErrorText>Something went wrong</ErrorText>}
-          {hasSuccess && <div>{`An email has been sent to ${userEmail}`}</div>}
+          {hasError && <ErrorText>{i18n.t('something_went_wrong')}</ErrorText>}
+          {/* {hasSuccess && <div>{`An email has been sent to ${userEmail}`}</div>} */}
+          {hasSuccess && (
+            <div>{i18n.t('an_email_has_been_sent_to', { userEmail })}</div>
+          )}
         </div>
         <div>
-          <span>Are you here by mistake? Go back to </span>
-          <Link to="/login">Login</Link>
+          <span>{i18n.t('are_you_here_by_mistake?_go_back_to')} </span>
+          <Link to="/login">{i18n.t('login')}</Link>
         </div>
       </FormContainer>
     </StyledCenterColumn>

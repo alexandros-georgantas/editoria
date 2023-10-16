@@ -1,7 +1,9 @@
 import { compose } from 'recompose'
 import { withFormik } from 'formik'
 import { graphql } from '@apollo/client/react/hoc'
+import i18next from 'i18next'
 import SIGNUP_USER from './graphql/mutations'
+// import i18n from "../../../../services/i18n";
 
 import Signup from './Signup'
 
@@ -24,7 +26,9 @@ const handleSubmit = (
       history.push('/login')
     })
     .catch(err => {
-      setErrors({ api: err.message })
+      const errMessage = i18next.t(err.message.toLowerCase().replace(/ /g, '_'))
+
+      setErrors({ api: errMessage })
       setSubmitting(false)
     })
 }
@@ -32,9 +36,13 @@ const handleSubmit = (
 const validate = values => {
   const errors = {}
 
+  const errorSameNames = i18next.t(
+    'First name and given name are the same'.toLowerCase().replace(/ /g, '_'),
+  )
+
   if (values.givenNames === values.surname) {
-    errors.givenNames = 'First name and given name are the same'
-    errors.surname = 'First name and given name are the same'
+    errors.givenNames = errorSameNames // 'First name and given name are the same'
+    errors.surname = errorSameNames // 'First name and given name are the same'
   }
 
   if (Object.keys(errors).length) {

@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 import findIndex from 'lodash/findIndex'
+import { useTranslation } from 'react-i18next'
 import BookComponentTitle from './BookComponentTitle'
 import BookComponentActions from './BookComponentActions'
 import ComponentTypeMenu from './ComponentTypeMenu'
@@ -237,6 +238,7 @@ const BookComponent = ({
       </g>
     </svg>
   )
+  /*
 
   const tocIcon = (
     <svg
@@ -273,6 +275,51 @@ const BookComponent = ({
       </g>
     </svg>
   )
+*/
+
+  const tocIcon = () => {
+    const { i18n } = useTranslation()
+    return (
+      <svg
+        fill="none"
+        height="22"
+        viewBox="0 0 38 22"
+        width="38"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g id="TOC-icon">
+          <text
+            alignmentBaseline="middle"
+            fill="#BDBDBD"
+            fontSize="16"
+            id="TOC"
+            x="1.5"
+            y="15.7"
+          >
+            {i18n.t('toc')}
+          </text>
+          <line
+            id="Line"
+            stroke="#BDBDBD"
+            strokeWidth="2"
+            transform="matrix(0.984144 -0.177373 0.0507775 0.99871 3.17969 14.5656)"
+            x2="29.7664"
+            y1="-1"
+            y2="-1"
+          />
+          <line
+            id="Line_2"
+            stroke="white"
+            strokeWidth="2"
+            transform="matrix(0.984144 -0.177373 0.0507775 0.99871 3 16.1597)"
+            x2="34.7275"
+            y1="-1"
+            y2="-1"
+          />
+        </g>
+      </svg>
+    )
+  }
 
   const goToEditor = () => {
     history.push(`/books/${bookId}/bookComponents/${id}`)
@@ -312,7 +359,7 @@ const BookComponent = ({
         </ActionsLeft>
         {componentType !== 'toc' && (
           <StyledButton
-            icon={tocIcon}
+            icon={tocIcon()}
             includeInTOC={includeInToc}
             onClick={e => {
               e.preventDefault()

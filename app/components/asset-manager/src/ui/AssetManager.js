@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { indexOf, forEach, find } from 'lodash'
+import { withTranslation } from 'react-i18next'
 
 import DialogModal from '../../../common/src/DialogModal'
 
@@ -210,11 +211,11 @@ class AssetManager extends React.Component {
   }
 
   render() {
-    const { isOpen, hideModal } = this.props
+    const { isOpen, hideModal, t } = this.props
 
     return (
       <DialogModal
-        headerText="Asset Manager"
+        headerText={t('Asset Manager')}
         isOpen={isOpen}
         notCentered
         onRequestClose={hideModal}
@@ -228,4 +229,5 @@ class AssetManager extends React.Component {
   }
 }
 
-export default AssetManager
+// export default AssetManager
+export default withTranslation()(AssetManager)

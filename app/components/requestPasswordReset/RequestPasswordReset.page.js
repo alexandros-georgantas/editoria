@@ -30,11 +30,15 @@ const RequestPasswordResetPage = props => {
   const inputValidation = debounce(value => {
     if (!value || value.length === 0) {
       setFormError('This field is required and should not be empty')
+      // const requiredFieldText = t('this_field_is_required_and_should_not_be_empty')
+      // setFormError(requiredFieldText)
       return false
     }
 
     if (!emailRegex.test(value)) {
       setFormError('This is not a valid email format')
+      // const notValidEmailText = t('this_is_not_a_valid_email_format')
+      // setFormError(notValidEmailText)
       return false
     }
 
