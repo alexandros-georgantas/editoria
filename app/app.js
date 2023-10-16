@@ -2,6 +2,7 @@ import 'regenerator-runtime/runtime'
 
 import React from 'react'
 import ReactDOM from 'react-dom'
+
 import { hot } from 'react-hot-loader'
 
 // import createHistory from 'history/createBrowserHistory'
@@ -32,10 +33,14 @@ import EditorModal from './components/wax/src/modals/EditorModal'
 import CreateTemplateModal from './components/templates/src/ui/src/modals/TemplateModal'
 import UpdateTemplateModal from './components/templates/src/ui/src/modals/ConnectedUpdateTemplateModal'
 import DeleteTemplateModal from './components/templates/src/ui/src/modals/DeleteTemplateModal'
+import { Loading } from './ui'
 
 import theme from './theme'
 
 import routes from './routes'
+
+// language translation service
+import '../services/i18n'
 
 const featureBookStructureEnabled =
   (process.env.FEATURE_BOOK_STRUCTURE &&
@@ -96,10 +101,14 @@ if (featureBookStructureEnabled) {
   }
 }
 
+const loading = <Loading />
 ReactDOM.render(
-  <ModalProvider modals={modals}>
-    <Root history={history} routes={routes} theme={theme} />
-  </ModalProvider>,
+  <React.Suspense fallback={loading}>
+    <ModalProvider modals={modals}>
+      <Root history={history} routes={routes} theme={theme} />
+    </ModalProvider>
+    ,
+  </React.Suspense>,
   rootEl,
 )
 

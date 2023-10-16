@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th, grid } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import { Button } from '../../../../../ui'
 
 const ButtonsContainer = styled.div`
@@ -97,46 +98,48 @@ const Template = props => {
     onUpdateTemplate,
   } = props
 
+  const { t } = useTranslation()
+
   return (
     <Container>
       <ImageContainer color="#F1F1F1" thumbnail={thumbnail}>
         <ButtonsContainer>
           <StyledButton
-            label="Update"
+            label="update"
             onClick={() => {
-              onUpdateTemplate(id)
+              onUpdateTemplate(id, t)
             }}
-            title="Update"
+            title="update"
           />
           <StyledButton
             danger
-            label="Delete"
+            label="delete"
             onClick={() => {
               onDeleteTemplate(id, name)
             }}
-            title="Delete"
+            title="delete"
           />
         </ButtonsContainer>
       </ImageContainer>
       <InfoContainer>
         <Row>
-          <Label>name</Label>
+          <Label>{t('name')}</Label>
           <Text>{name}</Text>
         </Row>
         <Row>
-          <Label>author</Label>
+          <Label>{t('author')}</Label>
           <Text>{author || '-'}</Text>
         </Row>
         <Row>
-          <Label>trim size</Label>
+          <Label>{t('trim size'.replace(/ /g, '_'))}</Label>
           <Text>{trimSize || '-'}</Text>
         </Row>
         <Row>
-          <Label>target</Label>
+          <Label>{t('target')}</Label>
           <Text>{target || '-'}</Text>
         </Row>
         <Row>
-          <Label>notes</Label>
+          <Label>{t('notes')}</Label>
           <Text>{notes || '-'}</Text>
         </Row>
       </InfoContainer>

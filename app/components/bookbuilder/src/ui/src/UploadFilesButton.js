@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { sortBy, forEach } from 'lodash'
+import { withTranslation } from 'react-i18next'
 import UploadButton from './UploadButton'
 
 class UploadFilesButton extends React.Component {
@@ -16,16 +17,18 @@ class UploadFilesButton extends React.Component {
   onChange = event => {
     event.preventDefault()
 
-    const { book, onWarning, uploadBookComponent } = this.props
+    const { book, onWarning, uploadBookComponent, t } = this.props
     const originalFiles = event.target.files
 
     forEach(originalFiles, element => {
       const extension = element.name.split('.')[1]
 
+      const warningText = t(
+        'one_or_more_of_the_selected_files_have_unsupported_extensions. try_to_use_only_files_with_extension .docx',
+      )
+
       if (extension !== 'docx') {
-        return onWarning(
-          'One or more of the selected files have unsupported extensions. Try to use only files with extension .docx',
-        )
+        return onWarning(warningText)
       }
 
       return true
@@ -56,7 +59,7 @@ class UploadFilesButton extends React.Component {
           uploading: false,
         })
         return onWarning(
-          'One or more of the selected files faced issues in conversion',
+          t('one_or_more_of_the_selected_files_faced_issues_in_conversion'),
         )
       })
 
@@ -65,13 +68,14 @@ class UploadFilesButton extends React.Component {
 
   render() {
     const { uploading, counter } = this.state
+    // const { t } = this.props
 
     let labelText = 'Upload word files'
 
     if (counter > 1) {
-      labelText = `Converting ${counter} files`
+      labelText = 'Converting files'
     } else if (counter === 1) {
-      labelText = `Converting ${counter} file`
+      labelText = 'converting file'
     }
 
     return (
@@ -87,4 +91,5 @@ class UploadFilesButton extends React.Component {
   }
 }
 
-export default UploadFilesButton
+// export default UploadFilesButton
+export default withTranslation()(UploadFilesButton)

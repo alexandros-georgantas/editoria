@@ -5,6 +5,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 
 const Button = styled.button`
   align-items: center;
@@ -20,6 +21,10 @@ const Button = styled.button`
       path {
         fill: #828282;
       }
+
+      text {
+        fill: #828282;
+      }
     }
     height: 28px;
     width: 28px;
@@ -30,6 +35,10 @@ const Button = styled.button`
 
     svg {
       path {
+        fill: ${th('colorFurniture')};
+      }
+
+      text {
         fill: ${th('colorFurniture')};
       }
     }
@@ -52,6 +61,10 @@ const Button = styled.button`
       path {
         fill: ${th('colorPrimary')};
       }
+
+      text {
+        fill: ${th('colorPrimary')};
+      }
     }
   }
 
@@ -63,6 +76,10 @@ const Button = styled.button`
 
     svg {
       path {
+        fill: ${th('colorPrimary')};
+      }
+
+      text {
         fill: ${th('colorPrimary')};
       }
     }
@@ -96,6 +113,7 @@ const ButtonWithIcon = ({
   title,
   className,
 }) => {
+  const { t } = useTranslation()
   return (
     <Button
       className={className}
@@ -104,12 +122,14 @@ const ButtonWithIcon = ({
       title={title}
     >
       <Icon>{icon}</Icon>
-      <Label>{label.toUpperCase()}</Label>
+      {/* <Label>{label.toUpperCase()}</Label> */}
+      <Label>{t(label.toLowerCase().replace(/ /g, '_')).toUpperCase()}</Label>
     </Button>
   )
 }
 
 const DefaultButton = ({ onClick, label, disabled, className, title }) => {
+  const { t } = useTranslation()
   return (
     <Button
       className={className}
@@ -117,7 +137,8 @@ const DefaultButton = ({ onClick, label, disabled, className, title }) => {
       onClick={onClick}
       title={title}
     >
-      <Label>{label.toUpperCase()}</Label>
+      {/* <Label>{label.toUpperCase()}</Label> */}
+      <Label>{t(label.toLowerCase().replace(/ /g, '_')).toUpperCase()}</Label>
     </Button>
   )
 }

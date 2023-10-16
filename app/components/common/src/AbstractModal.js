@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
+import { withTranslation } from 'react-i18next'
 
 export class AbstractModal extends React.Component {
   constructor(props) {
@@ -15,11 +16,11 @@ export class AbstractModal extends React.Component {
   }
 
   renderHeader() {
-    const { title } = this.props
+    const { title, t } = this.props
 
     return (
       <Modal.Header>
-        <Modal.Title>{title}</Modal.Title>
+        <Modal.Title>{t(title.toLowerCase().replace(/ /g, '_'))}</Modal.Title>
       </Modal.Header>
     )
   }
@@ -31,11 +32,11 @@ export class AbstractModal extends React.Component {
   }
 
   renderFooter() {
-    const { cancelText, successAction, successText, toggle } = this.props
+    const { cancelText, successAction, successText, toggle, t } = this.props
 
     const successButton = (
       <a className="modal-button bb-modal-act" onClick={this.performAction}>
-        {successText}
+        {t(successText.toLowerCase().replace(/ /g, '_'))}
       </a>
     )
 
@@ -48,7 +49,8 @@ export class AbstractModal extends React.Component {
             className="modal-button modal-discard bb-modal-cancel"
             onClick={toggle}
           >
-            {cancelText || 'Cancel'}
+            {t(cancelText.toLowerCase().replace(/ /g, '_')) ||
+              t('Cancel'.toLowerCase())}
           </a>
 
           {success}
@@ -103,4 +105,4 @@ AbstractModal.defaultProps = {
   successText: null,
 }
 
-export default AbstractModal
+export default withTranslation(AbstractModal)

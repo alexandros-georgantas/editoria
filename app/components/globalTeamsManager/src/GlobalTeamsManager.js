@@ -8,6 +8,7 @@ import keys from 'lodash/keys'
 import cloneDeep from 'lodash/cloneDeep'
 import { th } from '@pubsweet/ui-toolkit'
 import { H3 } from '@pubsweet/ui'
+import { Trans, useTranslation, withTranslation } from 'react-i18next'
 import { Loading, Button } from '../../../ui'
 
 const Container = styled.div`
@@ -111,12 +112,20 @@ const StyledSelect = styled(Select)`
 `
 
 const TeamHeading = props => {
+  const { t } = useTranslation()
   const { name } = props
-  return <TeamHeadingWrapper>{name}</TeamHeadingWrapper>
+  // return <TeamHeadingWrapper>{name}</TeamHeadingWrapper>
+  return (
+    <TeamHeadingWrapper>
+      {t(name.toLowerCase().replace(/ /g, '_'))}
+    </TeamHeadingWrapper>
+  )
 }
 
 const TeamSection = props => {
+  const { i18n } = useTranslation()
   const { name, setFieldValue, type, users, value } = props
+  const selectPlaceHolder = i18n.t('select')
 
   const options = users
     ? users.map(user => ({
@@ -152,8 +161,10 @@ const TeamSection = props => {
         getOptionValue={option => option.id}
         isMulti
         name={type}
+        noOptionsMessage={() => i18n.t('no_options')}
         onChange={handleChange}
         options={options}
+        placeholder={selectPlaceHolder}
         value={selectValue}
       />
     </TeamSectionWrapper>
@@ -177,7 +188,7 @@ const TeamManagerForm = props => {
       ))}
 
       <ButtonWrapper>
-        <Button disabled={!dirty} label="Save" title="Save" type="submit" />
+        <Button disabled={!dirty} label="save" title="save" type="submit" />
       </ButtonWrapper>
     </StyledForm>
   )
@@ -238,13 +249,15 @@ class GlobalTeamsManager extends React.Component {
   }
 
   render() {
-    const { users, teams, loading } = this.props
+    const { users, teams, loading, t } = this.props
     const { hideRibbon } = this.state
+    // const {t} = useTranslation()
 
     if (loading) return <Loading />
 
     let globalTeams = (teams || []).filter(team => team.global)
-    const infoMessage = 'Your teams have been successfully updated'
+    // const infoMessage = 'Your teams have been successfully updated'
+    const infoMessage = t('your_teams_have_been_successfully_updated')
 
     const initialValues = {}
     globalTeams.forEach(team => {
@@ -257,7 +270,9 @@ class GlobalTeamsManager extends React.Component {
       <Container>
         <InnerWrapper>
           <HeaderWrapper>
-            <Title>Global Teams Manager</Title>
+            <Title>
+              <Trans i18nKey="global_teams_manager">Global Teams Manager</Trans>
+            </Title>
           </HeaderWrapper>
           <Ribbon hide={hideRibbon}>{infoMessage}</Ribbon>
 
@@ -283,4 +298,5 @@ GlobalTeamsManager.defaultProps = {
   users: null,
 }
 
-export default GlobalTeamsManager
+// export default GlobalTeamsManager
+export default withTranslation()(GlobalTeamsManager)

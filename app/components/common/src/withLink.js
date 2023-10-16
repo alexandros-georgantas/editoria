@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-const withLink = (children, whereTo) => <Link to={whereTo}>{children}</Link>
+const withLink = (children, whereTo) => {
+  return <Link to={whereTo}>{children}</Link>
+}
 
 withLink.propTypes = {
   children: PropTypes.oneOfType([

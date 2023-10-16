@@ -4,6 +4,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import AlignmentBox from './AlignmentBox'
 
 const Container = styled.div`
@@ -31,9 +32,12 @@ const AlignmentBoxWithLabel = ({
   noBorder,
   onClick,
 }) => {
+  const { t } = useTranslation()
   return (
     <Container>
-      <Label labelPositionRight={labelPositionRight}>{labelText}</Label>
+      <Label labelPositionRight={labelPositionRight}>
+        {t(labelText.toLowerCase().replace(/ /g, '_'))}
+      </Label>
       <AlignmentBox
         active={active}
         id={id}

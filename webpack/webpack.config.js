@@ -31,6 +31,9 @@ module.exports = webpackEnv => {
       JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
     false
 
+  const languageSwitch =
+    (process.env.LANG_SWITCH && JSON.parse(process.env.LANG_SWITCH)) || false
+
   const featureUploadDOCXFiles =
     (process.env.FEATURE_UPLOAD_DOCX_FILES &&
       JSON.parse(process.env.FEATURE_UPLOAD_DOCX_FILES)) ||
@@ -102,6 +105,7 @@ module.exports = webpackEnv => {
         featureBookStructure,
         featureUploadDOCXFiles,
         locksWSURL,
+        languageSwitch,
         appVersion,
         appName,
       },

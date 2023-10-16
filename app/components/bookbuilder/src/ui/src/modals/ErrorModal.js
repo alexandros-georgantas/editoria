@@ -5,6 +5,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
 
+import { useTranslation } from 'react-i18next'
 import InfoModal from '../../../../../common/src/InfoModal'
 
 const Text = styled.div`
@@ -19,15 +20,16 @@ const Text = styled.div`
 const ErrorModal = props => {
   const { isOpen, hideModal, data } = props
   const { onConfirm, error } = data
+  const { t } = useTranslation()
 
   return (
     <InfoModal
-      headerText="An error occurred!"
+      headerText={t('An error occurred!')}
       isOpen={isOpen}
       onConfirm={onConfirm}
       onRequestClose={hideModal}
     >
-      <Text>{`${error}`}</Text>
+      <Text>{`${t(error.toLowerCase().replace(/ /g, '_'))}`}</Text>
     </InfoModal>
   )
 }

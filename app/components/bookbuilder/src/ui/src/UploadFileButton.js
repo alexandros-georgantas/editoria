@@ -2,6 +2,7 @@
 import React from 'react'
 import styled, { keyframes, css } from 'styled-components'
 
+import { useTranslation } from 'react-i18next'
 import UploadButton from './UploadButton'
 
 const animation = keyframes`
@@ -35,6 +36,8 @@ const UploadFileButton = ({
   uploading,
   uploadBookComponent,
 }) => {
+  const { t } = useTranslation()
+
   const isLocked = () => {
     if (lock === null || lock === undefined) return false
     return true
@@ -48,7 +51,9 @@ const UploadFileButton = ({
 
     if (extension !== 'docx') {
       return onWarning(
-        'This file extension is not supported by our system. Try to use only files with extension .docx',
+        t(
+          'this_file_extension_is_not_supported_by_our_system. try_to_use_only_files_with_extension .docx',
+        ),
       )
     }
 
@@ -71,13 +76,16 @@ const UploadFileButton = ({
         ],
       },
     }).catch(() =>
-      onWarning('One or more of the selected files faced issues in conversion'),
+      onWarning(
+        t('one_or_more_of_the_selected_files_faced_issues_in_conversion'),
+      ),
     )
 
     return true
   }
 
-  let text = 'Upload word'
+  // let text = t('upload_word')
+  let text = 'Upload Word'
 
   if (uploading) {
     text = 'Uploading'

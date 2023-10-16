@@ -3,6 +3,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 
 const Button = styled.button`
   align-items: center;
@@ -96,6 +97,8 @@ const ButtonWithIcon = ({
   title,
   className,
 }) => {
+  const { t } = useTranslation()
+
   return (
     <Button
       className={className}
@@ -104,12 +107,14 @@ const ButtonWithIcon = ({
       title={title}
     >
       <Icon>{icon}</Icon>
-      <Label>{label.toUpperCase()}</Label>
+      <Label>{t(label.toLowerCase().replace(/ /g, '_')).toUpperCase()}</Label>
     </Button>
   )
 }
 
 const DefaultButton = ({ onClick, label, disabled, className, title }) => {
+  const { t } = useTranslation()
+
   return (
     <Button
       className={className}
@@ -117,7 +122,7 @@ const DefaultButton = ({ onClick, label, disabled, className, title }) => {
       onClick={onClick}
       title={title}
     >
-      <Label>{label.toUpperCase()}</Label>
+      <Label>{t(label.toLowerCase().replace(/ /g, '_')).toUpperCase()}</Label>
     </Button>
   )
 }

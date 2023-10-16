@@ -9,6 +9,7 @@ import { th } from '@pubsweet/ui-toolkit'
 import { Action } from '@pubsweet/ui'
 import { DefaultButton } from './Button'
 import { Menu as UIMenu } from './Menu'
+import { useTranslation } from 'react-i18next'
 
 // const featureBookStructureEnabled = process.env.FEATURE_BOOK_STRUCTURE || false
 
@@ -279,6 +280,7 @@ const Opener = props => {
 
 const Footer = (handleSave, divisions, divisionType, setText, text) => () => {
   // const [text, setText] = useState(null)
+  const { t } = useTranslation()
 
   const createJsonConfig = text => {
     divisions.map(division => {
@@ -319,7 +321,7 @@ const Footer = (handleSave, divisions, divisionType, setText, text) => () => {
                 setText(null)
               }}
             >
-              Save
+              {t('save')}
             </Action>
           </>
         )}
@@ -336,6 +338,7 @@ const ComponentTypeMenu = ({
   bookStructure,
   applicationParameter,
 }) => {
+  const { t } = useTranslation()
   const { config: divisions } = find(applicationParameter, {
     context: 'bookBuilder',
     area: 'divisions',

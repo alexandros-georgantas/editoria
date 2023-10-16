@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { State } from 'react-powerplug'
 import { map } from 'lodash'
 
+import { useTranslation } from 'react-i18next'
 import BookTitle from './BookTitle'
 import BookActions from './BookActions'
 
@@ -48,12 +49,25 @@ const TopRowValue = styled.span`
   text-transform: capitalize;
 `
 
+/*
 const TopRowKeyValue = ({ value }) => (
   <>
     <TopRowKey>author</TopRowKey>
     <TopRowValue>{value}</TopRowValue>
   </>
 )
+*/
+const TopRowKeyValue = ({ value }) => {
+  const { t } = useTranslation()
+  return (
+    <>
+      <TopRowKey>{t('author')}</TopRowKey>
+      <TopRowValue>
+        {value.toLowerCase() === 'unassigned' ? t('unassigned') : value}
+      </TopRowValue>
+    </>
+  )
+}
 
 const TopRowValuesWrapper = styled.div`
   display: inline-flex;
@@ -112,6 +126,12 @@ const TopRowValues = ({ authors }) => {
       <TopRowValuesWrapper>
         <Author author="Unassigned" />
       </TopRowValuesWrapper>
+
+      /*
+            <TopRowValuesWrapper>
+                <Author author={t("unassigned")}/>
+            </TopRowValuesWrapper>
+            */
     )
 
   return (
@@ -155,6 +175,8 @@ const Book = props => {
       JSON.parse(process.env.FEATURE_BOOK_STRUCTURE)) ||
     false
 
+  const { t } = useTranslation()
+
   return (
     <State initial={{ isRenaming: false, showModal: false }}>
       {({ state, setState }) => {
@@ -186,12 +208,16 @@ const Book = props => {
         if (isPublished) {
           if (archived) {
             statusLabel = 'published (archived)'
+            // statusLabel = t('published_(archived)')
           } else {
+            // statusLabel = t('published')
             statusLabel = 'published'
           }
         } else if (archived) {
+          // statusLabel = t('in_progress_(archived)')
           statusLabel = 'in progress (archived)'
         } else {
+          // statusLabel = t('in_progress')
           statusLabel = 'in progress'
         }
 
@@ -212,7 +238,7 @@ const Book = props => {
             <TopRow archived={archived}>
               <Status isPublished={isPublished}>
                 {archived && <ArchivedIndicator>{icon}</ArchivedIndicator>}
-                {statusLabel}
+                {t(statusLabel.toLowerCase().replace(/ /g, '_'))}
               </Status>
 
               <TopRowValues authors={authors} />

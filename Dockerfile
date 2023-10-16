@@ -21,6 +21,7 @@ ARG client_ws_timeout
 ARG feature_book_structure
 ARG feature_upload_docx_files
 ARG locks_ws_url
+ARG lang_switch
 
 ENV NODE_ENV=$node_env
 ENV SERVER_PROTOCOL=$server_protocol
@@ -31,6 +32,7 @@ ENV CLIENT_WS_TIMEOUT=$client_ws_timeout
 ENV FEATURE_BOOK_STRUCTURE=$feature_book_structure
 ENV FEATURE_UPLOAD_DOCX_FILES=$feature_upload_docx_files
 ENV LOCKS_WS_URL=$locks_ws_url
+ENV LANG_SWITCH==$lang_switch
 
 RUN yarn pubsweet build
 

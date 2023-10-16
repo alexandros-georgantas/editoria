@@ -3,6 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Wax } from 'wax-prosemirror-core'
 
+import { useTranslation } from 'react-i18next'
 import { KetidaLayout } from '../layout'
 import { defaultConfig, OENConfigWax } from '../config'
 import WaxHeader from './WaxHeader'
@@ -49,6 +50,8 @@ const Editor = ({
   // onWarning(
   //         `Pasting external images is not supported. Please use platform's Asset Manager infrastructure`,
   //       ),
+  const { t } = useTranslation()
+
   let configWax = defaultConfig(onInfoModal)
 
   if (featureBookStructureEnabled) {
@@ -216,6 +219,7 @@ const Editor = ({
         title={title}
       />
       <WaxContainer>
+        {/*
         <Wax
           autoFocus
           config={configWax}
@@ -224,6 +228,19 @@ const Editor = ({
           layout={props => ketidaLayoutWithReadOnly(props, isReadOnly)}
           onChange={onPeriodicBookComponentContentChange}
           placeholder="Type Something..."
+          readonly={isReadOnly}
+          user={user}
+          value={content}
+        />
+        */}
+        <Wax
+          autoFocus
+          config={configWax}
+          fileUpload={() => true}
+          key={bookComponentId}
+          layout={props => ketidaLayoutWithReadOnly(props, isReadOnly)}
+          onChange={onPeriodicBookComponentContentChange}
+          placeholder={t('Type Something...'.toLowerCase().replace(/ /g, '_'))}
           readonly={isReadOnly}
           user={user}
           value={content}

@@ -17,7 +17,6 @@ services:
         - client_ws_min_timeout=${CLIENT_WS_MIN_TIMEOUT:-3000}
         - client_ws_timeout=${CLIENT_WS_TIMEOUT:-30000}
         - locks_ws_url=${LOCKS_WS_URL}
+        - lang_switch=${LANG_SWITCH}
     ports:
       - ${CLIENT_PORT}:80
-
- 

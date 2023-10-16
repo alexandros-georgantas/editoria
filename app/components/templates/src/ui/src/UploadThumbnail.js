@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import styled from 'styled-components'
+import { withTranslation } from 'react-i18next'
 import { mimetypeHelpers } from '../../../../common'
 
 import UploadButton from './UploadButton'
@@ -71,4 +72,4 @@ class UploadThumbnail extends React.Component {
   }
 }
 
-export default UploadThumbnail
+export default withTranslation()(UploadThumbnail)

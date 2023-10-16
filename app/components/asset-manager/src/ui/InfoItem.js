@@ -133,3 +133,4 @@ class InfoItem extends React.Component {
 }
 
 export default InfoItem
+// export default withTranslation()(InfoItem);

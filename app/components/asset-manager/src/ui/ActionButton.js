@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { th, darken, lighten } from '@pubsweet/ui-toolkit'
+import { useTranslation } from 'react-i18next'
 
 const Button = styled.button`
   align-items: center;
@@ -55,15 +56,18 @@ const Label = styled.span`
 `
 
 /* eslint-disable react/prop-types */
-const ActionButton = ({ onClick, label, disabled, className, type }) => (
-  <Button
-    className={className}
-    disabled={disabled}
-    onClick={onClick}
-    type={type}
-  >
-    <Label>{label.toUpperCase()}</Label>
-  </Button>
-)
+const ActionButton = ({ onClick, label, disabled, className, type }) => {
+  const { t } = useTranslation()
+  return (
+    <Button
+      className={className}
+      disabled={disabled}
+      onClick={onClick}
+      type={type}
+    >
+      <Label>{t(label.toUpperCase())}</Label>
+    </Button>
+  )
+}
 
 export default ActionButton
