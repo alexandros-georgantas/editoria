@@ -49,6 +49,7 @@ const EditorPage = props => {
     mode,
     isOnline,
     bookComponent,
+    heartbeatInterval,
     onBookComponentLock,
     onBookComponentTitleChange,
     // subscribeToBookComponentUpdates,
@@ -165,7 +166,7 @@ const EditorPage = props => {
       queryParams: { token, bookComponentId: bookComponent.id, tabId },
       share: true,
       reconnectAttempts: 5000,
-      reconnectInterval: 5000,
+      reconnectInterval: (heartbeatInterval?.config || 5000) + 500,
     },
     editorMode !== 'preview', // ########## ######### ######## 1 check if that works as expected
   )

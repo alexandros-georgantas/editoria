@@ -26,6 +26,7 @@
   "resolutions": {
     "prosemirror-view": "1.30.2",
     "postcss": "8",
+    "react-i18next": "13.3.1",
     "styled-components": "^4.1.3"
   },
   "dependencies": {
@@ -75,7 +76,6 @@
     "moment-timezone": "^0.5.28",
     "prop-types": "^15.6.0",
     "prosemirror-inputrules": "1.1.3",
-    "prosemirror-tables": "^1.3.2",
     "pubsweet": "^5.1.31",
     "react": "^17.0.2",
     "react-adopt": "^0.6.0",
@@ -84,7 +84,7 @@
     "react-codemirror2": "^7.2.1",
     "react-dom": "^17.0.2",
     "react-hot-loader": "4.13.0",
-    "react-i18next": "^13.0.3",
+    "react-i18next": "^13.3.1",
     "react-modal": "^3.11.1",
     "react-panelgroup": "^1.0.10",
     "react-powerplug": "^1.0.0",
@@ -103,8 +103,9 @@
     "typeface-vollkorn": "^1.1.13",
     "url-loader": "1.1.2",
     "uuid": "^3.3.2",
-    "wax-prosemirror-core": "0.8.8",
-    "wax-prosemirror-services": "0.8.8",
+    "wax-prosemirror-core": "0.8.25",
+    "wax-prosemirror-services": "0.8.25",
+    "wax-table-service": "0.8.25",
     "webpack": "4.39.3",
     "webpack-cli": "3.3.6",
     "webpack-dev-server": "3.7.2",

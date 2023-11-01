@@ -7,6 +7,7 @@ import {
   useLazyQuery,
   useSubscription,
 } from '@apollo/client'
+import { find } from 'lodash'
 import uuid from 'uuid/v4'
 
 import {
@@ -30,7 +31,12 @@ import ModalContext from '../../common/src/ModalContext'
 import { Loading } from '../../../ui'
 import EditorPage from './EditorPage'
 
-const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
+const EditorPageWithData = ({
+  currentUser,
+  showModal,
+  hideModal,
+  applicationParameter,
+}) => {
   const history = useHistory()
   const params = useParams()
 
@@ -225,6 +231,10 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
     })
   }
 
+  const heartbeatInterval = find(applicationParameter, {
+    area: 'heartbeatInterval',
+  })
+
   // const onBookUpdated = () => {
   //   return subscribeToMoreForBook({
   //     document: BOOK_UPDATED_SUBSCRIPTION,
@@ -367,6 +377,7 @@ const EditorPageWithData = ({ currentUser, showModal, hideModal }) => {
     <EditorPage
       book={book}
       bookComponent={bookComponent}
+      heartbeatInterval={heartbeatInterval}
       hideModal={hideModal}
       history={history}
       isOnline={isOnline}
