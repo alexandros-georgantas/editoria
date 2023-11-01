@@ -1,6 +1,5 @@
 import { emDash, ellipsis } from 'prosemirror-inputrules'
-// import { debounce } from 'lodash'
-import { columnResizing, tableEditing } from 'prosemirror-tables'
+
 import {
   InlineAnnotationsService,
   AnnotationToolGroupService,
@@ -9,8 +8,6 @@ import {
   LinkService,
   ListsService,
   ListToolGroupService,
-  TablesService,
-  TableToolGroupService,
   BaseService,
   BaseToolGroupService,
   DisplayBlockLevelService,
@@ -52,6 +49,8 @@ import {
 import { EditoriaSchema } from 'wax-prosemirror-core'
 
 import invisibles, { hardBreak } from '@guardian/prosemirror-invisibles'
+
+import { TablesService, columnResizing } from 'wax-table-service'
 
 import CharactersList from './charactersList'
 
@@ -109,7 +108,6 @@ export default onInfoModal => ({
   RejectTrackChangeService: {},
   PmPlugins: [
     columnResizing(),
-    tableEditing(),
     disallowPasteImagesPlugin(() =>
       onInfoModal(
         `Pasting external images is not supported. Please use platform's Asset Manager infrastructure`,
@@ -138,7 +136,6 @@ export default onInfoModal => ({
     new BaseService(),
     new BaseToolGroupService(),
     new NoteService(),
-    new TableToolGroupService(),
     new ImageToolGroupService(),
     new AnnotationToolGroupService(),
     new NoteToolGroupService(),

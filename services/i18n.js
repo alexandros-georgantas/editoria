@@ -19,7 +19,7 @@ i18next
 
     nonExplicitSupportedLngs: true,
     detection: {
-      order: ['localStorage', 'cookie', 'sessionStorage','path', 'htmlTag'],
+      order: ['localStorage', 'cookie', 'sessionStorage', 'path', 'htmlTag'],
       caches: ['localStorage', 'cookie'],
     },
 
@@ -33,8 +33,8 @@ i18next
 
     // Back-end config
     backend: {
-       loadPath: "/locales/{{lng}}/{{ns}}.json",
-        // loadpath: "http://localhost:3000/api/translations/{{lng}}"
+      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      // loadpath: "http://localhost:3000/api/translations/{{lng}}"
     },
 
     interpolation: {
@@ -50,7 +50,7 @@ i18next
     // },
 
     debug: process.env.NODE_ENV === 'development',
-      keySeparator: false
+    // keySeparator: false,
   })
 
 export default i18next
