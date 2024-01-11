@@ -32,7 +32,7 @@ ENV CLIENT_WS_TIMEOUT=$client_ws_timeout
 ENV FEATURE_BOOK_STRUCTURE=$feature_book_structure
 ENV FEATURE_UPLOAD_DOCX_FILES=$feature_upload_docx_files
 ENV LOCKS_WS_URL=$locks_ws_url
-ENV LANG_SWITCH==$lang_switch
+ENV LANG_SWITCH=$lang_switch
 
 RUN yarn pubsweet build
 
