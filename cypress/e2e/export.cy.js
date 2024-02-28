@@ -20,7 +20,7 @@ describe('Tests describing for imports', () => {
 
   it('Creating a template, book and adding components for export', () => {
     cy.get("[href='/templates']", { timeout: 8000 }).click()
-    cy.get("[title='Add TEMPLATE']", { timeout: 8000 }).click()
+    cy.get("[title='ADD TEMPLATE']", { timeout: 8000 }).click()
     cy.get("[name='name']").type('export_template')
     cy.get("[name='author']").type('author')
     cy.get('.css-g1d714-ValueContainer').then(els => {
@@ -152,7 +152,7 @@ describe('Tests describing for imports', () => {
     cy.contains('DOWNLOAD').click()
     cy.contains('PREVIEW').not('[enabled]')
     cy.contains('DOWNLOAD').should('be.enabled')
-    cy.contains('Format').should('exist')
+    cy.contains('FORMAT').should('exist')
     cy.contains('Ok').should('be.disabled')
     cy.contains('Cancel').should('be.enabled').click()
     cy.get('button[title="Export Book"]').should('exist').click()

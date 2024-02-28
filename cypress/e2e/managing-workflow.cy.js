@@ -17,7 +17,7 @@ describe('Managing workflow', () => {
       cy.log('You cannot upload a file in OEN')
       cy.contains('Delete').click()
       cy.contains(
-        'Are you sure you want to delete this part with title Untitled?',
+        'Are you sure you want to delete this Part with title Untitled?',
       )
       cy.get('button[title="Yes"]').click()
       cy.wait(5000)

@@ -10,7 +10,7 @@ describe('Testing OEN book builder', () => {
   })
 
   it('Add a new book', () => {
-    cy.get("[title='Add Book']", { timeout: 8000 }).click()
+    cy.get("[title='ADD BOOK']", { timeout: 8000 }).click()
     cy.get("[name='title'").type('OEN book')
     cy.contains('span', 'Save').click()
 
@@ -152,15 +152,15 @@ describe('Testing OEN book builder', () => {
         // Cloning elements
         cy.get("input[placeholder='Type the title of this section']")
           .parent()
-          .find('[title="Clone"]')
+          .find('[title="clone"]')
           .click()
         cy.get("input[placeholder='Type the title of this chapter']")
           .parent()
-          .find('[title="Clone"]')
+          .find('[title="clone"]')
           .click()
         cy.get("input[placeholder='Type the title of this part']")
           .parent()
-          .find('[title="Clone"]')
+          .find('[title="clone"]')
           .click()
 
         // Removing elements
@@ -268,7 +268,7 @@ describe('Testing OEN book builder', () => {
         )
 
         // Clone/remove elements
-        cy.get('button[title="Clone"]:first').click()
+        cy.get('button[title="clone"]:first').click()
         cy.get("input[placeholder='Type the title of this part']:first")
           .click()
           .clear()
@@ -291,7 +291,7 @@ describe('Testing OEN book builder', () => {
         cy.contains('Build Book').click({ force: true })
 
         //  Check confirmation message
-        cy.contains('BUILD OEN BOOK')
+        cy.contains('BUILD')
         cy.contains('Are you sure you want to build OEN book?')
         cy.contains(
           'You will no longer be able to access the Open Textbook Planner, but you can make any changes you’d like in the book after it is built.',

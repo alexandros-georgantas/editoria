@@ -86,7 +86,7 @@ describe('Book builder tests', () => {
     cy.get("[title='Add Unnumbered']", { timeout: 5000 })
       .should('exist', { timeout: 5000 })
       .click()
-    cy.checkComponentType(2, 'Unnumbered')
+    cy.checkComponentType(2, 'unnumbered')
     cy.contains('button', 'Delete').click()
     cy.contains('span', 'Yes', { timeout: 8000 }).click()
     cy.contains("[data-test-id='Body-division']", 'Untitled').should(
@@ -107,7 +107,7 @@ describe('Book builder tests', () => {
     cy.contains(
       'By creating a notes placeholder you will only be able to see templates with notes option set to endnotes',
     )
-    cy.get('[title="Ok"]').click()
+    cy.get('[title="OK"]').click()
     cy.contains("[data-test-id='Backmatter-division']", 'Notes', {
       timeout: 8000,
     })
@@ -124,11 +124,11 @@ describe('Book builder tests', () => {
       // Checks that in OEN there is also Copyright Page as component type in FM
       cy.get('[role="option"]:nth(6)').should('have.text', 'Copyright Page')
 
-      cy.get('[role="option"]:nth(7)').should('have.text', 'Epigraph').click()
-      cy.checkComponentType(7, 'Epigraph')
+      cy.get('[role="option"]:nth(7)').should('have.text', 'epigraph').click()
+      cy.checkComponentType(7, 'epigraph')
     } else {
-      cy.get('[role="option"]:nth(6)').should('have.text', 'Epigraph').click()
-      cy.checkComponentType(6, 'Epigraph')
+      cy.get('[role="option"]:nth(6)').should('have.text', 'epigraph').click()
+      cy.checkComponentType(6, 'epigraph')
     }
 
     cy.contains('button', 'Delete').click()
@@ -142,8 +142,8 @@ describe('Book builder tests', () => {
     cy.get('@component-types').click()
     cy.addComponentType('Epilogue')
 
-    cy.get('[role="option"]:nth(3)').should('have.text', 'Epilogue').click()
-    cy.checkComponentType(3, 'Epilogue')
+    cy.get('[role="option"]:nth(3)').should('have.text', 'epilogue').click()
+    cy.checkComponentType(3, 'epilogue')
 
     cy.get("[data-test-id='component-types']", { timeout: 8000 }).click({
       force: true,
@@ -155,10 +155,10 @@ describe('Book builder tests', () => {
     // Adding a new component in Backmatter
     cy.get("[title='Add Component']").last().click()
     cy.contains('Untitled').should('exist')
-    cy.addComponentType('Glossary')
+    cy.addComponentType('glossary')
 
-    cy.get('[role="option"]:nth(2)').should('have.text', 'Glossary').click()
-    cy.checkComponentType(2, 'Glossary')
+    cy.get('[role="option"]:nth(2)').should('have.text', 'glossary').click()
+    cy.checkComponentType(2, 'glossary')
 
     cy.get("[data-test-id='component-types']", { timeout: 8000 }).click({
       force: true,
@@ -181,7 +181,7 @@ describe('Book builder tests', () => {
         'Title Page',
         'Cover',
         'Copyright Page',
-        'Epigraph',
+        'epigraph',
       ].forEach(type => {
         cy.log(`Changing to ${type}...`)
         cy.get('[data-test-id="component-types"]').click({ force: true })
@@ -199,7 +199,7 @@ describe('Book builder tests', () => {
         'Half Title',
         'Title Page',
         'Cover',
-        'Epigraph',
+        'epigraph',
       ].forEach(type => {
         cy.log(`Changing to ${type}...`)
         cy.get('[data-test-id="component-types"]').click({ force: true })
@@ -219,7 +219,7 @@ describe('Book builder tests', () => {
     cy.contains("[data-test-id='Body-division']", 'Untitled')
 
     let option = 0
-    ;['Part', 'Chapter', 'Unnumbered', 'Epilogue'].forEach(type => {
+    ;['Part', 'Chapter', 'unnumbered', 'epilogue'].forEach(type => {
       cy.log(`Changing to ${type}...`)
       cy.get('[data-test-id="component-types"]').click({ force: true })
       cy.get(`[role="option"]:nth(${option})`).click()
@@ -237,7 +237,7 @@ describe('Book builder tests', () => {
     cy.contains("[data-test-id='Backmatter-division']", 'Untitled')
 
     let option = 0
-    ;['Component', 'Appendix', 'Glossary'].forEach(type => {
+    ;['Component', 'Appendix', 'glossary'].forEach(type => {
       cy.log(`Changing to ${type}...`)
       cy.get('[data-test-id="component-types"]').click({ force: true })
       cy.get(`[role="option"]:nth(${option})`).click()

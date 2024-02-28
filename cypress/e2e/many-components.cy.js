@@ -51,5 +51,4 @@ describe('Adding lots of components to a book', () => {
     cy.get('[title="Ok"]').click()
   })
 })
-
 */

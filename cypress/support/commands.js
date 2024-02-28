@@ -50,7 +50,7 @@ Cypress.Commands.add('login', (username, password) => {
 // Logout
 Cypress.Commands.add('logout', () => {
   cy.get("[title='User Menu dropdown']").click()
-  cy.get("[title='Logout']").click()
+  cy.get("[title='Log Out']").click()
 })
 
 // Entering into team manager settings
@@ -61,7 +61,7 @@ Cypress.Commands.add('teamManagerSettings', () => {
 
 // Adding a book
 Cypress.Commands.add('addBook', bookName => {
-  cy.get("[title='Add Book']", { timeout: 8000 }).click()
+  cy.get("[title='ADD BOOK']", { timeout: 8000 }).click()
   cy.get("[name='title'").type(bookName)
   cy.contains('span', 'Save').click()
   cy.contains('a', bookName, { timeout: 8000 })

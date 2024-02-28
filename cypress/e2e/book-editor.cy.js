@@ -8,72 +8,72 @@ describe('Book editor', () => {
     cy.fixture('book-content').then(bookContent => {
       display = [
         {
-          button: "[title='Change to Title']",
+          button: "[title='Switch to Title']",
           element: 'h1',
           content: bookContent['title-h1'],
         },
         {
-          button: "[title='Change to Author']",
+          button: "[title='Switch to Author']",
           element: '.author',
           content: bookContent.author,
         },
         {
-          button: "[title='Change to Subtitle']",
+          button: "[title='Switch to Subtitle']",
           element: '.cst',
           content: bookContent.subtitle,
         },
         {
-          button: "[title='Change to Epigraph Prose']",
+          button: "[title='Switch to Epigraph Prose']",
           element: '.epigraph-prose',
           content: bookContent['epigraph-prose'],
         },
         {
-          button: "[title='Change to Epigraph Poetry']",
+          button: "[title='Switch to Epigraph Poetry']",
           element: '.epigraph-poetry',
           content: bookContent['epigraph-poetry'],
         },
         {
-          button: "[title='Change to heading level 2']",
+          button: "[title='Switch to heading level 2']",
           element: 'h2',
           content: bookContent['heading-2'],
         },
         {
-          button: "[title='Change to heading level 3']",
+          button: "[title='Switch to heading level 3']",
           element: 'h3',
           content: bookContent['heading-3'],
         },
         {
-          button: "[title='Change to heading level 4']",
+          button: "[title='Switch to heading level 4']",
           element: 'h4',
           content: bookContent['heading-4'],
         },
         {
-          button: "[title='Change to Paragraph']",
+          button: "[title='Switch to Paragraph']",
           element: '.paragraph',
           content: bookContent.paragraph,
         },
         {
-          button: "[title='Change to Paragraph Continued']",
+          button: "[title='Switch to Paragraph Continued']",
           element: '.paragraph-cont',
           content: bookContent['paragraph-continued'],
         },
         {
-          button: "[title='Change to Extract Prose']",
+          button: "[title='Switch to Extract Prose']",
           element: '.extract-prose',
           content: bookContent['extract-prose'],
         },
         {
-          button: "[title='Change to Extract Poetry']",
+          button: "[title='Switch to Extract Poetry']",
           element: '.extract-poetry',
           content: bookContent['extract-poetry'],
         },
         {
-          button: "[title='Change to Source Note']",
+          button: "[title='Switch to Source Note']",
           element: '.source-note',
           content: bookContent['source-note'],
         },
         {
-          button: "[title='Change to Block Quote']",
+          button: "[title='Switch to Block Quote']",
           element: 'blockquote',
           content: bookContent['block-quote'],
         },

@@ -20,8 +20,8 @@ describe('Sort by Title', () => {
   })
 
   it('Sort by Title - Ascending', () => {
-    cy.contains('title').click()
-    cy.contains('title').click({ force: true })
+    cy.contains('Title').click()
+    cy.contains('Title').click({ force: true })
     cy.get('[data-cy="book"]').first().contains('A')
     cy.get('[data-cy="book"]:nth(1)').contains('B')
     cy.get('[data-cy="book"]').last().contains('C')
@@ -60,16 +60,16 @@ describe('Sort by Status', () => {
   })
 
   it('Sort by Status - Ascending', () => {
-    cy.contains('title').click()
-    cy.contains('pub. date').click()
+    cy.contains('Title').click()
+    cy.contains('Pub. date').click()
     cy.get('[data-cy="book"]').first().contains('B')
     cy.get('[data-cy="book"]:nth(1)').contains('A')
     cy.get('[data-cy="book"]').last().contains('C')
   })
 
   it('Sort by Status - Descending', () => {
-    cy.contains('title').click()
-    cy.contains('pub. date').click()
+    cy.contains('Title').click()
+    cy.contains('Pub. date').click()
     cy.get("[title='Ascending']").click()
     cy.get('[data-cy="book"]').first().contains('C')
     cy.get('[data-cy="book"]:nth(1)').contains('A')
