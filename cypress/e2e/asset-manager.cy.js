@@ -28,14 +28,14 @@ describe('Book builder asset manager', () => {
       // Deleting pre-built components in oen
       cy.contains('Delete').first().click({ force: true })
       cy.contains(
-        'Are you sure you want to delete this part with title Untitled?',
+        'Are you sure you want to delete this Part with title Untitled?',
       ).should('exist')
       cy.get('[title="Yes"]').trigger('mouseover').click({ force: true })
       cy.wait(5000)
       cy.contains('Untitled').should('exist')
       cy.contains('Delete').click({ timeout: 8000 })
       cy.contains(
-        'Are you sure you want to delete this chapter with title Untitled?',
+        'Are you sure you want to delete this Chapter with title Untitled?',
       ).should('exist')
       cy.get('[title="Yes"]').trigger('mouseover').click({ force: true })
       // cy.get('.loading-spinner', { timeout: 15000 }).should('not.exist')
