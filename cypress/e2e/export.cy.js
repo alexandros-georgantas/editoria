@@ -105,7 +105,7 @@ describe('Tests describing for imports', () => {
         cy.log('Text:', selectedTemplate)
 
         cy.get('[title="Cancel"]').should('be.enabled')
-        cy.get('[title="Ok"]').should('be.enabled').click({ force: true })
+        cy.get('[title="OK"]').should('be.enabled').click({ force: true })
 
         // Checking Preview page
         cy.get('section:nth(1)').should('have.text', 'BooksTemplates')
@@ -120,8 +120,9 @@ describe('Tests describing for imports', () => {
         cy.contains('MODIFY CSS').should('exist')
 
         // Check if the desired sentence contains the variable
+        cy.log(`${selectedTemplate}`)
         cy.contains(
-          `Do you want to modify the css of template "${selectedTemplate}" or create a new Template for the specific book.`,
+          `Do you want to modify the css of template ${selectedTemplate} or create a new Template for the specific book.`,
         ).should('exist')
       })
 
@@ -153,7 +154,7 @@ describe('Tests describing for imports', () => {
     cy.contains('PREVIEW').not('[enabled]')
     cy.contains('DOWNLOAD').should('be.enabled')
     cy.contains('FORMAT').should('exist')
-    cy.contains('Ok').should('be.disabled')
+    cy.get('[title="OK"]').should('not.be.enabled')
     cy.contains('Cancel').should('be.enabled').click()
     cy.get('button[title="Export Book"]').should('exist').click()
     cy.contains('DOWNLOAD').click()
@@ -166,8 +167,8 @@ describe('Tests describing for imports', () => {
     // cy.get('button[title="Cancel"]').click()
     // cy.contains('DOWNLOAD').click()
     cy.contains('You are about to export a valid EPUB v3 file.').should('exist')
-    cy.get('.react-select__value-container').should('have.text', 'Select...')
-    cy.contains('Ok').should('be.disabled')
+    cy.get('.react-select__value-container').should('have.text', 'select')
+    cy.contains('OK').should('not.be.enabled')
     ;[0, 1].forEach(option => {
       cy.get('.react-select__control').click({ force: true })
       cy.get(`#react-select-3-option-${option}`)
@@ -180,13 +181,21 @@ describe('Tests describing for imports', () => {
         .then(text => {
           cy.log('Template:', text)
           cy.wrap(text).should('be.oneOf', [
-            'Atla (chapterEnd)',
-            'Atla (footnotes)',
+            // 'Atla (chapterEnd)',
+            // 'Atla (footnotes)',
+            'bikini (footnotes)',
+            'atosh (footnotes)',
+            'eclypse (footnotes)',
+            'lategrey (footnotes)',
+            'vanilla (footnotes)',
+            'logical (footnotes)',
+            'significa (footnotes)',
+            'ternberg (footnotes)',
           ])
         })
     })
 
-    cy.contains('Ok').should('be.enabled')
+    cy.get('[title="OK"]').should('be.enabled')
 
     // PDF option
     cy.log('Checking the modal when PDF option is selected')
@@ -200,7 +209,7 @@ describe('Tests describing for imports', () => {
 
     cy.checkPagedjsTemplates()
 
-    cy.contains('Ok').should('be.enabled')
+    cy.get('[title="OK"]').should('be.enabled')
 
     // ICML option
     cy.log('Checking the modal when ICML option is selected')
@@ -211,7 +220,7 @@ describe('Tests describing for imports', () => {
     cy.contains(
       'You will get a compressed zip file containing all images used in the book and the ICML file ready to be imported in Adobe inDesign.',
     ).should('exist')
-    cy.contains('Ok').should('be.enabled')
+    cy.get('[title="OK"]').should('be.enabled')
     cy.contains('Cancel').click()
   })
 
@@ -229,8 +238,8 @@ describe('Tests describing for imports', () => {
       // The expected texts for each cell
       const expectedTexts = [
         ['Table of Contents', '', ''],
-        ['a-Font_matter', 'a-Font_matter', 'a-Font_matter'],
-        ['body', 'body', 'body'],
+        ['a-font_matter', 'a-Font_matter', 'a-Font_matter'],
+        ['Body', 'body', 'body'],
         ['second_chapter', 'second_chapter', 'second_chapter'],
         ['w-back_matter', 'w-back_matter', 'w-back_matter'],
       ]
@@ -284,8 +293,16 @@ Cypress.Commands.add('checkPagedjsTemplates', () => {
         cy.log('Template:', text)
         cy.wrap(text).should('be.oneOf', [
           'export_template',
-          'Atla (chapterEnd)',
-          'Atla (footnotes)',
+          // 'Atla (chapterEnd)',
+          // 'Atla (footnotes)',
+          'bikini (footnotes)',
+          'atosh (footnotes)',
+          'eclypse (footnotes)',
+          'lategrey (footnotes)',
+          'vanilla (footnotes)',
+          'logical (footnotes)',
+          'significa (footnotes)',
+          'ternberg (footnotes)',
         ])
       })
   })
