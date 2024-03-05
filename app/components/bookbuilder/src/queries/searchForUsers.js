@@ -9,9 +9,7 @@ const SEARCH_FOR_USERS = gql`
       username
       givenNames
       surname
-      defaultIdentity {
-        email
-      }
+      email
     }
   }
 `
