@@ -1,8 +1,8 @@
-const authsomeVanilla = require('./modules/authsomeVanilla')
-const authsomeBooksprints = require('./modules/authsomeBooksprints')
 const bbVanilla = require('./modules/bookBuilderVanilla')
 const bbOEN = require('./modules/bookBuilderOEN')
 const bbBooksprints = require('./modules/bookBuilderBooksprints')
+const vanilla = require('./modules/vanillaTeams')
+const booksprints = require('./modules/booksprintsTeams')
 
 const flavour =
   process.env.KETIDA_FLAVOUR && process.env.KETIDA_FLAVOUR === 'BOOKSPRINTS'
@@ -27,9 +27,11 @@ if (!featureBookStructureEnabled) {
 }
 
 module.exports = {
-  authsome: flavour === 'BOOKSPRINTS' ? authsomeBooksprints : authsomeVanilla,
   bookBuilder,
-  publicKeys: ['authsome', 'bookBuilder', 'pubsweet-client'],
+  authorization: {
+    teams: flavour === 'BOOKSPRINTS' ? booksprints.teams : vanilla.teams,
+  },
+  publicKeys: ['bookBuilder', 'pubsweet-client', 'authorization'],
   'pubsweet-client': {
     API_ENDPOINT: '/api',
     'login-redirect': '/',

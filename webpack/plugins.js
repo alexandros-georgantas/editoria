@@ -1,4 +1,4 @@
-const config = require('config')
+// const config = require('config')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -53,19 +53,19 @@ module.exports = (opts = {}) => {
   )
 
   // put dynamically required modules into the build
-  if (config.validations) {
-    plugins.push(
-      new webpack.ContextReplacementPlugin(/./, __dirname, {
-        [config.authsome.mode]: config.authsome.mode,
-      }),
-    )
-  } else {
-    plugins.push(
-      new webpack.ContextReplacementPlugin(/./, __dirname, {
-        [config.authsome.mode]: config.authsome.mode,
-      }),
-    )
-  }
+  // if (config.validations) {
+  //   plugins.push(
+  //     new webpack.ContextReplacementPlugin(/./, __dirname, {
+  //       [config.authsome.mode]: config.authsome.mode,
+  //     }),
+  //   )
+  // } else {
+  //   plugins.push(
+  //     new webpack.ContextReplacementPlugin(/./, __dirname, {
+  //       [config.authsome.mode]: config.authsome.mode,
+  //     }),
+  //   )
+  // }
 
   plugins.push(new CopyWebpackPlugin([{ from: '../public' }]))
 
