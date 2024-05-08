@@ -5,8 +5,10 @@ import { gql } from '@apollo/client'
 const CREATE_BOOK = gql`
   mutation CreateBook($input: CreateBookInput!) {
     createBook(input: $input) {
-      id
-      title
+      book {
+        id
+        title
+      }
     }
   }
 `
