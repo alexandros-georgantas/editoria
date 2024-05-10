@@ -66,6 +66,8 @@ const mapProps = args => ({
     const {
       createBookMutation: createBookMutationFromArgs,
       withModal: withModalFromArgs,
+      getBookCollectionsQuery,
+      getDashboardRulesQuery,
     } = args
 
     const { createBook } = createBookMutationFromArgs
@@ -79,6 +81,9 @@ const mapProps = args => ({
             title,
           },
         },
+      }).then(() => {
+        getDashboardRulesQuery.refetch()
+        getBookCollectionsQuery.refetch()
       })
       hideModal()
     }
