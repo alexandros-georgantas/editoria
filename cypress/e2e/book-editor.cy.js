@@ -150,20 +150,11 @@ describe('Book editor', () => {
       cy.get('.ProseMirror').type(`${option.content}{enter}`)
     })
 
-    // Adding ordered list
-    cy.get("[title='Wrap in ordered list']").click()
-    listItems.forEach(li => {
-      cy.get('.ProseMirror').type(`${li}{enter}`)
-    })
-    cy.get('.ProseMirror').type('{enter}')
+    // Add ordered list
+    cy.addList('ordered', listItems)
 
-    // Adding Bullet list
-    cy.get("[title='Wrap in bullet list']").click()
-
-    listItems.forEach(li => {
-      cy.get('.ProseMirror').type(`${li}{enter}`)
-    })
-    cy.get('.ProseMirror').type('{enter}')
+    // Add bullet list
+    cy.addList('bullet', listItems)
 
     cy.get("[title='Save changes']").click()
     // cy.wait("@gqlUpdateBookComponentContentMutation");
@@ -190,4 +181,12 @@ describe('Book editor', () => {
       cy.contains(listItems[index])
     })
   })
+})
+
+Cypress.Commands.add('addList', (listType, listItems) => {
+  cy.get(`[title='Wrap in ${listType} list']`).click()
+  listItems.forEach(li => {
+    cy.get('.ProseMirror').type(`${li}{enter}`)
+  })
+  cy.get('.ProseMirror').type('{enter}')
 })
