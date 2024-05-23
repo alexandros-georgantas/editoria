@@ -47,26 +47,21 @@ describe('Book builder asset manager', () => {
     }
 
     cy.contains('Asset Manager').click()
-    cy.get("[id='file-uploader-assets']").selectFile(filePaths.file1.path, {
-      force: true,
-    })
-    cy.contains('div', filePaths.file1.name, { timeout: 8000 }).should('exist')
-    cy.get("[id='file-uploader-assets']").selectFile(filePaths.file2.path, {
-      force: true,
-    })
-    cy.contains('div', filePaths.file2.name, { timeout: 8000 }).should('exist')
+    cy.uploadFileAssetManager(filePaths.file1.path, filePaths.file1.name)
+    cy.uploadFileAssetManager(filePaths.file2.path, filePaths.file2.name)
     cy.get("[title='Close']").click()
   })
 
   it('Insert images into content', () => {
     cy.contains(book.name, { timeout: 10000 })
     cy.contains('Edit').click()
-    cy.get("button[title='Add Chapter']").click()
-    cy.wait(5000)
-    cy.contains('Untitled').click()
-    cy.get("button[title='Upload Image']", { timeout: 6000 }).click({
-      force: true,
-    })
+    cy.addUntitledChapter()
+
+    cy.get("button[title='Upload Image']", { timeout: 6000 })
+      .should('be.visible')
+      .click({
+        force: true,
+      })
     cy.get("button[title='Upload Images']").should('be.enabled')
     cy.get("button[title='Insert Image/s']").should('be.disabled')
     cy.get("button[title='Delete Selected']").should('be.disabled')
@@ -81,15 +76,12 @@ describe('Book builder asset manager', () => {
   it('Deleting images', () => {
     cy.contains(book.name, { timeout: 10000 })
     cy.contains('Edit').click()
+
     cy.contains('Asset Manager', { timeout: 6000 }).click()
-    cy.get("[type='checkbox']:nth(1)").check()
-    cy.contains('span', 'Delete Selected').click()
-    cy.contains('span', 'Yes').click()
+    cy.deleteFirstImage()
     cy.contains('div', filePaths.file1.name).should('not.exist')
-    cy.get("[type='checkbox']:nth(1)").check()
-    cy.contains('span', 'Delete Selected').click()
-    cy.contains('span', 'Yes').click()
-    cy.contains('div', filePaths.file1.name).should('not.exist')
+    cy.deleteFirstImage()
+    cy.contains('div', filePaths.file2.name).should('not.exist')
   })
 
   it('Check supported files - JPG, PNG, SVG, TIFF', () => {
@@ -97,32 +89,19 @@ describe('Book builder asset manager', () => {
     cy.contains(book.name, { timeout: 10000 })
     cy.contains('Edit').click()
     cy.contains('Asset Manager', { timeout: 6000 }).click()
-    cy.get("[id='file-uploader-assets']").selectFile(filePaths.file2.path, {
-      force: true,
-    })
-    cy.contains('div', filePaths.file2.name, { timeout: 8000 }).should('exist')
-    cy.get("[id='file-uploader-assets']").selectFile(
-      'cypress/fixtures/assets/png/cat.png',
-      { force: true },
-    )
-    cy.contains('div', 'cat.png', { timeout: 8000 }).should('exist')
-    cy.get("[id='file-uploader-assets']").selectFile(
-      'cypress/fixtures/assets/svg/cat.svg',
-      { force: true },
-    )
-    cy.contains('div', 'cat.svg', { timeout: 8000 }).should('exist')
-    cy.get("[id='file-uploader-assets']").selectFile(
+    cy.uploadFileAssetManager(filePaths.file2.path, filePaths.file2.name)
+    cy.uploadFileAssetManager('cypress/fixtures/assets/png/cat.png', 'cat.png')
+    cy.uploadFileAssetManager('cypress/fixtures/assets/svg/cat.svg', 'cat.svg')
+    cy.uploadFileAssetManager(
       'cypress/fixtures/assets/tiff/cat.tiff',
-      { force: true },
+      'cat.tiff',
     )
-    cy.contains('div', 'cat.tiff', { timeout: 8000 }).should('exist')
     cy.get("[title='Close']").click()
     cy.contains('Delete').click()
     cy.contains('Yes').click()
-    cy.get("button[title='Add Chapter']").click()
-    cy.contains('Untitled').click({ timeout: 5000 })
+    cy.addUntitledChapter()
     ;['1', '2', '3', '4'].forEach(box => {
-      cy.get("button[title='Upload Image']").click()
+      cy.get("button[title='Upload Image']", { timeout: 10000 }).click()
       cy.get(`[type='checkbox']:nth(${box})`).check()
       cy.get("button[title='Insert Image/s']").click()
     })
@@ -144,7 +123,7 @@ describe('Book builder asset manager', () => {
         'cypress/fixtures/docs/chapter_w-image.docx',
         { force: true },
       )
-      cy.contains('span', 'chapter_w-image')
+      cy.contains('span', 'chapter_w-image', { timeout: 10000 })
       cy.get('button[title="Upload word"]:nth(1)', { timeout: 16000 }).should(
         'exist',
       )
@@ -175,46 +154,57 @@ describe('Book builder asset manager', () => {
     })
 
     it('Ordering images by name', () => {
-      cy.get("[id='file-uploader-assets']").selectFile(filePaths.file1.path, {
-        force: true,
-      })
-
-      cy.get("[id='file-uploader-assets']").selectFile(filePaths.file2.path, {
-        force: true,
-      })
+      cy.uploadFileAssetManager(filePaths.file1.path, filePaths.file1.name)
+      cy.uploadFileAssetManager(filePaths.file2.path, filePaths.file2.name)
 
       // Descending Order
-      cy.contains('Name').parent().find('button').click({ timeout: 5000 })
-
-      cy.get("input[type='checkbox']:nth(1)")
-        .parent()
-        .parent()
-        .contains('cat.jpg')
-
-      cy.get("[type='checkbox']:nth(2)").parent().parent().contains('anime')
+      cy.orderingImages('Name', 'cat', 'anime')
 
       // Ascending Order
-      cy.contains('Name').parent().find('button').click()
-      cy.get("[type='checkbox']:nth(1)").parent().parent().contains('anime')
-      cy.get("[type='checkbox']:nth(2)").parent().parent().contains('cat')
+      cy.orderingImages('Name', 'anime', 'cat')
       cy.get("[title='Close']").click()
     })
 
     it('Ordering images by updated date', () => {
       // Descending Order
-      cy.contains('Name') // ???
-        .parent()
-        .find('button')
-        .click()
-
-      cy.get("[type='checkbox']:nth(1)").parent().parent().contains('cat')
-      cy.get("[type='checkbox']:nth(2)").parent().parent().contains('anime')
+      cy.orderingImages('Updated', 'cat', 'anime')
 
       // Ascending Order
-      cy.contains('Name').parent().find('button').click()
-      cy.get("[type='checkbox']:nth(1)").parent().parent().contains('anime')
-      cy.get("[type='checkbox']:nth(2)").parent().parent().contains('cat')
+      cy.orderingImages('Updated', 'cat', 'anime')
+      cy.log(
+        "Both images were uploaded on the same date so the order doesn't change.",
+      )
       cy.get("[title='Close']").click()
     })
   })
+})
+
+Cypress.Commands.add('uploadFileAssetManager', (path, name) => {
+  cy.get("[id='file-uploader-assets']").selectFile(`${path}`, {
+    force: true,
+  })
+  cy.contains('div', `${name}`, { timeout: 8000 }).should('exist')
+})
+
+Cypress.Commands.add('deleteFirstImage', () => {
+  cy.get("[type='checkbox']:nth(1)").check()
+  cy.contains('span', 'Delete Selected').click()
+  cy.contains('span', 'Yes').click()
+})
+
+Cypress.Commands.add('addUntitledChapter', () => {
+  cy.get("button[title='Add Chapter']").click()
+  cy.contains('Untitled').click({ timeout: 5000 })
+})
+
+Cypress.Commands.add('orderingImages', (attribute, firstImg, secondImg) => {
+  cy.log(`Ordering by ${attribute}`)
+  cy.contains(`${attribute}`).parent().find('button', { timeout: 5000 }).click()
+
+  cy.get("input[type='checkbox']:nth(1)")
+    .parent()
+    .parent()
+    .contains(`${firstImg}`)
+
+  cy.get("[type='checkbox']:nth(2)").parent().parent().contains(`${secondImg}`)
 })
