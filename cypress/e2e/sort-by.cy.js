@@ -7,11 +7,9 @@ describe('Sort by Title', () => {
     //  NOTE: delete the sign up command after adding script
     cy.login(admin.username, admin.password)
     cy.addBook('B')
-    cy.reload()
     cy.addBook('C')
-    cy.reload()
     cy.addBook('A')
-    cy.reload()
+    cy.logout()
   })
 
   beforeEach(() => {
@@ -22,16 +20,12 @@ describe('Sort by Title', () => {
   it('Sort by Title - Ascending', () => {
     cy.contains('Title').click()
     cy.contains('Title').click({ force: true })
-    cy.get('[data-cy="book"]').first().contains('A')
-    cy.get('[data-cy="book"]:nth(1)').contains('B')
-    cy.get('[data-cy="book"]').last().contains('C')
+    cy.checkOrder('A', 'B', 'C')
   })
 
   it('Sort by Title - Descending', () => {
-    cy.get("[title='Ascending']").click()
-    cy.get('[data-cy="book"]').first().contains('C')
-    cy.get('[data-cy="book"]:nth(1)').contains('B')
-    cy.get('[data-cy="book"]').last().contains('A')
+    cy.get("[title='Ascending']", { timeout: 6500 }).click()
+    cy.checkOrder('C', 'B', 'A')
   })
 })
 
@@ -43,36 +37,39 @@ describe('Sort by Status', () => {
 
   it('Publishing the first two books', () => {
     // Publishing the first book
-    cy.get('[data-cy=book]:first').planBookOen()
-    cy.get('[data-cy=book]:first').contains('Edit').click()
-    cy.contains('Metadata', { timeout: 8000 }).click()
-    cy.get('#publicationDate').type('2001-01-01')
-    cy.contains('Save Metadata').click()
-    cy.contains('Save Metadata').should('not.exist', { timeout: 5000 })
+    cy.get('[data-cy=book]:first', { timeout: 6500 }).planBookOen()
+    cy.publishBook('0', '2001-01-01')
 
     cy.get("a[href='/books']:nth(1)", { timeout: 8000 }).click()
     // Publishing the second book
-    cy.get('[data-cy=book]:nth(1)').planBookOen()
-    cy.get('[data-cy=book]:nth(1)').contains('Edit').click()
-    cy.contains('Metadata', { timeout: 8000 }).click()
-    cy.get('#publicationDate').type('1999-01-01')
-    cy.contains('Save Metadata').click()
+    cy.get('[data-cy=book]:nth(1)', { timeout: 6500 }).planBookOen()
+    cy.publishBook('1', '1999-01-01')
   })
 
   it('Sort by Status - Ascending', () => {
-    cy.contains('Title').click()
+    cy.contains('Title', { timeout: 6000 }).click()
     cy.contains('Pub. date').click()
-    cy.get('[data-cy="book"]').first().contains('B')
-    cy.get('[data-cy="book"]:nth(1)').contains('A')
-    cy.get('[data-cy="book"]').last().contains('C')
+    cy.checkOrder('B', 'A', 'C')
   })
 
   it('Sort by Status - Descending', () => {
-    cy.contains('Title').click()
+    cy.contains('Title', { timeout: 6000 }).click()
     cy.contains('Pub. date').click()
     cy.get("[title='Ascending']").click()
-    cy.get('[data-cy="book"]').first().contains('C')
-    cy.get('[data-cy="book"]:nth(1)').contains('A')
-    cy.get('[data-cy="book"]').last().contains('B')
+    cy.checkOrder('C', 'A', 'B')
   })
+})
+
+Cypress.Commands.add('checkOrder', (firstBook, secondBook, thirdBook) => {
+  cy.get('[data-cy="book"]').first().contains(`${firstBook}`)
+  cy.get('[data-cy="book"]:nth(1)').contains(`${secondBook}`)
+  cy.get('[data-cy="book"]').last().contains(`${thirdBook}`)
+})
+
+Cypress.Commands.add('publishBook', (bookIndex, pubDate) => {
+  cy.get(`[data-cy=book]:nth(${bookIndex})`).contains('Edit').click()
+  cy.contains('Metadata', { timeout: 8000 }).click()
+  cy.get('#publicationDate').type(`${pubDate}`)
+  cy.contains('Save Metadata').click()
+  cy.contains('Save Metadata').should('not.exist', { timeout: 5000 })
 })

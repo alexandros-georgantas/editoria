@@ -7,6 +7,9 @@ describe('Book Metadata', () => {
   let metadata
   beforeEach(() => {
     cy.login(admin.username, admin.password)
+    cy.contains(book.name).should('exist')
+    cy.contains('Edit', { timeout: 8000 }).click()
+    cy.contains('Metadata', { timeout: 8000 }).click()
   })
 
   before(() => {
@@ -21,46 +24,38 @@ describe('Book Metadata', () => {
   })
 
   it('Adding metadata', () => {
-    cy.contains(book.name).should('exist')
-    cy.contains('Edit', { timeout: 8000 }).click()
-    cy.contains('Metadata', { timeout: 8000 }).click()
-    cy.get("[id='edition']", { timeout: 8000 }).type(metadata.edition)
-    cy.get("[id='copyrightStatement']").type(metadata.copyright_statement)
-    cy.get("[id='copyrightYear']").type(metadata.copyright_year)
-    cy.get("[id='copyrightHolder']").type(metadata.copyright_holder)
-    cy.get("[id='license']").type(metadata.license)
-    cy.get("[id='isbn']").type(metadata.isbn)
-    cy.get("[id='issn']").type(metadata.issn)
-    cy.get("[id='issnL']").type(metadata.issn_l)
-    cy.get("[id='publicationDate']").type(metadata.publication_date)
+    cy.typeIntoField('edition', metadata.edition)
+    cy.typeIntoField('copyrightStatement', metadata.copyright_statement)
+    cy.typeIntoField('copyrightYear', metadata.copyright_year)
+    cy.typeIntoField('copyrightHolder', metadata.copyright_holder)
+    cy.typeIntoField('license', metadata.license)
+    cy.typeIntoField('isbn', metadata.isbn)
+    cy.typeIntoField('issn', metadata.issn)
+    cy.typeIntoField('issnL', metadata.issn_l)
+    cy.typeIntoField('publicationDate', metadata.publication_date)
+
     cy.contains('span', 'Save Metadata').click()
   })
 
   it('Checking metadata', () => {
-    cy.contains(book.name).should('exist')
-    cy.contains('Edit', { timeout: 8000 }).click()
-    cy.contains('Metadata', { timeout: 8000 }).click()
-    cy.get("[id='edition']", { timeout: 8000 }).should(
-      'have.value',
-      metadata.edition,
-    )
-    cy.get("[id='copyrightStatement']").should(
-      'have.value',
-      metadata.copyright_statement,
-    )
-    cy.get("[id='copyrightYear']").should('have.value', metadata.copyright_year)
-    cy.get("[id='copyrightHolder']").should(
-      'have.value',
-      metadata.copyright_holder,
-    )
-    cy.get("[id='license']").should('have.value', metadata.license)
-    cy.get("[id='isbn']").should('have.value', metadata.isbn)
-    cy.get("[id='issn']").should('have.value', metadata.issn)
-    cy.get("[id='issnL']").should('have.value', metadata.issn_l)
-    cy.get("[id='publicationDate']").should(
-      'have.value',
-      metadata.publication_date,
-    )
-    cy.contains('span', 'Save Metadata').click()
+    cy.assertFieldValue('edition', metadata.edition)
+    cy.assertFieldValue('copyrightStatement', metadata.copyright_statement)
+    cy.assertFieldValue('copyrightYear', metadata.copyright_year)
+    cy.assertFieldValue('copyrightHolder', metadata.copyright_holder)
+    cy.assertFieldValue('license', metadata.license)
+    cy.assertFieldValue('isbn', metadata.isbn)
+    cy.assertFieldValue('issn', metadata.issn)
+    cy.assertFieldValue('issnL', metadata.issn_l)
+    cy.assertFieldValue('publicationDate', metadata.publication_date)
+
+    cy.contains('span', 'Cancel').click()
   })
+})
+
+Cypress.Commands.add('typeIntoField', (fieldId, value) => {
+  cy.get(`[id='${fieldId}']`).type(value)
+})
+
+Cypress.Commands.add('assertFieldValue', (fieldId, value) => {
+  cy.get(`[id='${fieldId}']`).should('have.value', value)
 })

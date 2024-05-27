@@ -133,3 +133,10 @@ Cypress.Commands.add('planBookOen', () => {
     }
   })
 })
+
+Cypress.Commands.add('uploadDoc', (path, name) => {
+  cy.get("[id='file-uploader-generic']").selectFile(`${path}`, {
+    force: true,
+  })
+  cy.contains('span', `${name}`, { timeout: 10000 })
+})

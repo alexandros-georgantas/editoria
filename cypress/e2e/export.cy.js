@@ -42,26 +42,10 @@ describe('Tests describing for imports', () => {
     if (Cypress.env('oenBoolean') === true) {
       cy.log('You can not upload a doc in OEN')
     } else {
-      cy.get("[id='file-uploader-generic']").selectFile(docs.frontmatter.path, {
-        force: true,
-      })
-      cy.contains('span', docs.frontmatter.name, { timeout: 10000 })
-
-      cy.get("[id='file-uploader-generic']").selectFile(docs.body.path, {
-        force: true,
-      })
-      cy.contains('span', docs.body.name, { timeout: 10000 })
-
-      cy.get("[id='file-uploader-generic']").selectFile(docs.backmatter.path, {
-        force: true,
-      })
-      cy.contains('span', docs.backmatter.name, { timeout: 10000 })
-
-      cy.get("[id='file-uploader-generic']").selectFile(
-        docs.second_chapter.path,
-        { force: true },
-      )
-      cy.contains('span', docs.backmatter.name, { timeout: 10000 })
+      cy.uploadDoc(docs.frontmatter.path, docs.frontmatter.name)
+      cy.uploadDoc(docs.body.path, docs.body.name)
+      cy.uploadDoc(docs.backmatter.path, docs.backmatter.name)
+      cy.uploadDoc(docs.second_chapter.path, docs.second_chapter.name)
     }
   })
 
@@ -115,7 +99,6 @@ describe('Tests describing for imports', () => {
         cy.get('button[title="Print"]').should('be.enabled')
         cy.contains('a', 'Back to book').should('exist')
 
-        // Save modal
         cy.get('button[title="Save"]').click()
         cy.contains('MODIFY CSS').should('exist')
 
@@ -181,8 +164,6 @@ describe('Tests describing for imports', () => {
         .then(text => {
           cy.log('Template:', text)
           cy.wrap(text).should('be.oneOf', [
-            // 'Atla (chapterEnd)',
-            // 'Atla (footnotes)',
             'bikini (footnotes)',
             'atosh (footnotes)',
             'eclypse (footnotes)',

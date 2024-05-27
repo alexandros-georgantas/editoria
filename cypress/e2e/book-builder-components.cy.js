@@ -13,6 +13,7 @@ describe('Book builder tests', () => {
     cy.addBook(book.name)
     cy.contains(book.name).should('exist')
     cy.planBookOen()
+    cy.logout()
   })
 
   beforeEach(() => {
@@ -27,6 +28,7 @@ describe('Book builder tests', () => {
     })
     cy.contains('button', 'Delete').click({ force: true })
     cy.contains('span', 'Yes', { timeout: 8000 }).click()
+    cy.contains('Untitled').should('not.exist', { timeout: 8000 })
   })
 
   it('Body', () => {
