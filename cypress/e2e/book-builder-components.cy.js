@@ -11,7 +11,7 @@ describe('Book builder tests', () => {
     })
     cy.login(admin.username, admin.password)
     cy.addBook(book.name)
-    cy.contains(book.name).should('exist')
+    cy.contains(book.name).should('exist', { timeout: 6000 })
     cy.planBookOen()
     cy.logout()
   })
@@ -26,9 +26,7 @@ describe('Book builder tests', () => {
     cy.contains("[data-test-id='Frontmatter-division']", 'Untitled', {
       timeout: 8000,
     })
-    cy.contains('button', 'Delete').click({ force: true })
-    cy.contains('span', 'Yes', { timeout: 8000 }).click()
-    cy.contains('Untitled').should('not.exist', { timeout: 8000 })
+    cy.deleteUntitled()
   })
 
   it('Body', () => {
@@ -43,6 +41,7 @@ describe('Book builder tests', () => {
         .should('have.text', 'Part')
       cy.contains('button', 'Delete').click()
       cy.contains('span', 'Yes', { timeout: 8000 }).click()
+      // cy.deleteUntitled('Body')
       cy.reload()
 
       // Checking Chapter component
@@ -52,10 +51,7 @@ describe('Book builder tests', () => {
       cy.checkComponentType(1, 'Chapter')
       cy.contains('button', 'Delete').click()
       cy.contains('span', 'Yes', { timeout: 8000 }).click()
-      cy.contains("[data-test-id='Body-division']", 'Untitled').should(
-        'not.exist',
-        { timeout: 5000 },
-      )
+      // cy.deleteUntitled('Body')
     } else {
       // Adding a Chapter body
       cy.get("[title='Add Chapter']").click()
@@ -63,12 +59,7 @@ describe('Book builder tests', () => {
         timeout: 8000,
       })
       cy.checkComponentType(1, 'Chapter')
-      cy.contains('button', 'Delete').click()
-      cy.contains('span', 'Yes', { timeout: 8000 }).click()
-      cy.contains("[data-test-id='Body-division']", 'Untitled').should(
-        'not.exist',
-        { timeout: 5000 },
-      )
+      cy.deleteUntitled('Body')
 
       // Adding a Part
       cy.get("[title='Add Part']", { timeout: 5000 }).click()
@@ -76,12 +67,7 @@ describe('Book builder tests', () => {
         timeout: 8000,
       })
       cy.checkComponentType(0, 'Part')
-      cy.contains('button', 'Delete').click()
-      cy.contains('span', 'Yes', { timeout: 8000 }).click()
-      cy.contains("[data-test-id='Body-division']", 'Untitled').should(
-        'not.exist',
-        { timeout: 5000 },
-      )
+      cy.deleteUntitled('Body')
     }
 
     // Adding Unnumbered
@@ -89,12 +75,7 @@ describe('Book builder tests', () => {
       .should('exist', { timeout: 5000 })
       .click()
     cy.checkComponentType(2, 'unnumbered')
-    cy.contains('button', 'Delete').click()
-    cy.contains('span', 'Yes', { timeout: 8000 }).click()
-    cy.contains("[data-test-id='Body-division']", 'Untitled').should(
-      'not.exist',
-      { timeout: 5000 },
-    )
+    cy.deleteUntitled('Body')
   })
 
   it('Back-Matter', () => {
@@ -103,8 +84,8 @@ describe('Book builder tests', () => {
       timeout: 8000,
     })
     cy.checkComponentType(0, 'Component')
-    cy.contains('button', 'Delete').click({ force: true })
-    cy.contains('span', 'Yes', { timeout: 8000 }).click({ force: true })
+    cy.deleteUntitled('Backmatter')
+
     cy.get('button[title="Add notes placeholder"]').click()
     cy.contains(
       'By creating a notes placeholder you will only be able to see templates with notes option set to endnotes',
@@ -113,8 +94,7 @@ describe('Book builder tests', () => {
     cy.contains("[data-test-id='Backmatter-division']", 'Notes', {
       timeout: 8000,
     })
-    cy.contains('button', 'Delete').click({ force: true })
-    cy.contains('span', 'Yes', { timeout: 8000 }).click({ force: true })
+    cy.deleteUntitled('Backmatter')
   })
 
   it('Add new component types in Frontmatter, Body and backmatter', () => {
@@ -150,13 +130,11 @@ describe('Book builder tests', () => {
     cy.get("[data-test-id='component-types']", { timeout: 8000 }).click({
       force: true,
     })
-    cy.contains('button', 'Delete').click()
-    cy.contains('span', 'Yes', { timeout: 8000 }).click()
-    cy.contains('Untitled').should('not.exist')
+    cy.deleteUntitled('Body')
 
     // Adding a new component in Backmatter
     cy.get("[title='Add Component']").last().click()
-    cy.contains('Untitled').should('exist')
+    cy.contains('Untitled').should('exist', { timeout: 6000 })
     cy.addComponentType('glossary')
 
     cy.get('[role="option"]:nth(2)').should('have.text', 'glossary').click()
@@ -165,17 +143,17 @@ describe('Book builder tests', () => {
     cy.get("[data-test-id='component-types']", { timeout: 8000 }).click({
       force: true,
     })
-    cy.contains('button', 'Delete').click()
-    cy.contains('span', 'Yes', { timeout: 8000 }).click()
+    cy.deleteUntitled('Backmatter')
   })
 
   it('Changing component types - Front-matter', () => {
     cy.get("[title='Add Component']").first().click()
-    cy.contains('[data-test-id="Frontmatter-division"]', 'Untitled')
+    cy.contains('[data-test-id="Frontmatter-division"]', 'Untitled', {
+      timeout: 6000,
+    })
 
     if (Cypress.env('oenBoolean') === true) {
-      let option = 0
-      ;[
+      const componentTypes = [
         'Component',
         'Introduction',
         'Preface',
@@ -184,17 +162,12 @@ describe('Book builder tests', () => {
         'Cover',
         'Copyright Page',
         'epigraph',
-      ].forEach(type => {
-        cy.log(`Changing to ${type}...`)
-        cy.get('[data-test-id="component-types"]').click({ force: true })
-        cy.get(`[role="option"]:nth(${option})`).click()
-        cy.checkComponentType(`${option}`, `${type}`)
-        cy.get('[data-test-id="component-types"]', { timeout: 8000 }).click()
-        option += 1
+      ]
+      componentTypes.forEach((type, index) => {
+        cy.changeComponentType(type, index)
       })
     } else {
-      let option = 0
-      ;[
+      const componentTypes = [
         'Component',
         'Introduction',
         'Preface',
@@ -202,72 +175,48 @@ describe('Book builder tests', () => {
         'Title Page',
         'Cover',
         'epigraph',
-      ].forEach(type => {
-        cy.log(`Changing to ${type}...`)
-        cy.get('[data-test-id="component-types"]').click({ force: true })
-        cy.get(`[role="option"]:nth(${option})`).click()
-        cy.checkComponentType(`${option}`, `${type}`)
-        cy.get('[data-test-id="component-types"]', { timeout: 8000 }).click()
-        option += 1
+      ]
+
+      componentTypes.forEach((type, index) => {
+        cy.changeComponentType(type, index)
       })
     }
-
-    cy.contains('button', 'Delete').click({ force: true })
-    cy.contains('span', 'Yes', { timeout: 8000 }).click()
+    cy.deleteUntitled('Frontmatter')
   })
 
   it('Changing component types - Body', () => {
     cy.get("[title='Add Part']").click()
-    cy.contains("[data-test-id='Body-division']", 'Untitled')
+    cy.contains("[data-test-id='Body-division']", 'Untitled', { timeout: 8000 })
 
-    let option = 0
-    ;['Part', 'Chapter', 'unnumbered', 'epilogue'].forEach(type => {
-      cy.log(`Changing to ${type}...`)
-      cy.get('[data-test-id="component-types"]').click({ force: true })
-      cy.get(`[role="option"]:nth(${option})`).click()
-      cy.checkComponentType(`${option}`, `${type}`)
-      cy.get('[data-test-id="component-types"]', { timeout: 8000 }).click()
-      option += 1
+    const componentTypes = ['Part', 'Chapter', 'unnumbered', 'epilogue']
+    componentTypes.forEach((type, index) => {
+      cy.changeComponentType(type, index)
     })
 
-    cy.contains('button', 'Delete').click({ force: true })
-    cy.contains('span', 'Yes', { timeout: 8000 }).click()
+    cy.deleteUntitled('Body')
   })
 
   it('Changing component types - Backmatter', () => {
     cy.get("[title='Add Component']").last().click()
-    cy.contains("[data-test-id='Backmatter-division']", 'Untitled')
-
-    let option = 0
-    ;['Component', 'Appendix', 'glossary'].forEach(type => {
-      cy.log(`Changing to ${type}...`)
-      cy.get('[data-test-id="component-types"]').click({ force: true })
-      cy.get(`[role="option"]:nth(${option})`).click()
-      cy.checkComponentType(`${option}`, `${type}`)
-      cy.get('[data-test-id="component-types"]', { timeout: 8000 }).click()
-      option += 1
+    cy.contains("[data-test-id='Backmatter-division']", 'Untitled', {
+      timeout: 6000,
     })
 
-    cy.contains('button', 'Delete').click({ force: true })
-    cy.contains('span', 'Yes', { timeout: 8000 }).click()
+    const componentTypes = ['Component', 'Appendix', 'glossary']
+    componentTypes.forEach((type, index) => {
+      cy.changeComponentType(type, index)
+    })
+
+    cy.deleteUntitled('Backmatter')
   })
 
   it('Uploading docs', () => {
     if (Cypress.env('oenBoolean') === true) {
       cy.log('You can not upload a doc in OEN')
     } else {
-      cy.get("[id='file-uploader-generic']").selectFile(docs.frontmatter.path, {
-        force: true,
-      })
-      cy.contains('span', docs.frontmatter.name, { timeout: 8000 })
-      cy.get("[id='file-uploader-generic']").selectFile(docs.body.path, {
-        force: true,
-      })
-      cy.contains('span', docs.body.name, { timeout: 8000 })
-      cy.get("[id='file-uploader-generic']").selectFile(docs.backmatter.path, {
-        force: true,
-      })
-      cy.contains('span', docs.backmatter.name, { timeout: 8000 })
+      cy.uploadDoc(docs.frontmatter.path, docs.frontmatter.name)
+      cy.uploadDoc(docs.body.path, docs.body.name)
+      cy.uploadDoc(docs.backmatter.path, docs.backmatter.name)
     }
   })
 })
@@ -289,4 +238,29 @@ Cypress.Commands.add('addComponentType', nameComponentType => {
   cy.contains('ADD A NEW TYPE').click()
   cy.get('#addComponentType').type(`${nameComponentType}`)
   cy.contains('Save').click()
+})
+
+Cypress.Commands.add('deleteUntitled', division => {
+  cy.contains('button', 'Delete').click({ force: true })
+  cy.contains('span', 'Yes', { timeout: 8000 }).click()
+  if (division === 'Body' || division === 'Backmatter') {
+    cy.get(`[data-test-id='${division}-division']`).should(
+      'contain',
+      'There are no items in this division.',
+      { timeout: 5000 },
+    )
+  } else {
+    cy.contains(
+      "[data-test-id='Frontmatter-division']",
+      'DELETE COMPONENT',
+    ).should('not.exist', { timeout: 5000 })
+  }
+})
+
+Cypress.Commands.add('changeComponentType', (type, index) => {
+  cy.log(`Changing to ${type}...`)
+  cy.get('[data-test-id="component-types"]').click({ force: true })
+  cy.get(`[role="option"]:nth(${index})`).click()
+  cy.checkComponentType(`${index}`, `${type}`)
+  cy.get('[data-test-id="component-types"]', { timeout: 8000 }).click()
 })

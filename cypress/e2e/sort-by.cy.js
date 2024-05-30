@@ -3,8 +3,6 @@ const { admin } = require('../support/credentials')
 
 describe('Sort by Title', () => {
   before(() => {
-    //  cy.exec('docker exec server_server_1 node ./scripts/seeds/createVerifiedUser.js email1234@gmail.com user1234')
-    //  NOTE: delete the sign up command after adding script
     cy.login(admin.username, admin.password)
     cy.addBook('B')
     cy.addBook('C')

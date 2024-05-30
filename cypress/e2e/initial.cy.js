@@ -8,9 +8,11 @@ const baseRoute = Cypress.config().baseUrl
 
 // Suit describing tests for login screen
 describe('Login screen tests', () => {
-  /*    before(() => {
-        cy.exec('docker exec server_server_1 node ./scripts/seeds/createVerifiedUser.js email1234@gmail.com user1234')
-    }) */
+  before(() => {
+    cy.exec(
+      'docker exec kdk-server-1 node /home/node/server/scripts/seeds/createVerifiedUser.js email12345@gmail.com verified User',
+    )
+  })
 
   beforeEach(() => {
     cy.visit(baseRoute)
@@ -24,13 +26,13 @@ describe('Login screen tests', () => {
     cy.get("input[data-test-id='surname']").type(newUser.surname)
     cy.get("input[data-test-id='username'").type(newUser.username)
     cy.get("input[data-test-id='email'").type(newUser.email)
-    cy.get("input[data-test-id='password'").type(newUser.password)
+    cy.get("input[data-test-id='password'").type('password')
     cy.get("button[type='submit']").click()
     cy.url().should('be.equal', `${baseRoute}/login`)
   })
 
   it('Login & Logout', () => {
-    cy.login(newUser.username, newUser.password)
+    cy.login(newUser.username, 'password')
     cy.url().should('be.equal', `${baseRoute}/books`)
 
     if (!localStorage.getItem('token') === null) {
@@ -66,7 +68,8 @@ describe('Profile Screen Tests', () => {
             aliasMutation(req,"UpdatePersonalInformation");
             aliasMutation(req,"UpdatePassword");
     }) */
-    cy.login(newUser.username, currentPassword)
+    // cy.login(newUser.username, currentPassword)
+    cy.login(newUser.username, 'password')
     cy.url().should('be.equal', `${baseRoute}/books`)
     cy.get('[title="User Menu dropdown"]', { timeout: 8000 }).click()
     cy.get("[href='/profile']").click()
@@ -85,7 +88,7 @@ describe('Profile Screen Tests', () => {
 
   it('Change Password', () => {
     cy.url().should('be.equal', `${baseRoute}/profile`)
-    cy.get("input[name='currentPassword']").type(newUser.password)
+    cy.get("input[name='currentPassword']").type('password')
     cy.get("input[name='newPassword1']").type(newUser.newPassword)
     cy.get("input[name='newPassword2']").type(newUser.newPassword)
     cy.contains('span', 'Change password').click()
