@@ -1,0 +1,58 @@
+/* import your fonts if you have some in the src/fonts folder */
+/* @import "modules/fonts.css"; */
+
+/* theming of the book  */
+
+@import 'modules/reset.css';
+@import "modules/fonts.css";
+
+@import "modules/vars.css";
+@import "modules/body.css";
+@import "modules/header.css";
+@import "modules/pictures.css";
+@import "modules/list.css";
+@import "modules/table.css";
+@import "modules/numbering.css";
+@import "modules/copyright.css";
+@import "modules/dedication.css";
+@import "modules/notes.css";
+@import "modules/title.css";
+@import "modules/appendix.css"; 
+@import "modules/specific.css";
+@import "modules/appendix.css"; 
+
+
+
+
+
+
+/* css for the layouts */
+/* paged.js tool import */
+
+/* paged js interface and screen view css */
+@import "interface/interface.css";
+
+/* baseline helper */
+@import "interface/baseline.css";
+
+/* hack for stuff not implemented yet */
+@import "interface/hack.css";
+
+@import "modules/layout.css";
+@import "modules/page-toc.css";
+@import "modules/page-cover.css";
+@import "modules/page-frontMatter.css"; 
+@import "modules/page-chapter.css";
+@import "modules/page-part.css";
+@import "modules/page-unumbered.css";
+@import "modules/page-notes.css";
+@import "modules/page-half-title.css";
+@import "modules/page-title.css";
+@import "modules/page-copyright.css";
+@import "modules/page-dedication.css"; 
+@import "modules/page-appendix.css"; 
+/* @import "modules/specific-book2.css"; */
+
+
+
+

@@ -4,7 +4,7 @@ import config from 'config'
 
 const getUserTrackChangeColor = (teams = []) => {
   const team =
-    sortBy(config.authsome.teams, ['weight']).find(teamConfig =>
+    sortBy(config.authorization.teams, ['weight']).find(teamConfig =>
       teams.some(t => t.role === teamConfig.role),
     ) || {}
 

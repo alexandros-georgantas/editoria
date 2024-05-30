@@ -1,0 +1,37 @@
+{
+    "name1":"01_New_template",
+    "name2":"012_New_template",
+    "author1":"John doe",
+    "author2":"Eve",
+    "thumbnail":"./cypress/fixtures/assets/cat.jpg",
+    "thumbnail2":"./cypress/fixtures/assets/anime.jpg",
+    "target":{
+        "pagedJs":"PagedJS",
+        "epub":"EPUB",
+        "vivliostyle":"VivlioStyle"
+    },
+    "epub_scripts":{
+        "script1":"Script1 (epub)",
+        "script2":"Script2 (epub)",
+        "script3":"Script3 (epub)",
+        "Script4":"Script4 (epub)",
+        "Script5":"Script5 (epub)",
+        "Script6":"Script6 (epub)"
+    },
+    "pagedjs_scripts":{
+        "script3":"Script3 (pagedjs)",
+        "script4":"Script4 (pagedjs)"
+    },
+    "notes":{
+        "footnotes":"Footnotes",
+        "endnotes":"Endnotes",
+        "chapterendNotes":""
+    },
+    "file_path":"./cypress/fixtures/css/book.css",
+    "file_name":"book.css",
+    "file_extentsion":".css",
+
+    "temp_file":"./cypress/fixtures/css/book1.css",
+    "temp_file_name":"book1.css",
+    "temp_file_extentsion":".css"
+}

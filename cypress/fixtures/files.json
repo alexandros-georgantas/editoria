@@ -1,0 +1,32 @@
+{
+  "file1":{
+    "path": "cypress/fixtures/assets/anime.jpg",
+    "name":"anime",
+    "alt_text":"Anime image"
+  },
+  "file2":{
+    "path":"cypress/fixtures/assets/cat.jpg",
+    "name":"cat"
+  },
+  "docs":{
+    "frontmatter":{
+     "path": "cypress/fixtures/docs/a-Font_matter.docx",
+     "name": "a-Font_matter"
+     
+    },
+    "body":{
+      "path": "cypress/fixtures/docs/body.docx",
+      "name": "body"
+      
+     },
+    "second_chapter":{
+      "path":"cypress/fixtures/docs/second_chapter.docx",
+      "name":"second_chapter"
+    },
+    
+     "backmatter":{
+      "path": "cypress/fixtures/docs/w-back_matter.docx",
+      "name": "w-back_matter"    
+     } 
+  }
+}
