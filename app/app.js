@@ -8,7 +8,7 @@ import { hot } from 'react-hot-loader'
 // import createHistory from 'history/createBrowserHistory'
 import { createBrowserHistory } from 'history'
 
-import { Root } from '@pubsweet/client'
+import Root from './Root'
 
 // Modals
 import AssetManager from './components/asset-manager/src/ConnectedAssetManager'

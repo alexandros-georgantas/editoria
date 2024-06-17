@@ -9,21 +9,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useTranslation } from 'react-i18next'
 import { Button, NavBarLink } from '../../../../ui'
 
-const serverProtocol = process.env.SERVER_PROTOCOL
-const serverHost = process.env.SERVER_HOST
-const serverPort = process.env.SERVER_PORT
-
-let serverUrl, serverUrlWithProtocol
-
-if (serverProtocol && serverHost) {
-  serverUrl = `${serverHost}${serverPort ? `:${serverPort}` : ''}`
-  serverUrlWithProtocol = `${serverProtocol}://${serverUrl}`
-}
-
-if (!serverUrl) {
-  serverUrl = window.location.host
-  serverUrlWithProtocol = `${window.location.protocol}//${serverUrl}`
-}
+import { serverUrl } from '../../../../getUrl'
 
 const featureBookStructureEnabled =
   (process.env.FEATURE_BOOK_STRUCTURE &&
@@ -87,7 +73,7 @@ const PreviewArea = styled.div`
 const handleDownload = hashed => e => {
   e.preventDefault()
   axios
-    .get(`${serverUrlWithProtocol}/api/fileserver/paged/${hashed}/index.html`)
+    .get(`${serverUrl}/api/fileserver/paged/${hashed}/index.html`)
     .then(res => {
       window.location.replace(res.request.responseURL)
     })
@@ -116,7 +102,7 @@ const PagedStyler = ({
   useEffect(() => {
     async function fetchData() {
       const response = await fetch(
-        `${serverUrlWithProtocol}/uploads/temp/previewer/${hashed}/${templateFile.name}`,
+        `${serverUrl}/uploads/temp/previewer/${hashed}/${templateFile.name}`,
       )
 
       const file = await response.text()
