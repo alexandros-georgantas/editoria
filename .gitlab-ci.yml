@@ -16,6 +16,7 @@ stages:
 .build development:
   image: docker:26
   stage: build development
+  interruptible: true
   services:
     - docker:26-dind
   before_script:
@@ -27,6 +28,7 @@ stages:
 .lint:
   stage: lint
   image: $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA
+  interruptible: true
   script:
     - cd $WORKDIR
     - yarn coko-lint run
@@ -34,6 +36,7 @@ stages:
 build preproduction:
   stage: build preproduction
   image: docker:26
+  interruptible: true
   services:
     - docker:26-dind
   before_script:
