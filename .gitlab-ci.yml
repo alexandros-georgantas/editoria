@@ -4,6 +4,7 @@ variables:
   IMAGE_ORG: cokoapps
   IMAGE_NAME: editoria
   WORKDIR: /home/node/app
+  CLUSTER_COMPOSE_FILE: docker-compose.ci.yml
 
 stages:
   - build development
