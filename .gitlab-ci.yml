@@ -43,6 +43,23 @@ build preproduction:
   # only:
   #   - main
 
+publish:
+  stage: publish
+  image: docker:26
+  services:
+    - docker:26-dind
+  before_script:
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Non-existent or incomplete docker credentials" && exit 0; fi
+  script:
+    - docker pull $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA
+    - docker tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+    - docker tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA $IMAGE_ORG/$IMAGE_NAME:latest
+    - docker push $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+    - docker push $IMAGE_ORG/$IMAGE_NAME:latest
+  # only:
+  #   - main
+
 deploy:
   stage: deploy
   image: $CI_REGISTRY/cokoinfra/ansible-deployer
