@@ -2,17 +2,6 @@ FROM node:16.19.0-alpine3.16 as build-stage
 
 RUN apk add --no-cache git make g++
 
-WORKDIR /home/node/app
-
-COPY package.json .
-COPY yarn.lock .
-
-# Install development node modules for building webpack bundle
-RUN yarn install --frozen-lockfile --production=false
-
-COPY . .
-
-ARG node_env
 ARG client_ws_min_timeout
 ARG client_ws_timeout
 ARG feature_book_structure
@@ -20,13 +9,22 @@ ARG feature_upload_docx_files
 ARG locks_ws_url
 ARG lang_switch
 
-ENV NODE_ENV=$node_env
+ENV NODE_ENV=production
 ENV CLIENT_WS_MIN_TIMEOUT=$client_ws_min_timeout
 ENV CLIENT_WS_TIMEOUT=$client_ws_timeout
 ENV FEATURE_BOOK_STRUCTURE=$feature_book_structure
 ENV FEATURE_UPLOAD_DOCX_FILES=$feature_upload_docx_files
 ENV LOCKS_WS_URL=$locks_ws_url
 ENV LANG_SWITCH=$lang_switch
+
+WORKDIR /home/node/app
+
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn install --frozen-lockfile
+
+COPY . .
 
 RUN yarn pubsweet build
 
