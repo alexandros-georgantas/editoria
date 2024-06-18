@@ -36,7 +36,7 @@ build preproduction:
   before_script:
     - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
   script:
-    - docker build --tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA -f Dockerfile-production .
+    - docker build --tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA -f Dockerfile .
     - docker push $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA
   # only:
   #   - main
