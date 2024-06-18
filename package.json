@@ -115,7 +115,7 @@
     "yup": "^0.28.1"
   },
   "devDependencies": {
-    "@coko/lint": "^2.0.0",
+    "@coko/lint": "^2.1.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "faker": "^4.1.0",
     "joi-browser": "^13.0.1",
