@@ -43,6 +43,6 @@ COPY --from=build-stage /home/node/app/node_modules/@coko/client/scripts/env.sh 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # containers run nginx with global directives and daemon off
-RUN nginx -g daemon off
+# RUN nginx -g daemon off
 
 ENTRYPOINT ["sh", "./env.sh"]
