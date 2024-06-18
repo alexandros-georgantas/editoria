@@ -1,8 +1,6 @@
 variables:
   IMAGE_NAME_DEVELOPMENT: $CI_REGISTRY/ketty/editoria/editoria-dev
-  # IMAGE_ORG: cokoapps
-  # IMAGE_NAME: ketida-server-develop
-  # WORKDIR: /home/node/ketida
+  WORKDIR: /home/node/app
 
 stages:
   - build development
@@ -22,9 +20,9 @@ build:
     - docker build --tag $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA -f Dockerfile-development .
     - docker push $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA
 
-.lint js:
+lint:
   stage: lint
-  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  image: $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA
   script:
     - cd $WORKDIR
-    - yarn eslint .
+    - yarn coko-lint run
