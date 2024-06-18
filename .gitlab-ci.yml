@@ -1,5 +1,6 @@
 variables:
   IMAGE_NAME_DEVELOPMENT: $CI_REGISTRY/ketty/editoria/editoria-dev
+  IMAGE_NAME_PREPRODUCTION: $CI_REGISTRY/ketty/editoria/editoria
   WORKDIR: /home/node/app
 
 stages:
@@ -9,7 +10,7 @@ stages:
   - publish
   - deploy
 
-build:
+.build development:
   image: docker:26
   stage: build development
   services:
@@ -20,9 +21,22 @@ build:
     - docker build --tag $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA -f Dockerfile-development .
     - docker push $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA
 
-lint:
+.lint:
   stage: lint
   image: $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA
   script:
     - cd $WORKDIR
     - yarn coko-lint run
+
+build preproduction:
+  stage: build preproduction
+  image: docker:26
+  services:
+    - docker:26-dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker build --tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA -f Dockerfile-production .
+    - docker push $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA
+  # only:
+  #   - main
