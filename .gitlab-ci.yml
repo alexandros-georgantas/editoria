@@ -1,28 +1,138 @@
 variables:
+  IMAGE_NAME_DEVELOPMENT: $CI_REGISTRY/ketty/editoria/editoria-dev
+  IMAGE_NAME_PREPRODUCTION: $CI_REGISTRY/ketty/editoria/editoria
   IMAGE_ORG: cokoapps
-  IMAGE_NAME: ketida-server-develop
-  WORKDIR: /home/node/ketida
+  IMAGE_NAME: editoria
+  WORKDIR: /home/node/app
+  CLUSTER_COMPOSE_FILE: docker-compose.ci.yml
 
 stages:
-  - build
+  - build development
   - lint
+  - build preproduction
+  - publish
+  - deploy
 
-build:
-  image: docker:20.10.16
-  stage: build
+.build development:
+  image: docker:26
+  stage: build development
+  interruptible: true
   services:
-    - docker:20.10.16-dind
+    - docker:26-dind
   before_script:
-    - docker info
-    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
   script:
-    - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Not pushing" && exit 0; fi
-    - docker build --tag $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA ./packages/server -f packages/server/Dockerfile-development
-    - docker push $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+    - docker build --tag $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA -f Dockerfile-development .
+    - docker push $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA
 
-lint js:
+.lint:
   stage: lint
-  image: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+  image: $IMAGE_NAME_DEVELOPMENT:$CI_COMMIT_SHA
+  interruptible: true
   script:
     - cd $WORKDIR
-    - yarn eslint .
+    - yarn coko-lint run
+
+build preproduction:
+  stage: build preproduction
+  image: docker:26
+  interruptible: true
+  services:
+    - docker:26-dind
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login "$CI_REGISTRY" -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - docker build --tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA -f Dockerfile .
+    - docker push $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA
+  # only:
+  #   - main
+
+publish:
+  stage: publish
+  image: docker:26
+  services:
+    - docker:26-dind
+  before_script:
+    - docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    - if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_PASSWORD" ]; then echo "Non-existent or incomplete docker credentials" && exit 0; fi
+  script:
+    - docker pull $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA
+    - docker tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+    - docker tag $IMAGE_NAME_PREPRODUCTION:$CI_COMMIT_SHA $IMAGE_ORG/$IMAGE_NAME:latest
+    - docker push $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+    - docker push $IMAGE_ORG/$IMAGE_NAME:latest
+  # only:
+  #   - main
+
+deploy:
+  stage: deploy
+  image: $CI_REGISTRY/cokoinfra/ansible-deployer
+  services:
+    - docker:26-dind
+  variables:
+    ANSCOMPOSE_NODE_ENV: production
+    ANSCOMPOSE_KETIDA_FLAVOUR: VANILLA
+    # ANSCOMPOES_SERVER_URL: ${SERVER_URL}
+    # ANSCOMPOSE_WEBSOCKET_SERVER_URL: ${WEBSOCKET_SERVER_URL}
+    # ANSCOMPOSE_CLIENT_URL: ${CLIENT_URL}
+    ANSCOMPOSE_SERVER_SERVE_CLIENT: false
+    # ANSCOMPOSE_POSTGRES_HOST: ${POSTGRES_HOST}
+    # ANSCOMPOSE_POSTGRES_PORT: ${POSTGRES_PORT}
+    # ANSCOMPOSE_POSTGRES_DB: ${POSTGRES_DB}
+    # ANSCOMPOSE_POSTGRES_USER: ${POSTGRES_USER}
+    # ANSCOMPOSE_POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # ANSCOMPOSE_ADMIN_USERNAME: ${ADMIN_USERNAME}
+    # ANSCOMPOSE_ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    # ANSCOMPOSE_ADMIN_GIVEN_NAME: ${ADMIN_GIVEN_NAME}
+    # ANSCOMPOSE_ADMIN_SURNAME: ${ADMIN_SURNAME}
+    # ANSCOMPOSE_ADMIN_EMAIL: ${ADMIN_EMAIL}
+    ANSCOMPOSE_SERVER_PORT: 3000
+    ANSCOMPOSE_WS_SERVER_PORT: 3333
+    ANSCOMPOSE_WS_HEARTBEAT_INTERVAL: 10000
+    ANSCOMPOSE_FAIL_SAFE_UNLOCKING_INTERVAL: 12000
+    # ANSCOMPOSE_MAILER_USER: ${MAILER_USER}
+    # ANSCOMPOSE_MAILER_PASSWORD: ${MAILER_PASSWORD}
+    # ANSCOMPOSE_MAILER_SENDER: ${MAILER_SENDER}
+    # ANSCOMPOSE_MAILER_HOSTNAME: ${MAILER_HOSTNAME}
+    ANSCOMPOSE_PASSWORD_RESET_PATH_TO_PAGE: /password-reset
+    # ANSCOMPOSE_S3_PROTOCOL: ${S3_PROTOCOL}
+    # ANSCOMPOSE_S3_HOST: ${S3_HOST}
+    # ANSCOMPOSE_S3_PORT: ${S3_PORT}
+    # ANSCOMPOSE_S3_ACCESS_KEY_ID_ADMIN: ${S3_ACCESS_KEY_ID_ADMIN}
+    # ANSCOMPOSE_S3_SECRET_ACCESS_KEY_ADMIN: ${S3_SECRET_ACCESS_KEY_ADMIN}
+    # ANSCOMPOSE_S3_ACCESS_KEY_ID_USER: ${S3_ACCESS_KEY_ID_USER}
+    # ANSCOMPOSE_S3_SECRET_ACCESS_KEY_USER: ${S3_SECRET_ACCESS_KEY_USER}
+    # ANSCOMPOSE_S3_BUCKET: ${S3_BUCKET}
+    ANSCOMPOSE_SERVICE_EPUB_CHECKER_CLIENT_ID: ${SERVICE_EPUB_CHECKER_CLIENT_ID}
+    ANSCOMPOSE_SERVICE_EPUB_CHECKER_SECRET: ${SERVICE_EPUB_CHECKER_SECRET}
+    ANSCOMPOSE_SERVICE_EPUB_CHECKER_URL: ${SERVICE_EPUB_CHECKER_URL}
+    ANSCOMPOSE_SERVICE_ICML_CLIENT_ID: ${SERVICE_ICML_CLIENT_ID}
+    ANSCOMPOSE_SERVICE_ICML_SECRET: ${SERVICE_ICML_SECRET}
+    ANSCOMPOSE_SERVICE_ICML_URL: ${SERVICE_ICML_URL}
+    ANSCOMPOSE_SERVICE_PAGEDJS_CLIENT_ID: ${SERVICE_PAGEDJS_CLIENT_ID}
+    ANSCOMPOSE_SERVICE_PAGEDJS_SECRET: ${SERVICE_PAGEDJS_SECRET}
+    ANSCOMPOSE_SERVICE_PAGEDJS_URL: ${SERVICE_PAGEDJS_URL}
+    ANSCOMPOSE_SERVICE_XSWEET_CLIENT_ID: ${SERVICE_XSWEET_CLIENT_ID}
+    ANSCOMPOSE_SERVICE_XSWEET_SECRET: ${SERVICE_XSWEET_SECRET}
+    ANSCOMPOSE_SERVICE_XSWEET_URL: ${SERVICE_XSWEET_URL}
+    ANSCOMPOSE_FEATURE_UPLOAD_DOCX_FILES: true
+    ANSCOMPOSE_FEATURE_BOOK_STRUCTURE: false
+    ANSCOMPOSE_TEMP_DIRECTORY_CRON_JOB_SCHEDULE: -0 * * * *
+    ANSCOMPOSE_TEMP_DIRECTORY_CRON_JOB_OFFSET: 1800000
+    ANSCOMPOSE_TEMP_DIRECTORY_CLEAN_UP: true
+    ANSCOMPOSE_POSTGRES_ALLOW_SELF_SIGNED_CERTIFICATES: true
+    COMPOSE_SERVICES: client,server
+    COMPOSE_SERVICES_CLIENT_URL: editoria.coko.app
+    COMPOSE_SERVICES_CLIENT_IMAGE: $IMAGE_ORG/$IMAGE_NAME:$CI_COMMIT_SHA
+    COMPOSE_SERVICES_SERVER_URL: editoria.server.coko.app
+    COMPOSE_SERVICES_SERVER_IMAGE: cokoapps/ketty-server:1.33.2
+    do_spaces_access_key: $DIGITAL_OCEAN_SPACES_ACCESS_KEY
+    do_spaces_secret_key: $DIGITAL_OCEAN_SPACES_SECRET_KEY
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context ketty/agent:agent-1
+    - cp $CLUSTER_COMPOSE_FILE /ansible
+    - cd /ansible
+    - ANSIBLE_FORCE_COLOR=true ansible-playbook bootstrap.yml -e "compose_file=$CLUSTER_COMPOSE_FILE"
+  # only:
+  #   - main

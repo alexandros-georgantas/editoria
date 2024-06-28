@@ -2,6 +2,7 @@ const path = require('path')
 const fs = require('fs-extra')
 const config = require('config')
 const { pick } = require('lodash')
+
 const rules = require('./common-rules')
 
 // const contentBase = path.resolve(__dirname, '..', '_build', 'assets')
@@ -21,7 +22,7 @@ const plugins = require('./plugins')
 module.exports = webpackEnv => {
   const isEnvDevelopment = webpackEnv === 'development'
   const isEnvProduction = webpackEnv === 'production'
-  const serverProtocol = process.env.SERVER_PROTOCOL
+  const serverUrl = process.env.SERVER_URL
   const locksWSURL = process.env.LOCKS_WS_URL
   const appVersion = packageJson.version
   const appName = packageJson.name
@@ -38,9 +39,6 @@ module.exports = webpackEnv => {
     (process.env.FEATURE_UPLOAD_DOCX_FILES &&
       JSON.parse(process.env.FEATURE_UPLOAD_DOCX_FILES)) ||
     false
-
-  const serverHost = process.env.SERVER_HOST
-  const serverPort = process.env.SERVER_PORT
 
   const devServerHost = process.env.CLIENT_HOST
   const devServerPort = process.env.CLIENT_PORT
@@ -99,9 +97,7 @@ module.exports = webpackEnv => {
         timeout: clientWSTimeout,
       },
       clientEnv: {
-        serverProtocol,
-        serverHost,
-        serverPort,
+        serverUrl,
         featureBookStructure,
         featureUploadDOCXFiles,
         locksWSURL,

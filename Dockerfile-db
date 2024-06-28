@@ -1,0 +1,10 @@
+# Basically the same as https://github.com/pgvector/pgvector/blob/master/Dockerfile
+# We want to keep it local to have control of database versions in case this stops being updated
+
+FROM postgres:14
+
+COPY . /tmp/pgvector
+
+RUN apt-get update && \
+    apt-get install -y postgresql-14-pgvector && \
+    rm -rf /var/lib/apt/lists/*

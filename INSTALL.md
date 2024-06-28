@@ -39,9 +39,7 @@ The production image of Ketida client consists of bundle of the application code
 The client build requires the following environment variables to be passed to its context:
 
 ```
-SERVER_PROTOCOL
-SERVER_HOST
-SERVER_PORT
+SERVER_URL
 CLIENT_PORT
 LOCKS_WS_URL
 CLIENT_WS_MIN_TIMEOUT
@@ -50,9 +48,7 @@ FEATURE_BOOK_STRUCTURE
 FEATURE_UPLOAD_DOCX_FILES
 ```
 
-- **SERVER_PROTOCOL:** `http` or `https` based on your setup of the deployed Ketida server
-- **SERVER_HOST:** the host part of your public `URL` of the deployed Ketida server
-- **SERVER_PORT:** the server port of the deployed Ketida server, if applies
+- **SERVER_URL:** the url where ketty server can be found
 - **CLIENT_PORT:** the port where the Ketida client will be exposed
 - **LOCKS_WS_URL:** the public `URL` where the websocket server dedicated to the chapter locks mechanism listens to.
 - **CLIENT_WS_MIN_TIMEOUT:** more info [here](https://www.apollographql.com/docs/react/api/link/apollo-link-ws/#options-1)

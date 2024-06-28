@@ -8,9 +8,6 @@ services:
       dockerfile: Dockerfile
       args:
         - node_env=production
-        - server_protocol=${SERVER_PROTOCOL}
-        - server_host=${SERVER_HOST}
-        - server_port=${SERVER_PORT}
         - server_serve_client=false
         - feature_book_structure=${FEATURE_BOOK_STRUCTURE}
         - feature_upload_docx_files=${FEATURE_UPLOAD_DOCX_FILES}
@@ -20,3 +17,5 @@ services:
         - lang_switch=${LANG_SWITCH}
     ports:
       - ${CLIENT_PORT}:80
+    environment:
+      - SERVER_URL:${SERVER_URL}
